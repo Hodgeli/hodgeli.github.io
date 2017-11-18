@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[First Blog]]></title>
+    <title><![CDATA[markdown语法]]></title>
     <url>%2F2017%2F11%2F18%2FFirst-Blog%2F</url>
-    <content type="text"><![CDATA[Hello,every one! This is my first blog. welcome here.]]></content>
+    <content type="text"><![CDATA[标题在行首插入 1 到 6 个 # ，对应到标题 1 到 6 阶。blog将最高级的标题自动整理生成为目录 水平线连续三个_或-或* 文本样式加粗：用两个*或_包裹文字斜体：用一个*或_包裹文字删除线：用两个~包裹文字转义：在需转义字符前加\ 列表无序列表： Create a list by starting a line with +, -, or * 有序列表： You can use sequential numbers… …or keep all the numbers as 1. 链接行内形式：1This is an [example link](http://example.com/ &quot;With a Title&quot;). This is an example link.参考形式：123456I get 10 times more traffic from [Google][1] than from[Yahoo][2] or [MSN][3].[1]: http://google.com/ "Google"[2]: http://search.yahoo.com/ "Yahoo Search"[3]: http://search.msn.com/ "MSN Search" I get 10 times more traffic from Google than from Yahoo or MSN.]]></content>
+      <categories>
+        <category>参考手册</category>
+      </categories>
+      <tags>
+        <tag>markdown;工具</tag>
+      </tags>
   </entry>
 </search>
