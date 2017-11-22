@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="我的追寻">
 <meta property="og:description" content="利用twitter API爬取数据">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-22T07:04:47.738Z">
+<meta property="og:updated_time" content="2017-11-22T07:06:50.784Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="twitter爬虫">
 <meta name="twitter:description" content="利用twitter API爬取数据">
@@ -412,13 +412,12 @@
       
 
       
-        <p>##帐号准备</p>
-<ul>
+        <h2 id="帐号准备"><a href="#帐号准备" class="headerlink" title="帐号准备"></a>帐号准备</h2><ul>
 <li>首先需要注册twitter账号，注册页使用google邮箱，下一页验证手机号。</li>
 <li>新建一个twitter application 链接：<a href="https://apps.twitter.com/app/new" target="_blank" rel="noopener">新建项目</a><br>按要求填写内容后在keys and access token页面获取对应keys。</li>
 </ul>
-<p>##环境配置<br>安装tweepy：<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install tweepy</span><br></pre></td></tr></table></figure></p>
-<p>##简单示例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#  -*- coding: utf-8 -*-</span><br><span class="line">import tweepy</span><br><span class="line">from tweepy import OAuthHandler</span><br><span class="line"></span><br><span class="line">consumer_key = &apos;replace your own account consumer_key&apos;</span><br><span class="line">consumer_secret = &apos;replace your own account consumer_secret&apos;</span><br><span class="line">access_token = &apos;replace your own account access_token&apos;</span><br><span class="line">access_secret = &apos;replace your own account access_secret&apos;</span><br><span class="line"></span><br><span class="line">auth = OAuthHandler(consumer_key,consumer_secret)</span><br><span class="line">auth.set_access_token(access_token,access_secret)</span><br><span class="line"></span><br><span class="line">#api = tweepy.API(auth)</span><br><span class="line">api = tweepy.API(auth,proxy=&quot;127.0.0.1:1080&quot;)#代理</span><br><span class="line"></span><br><span class="line">for status in tweepy.Cursor(api.home_timeline).items(2):#抓取条数</span><br><span class="line">    print (status.text)</span><br></pre></td></tr></table></figure></p>
+<h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><p>安装tweepy：<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install tweepy</span><br></pre></td></tr></table></figure></p>
+<h2 id="简单示例"><a href="#简单示例" class="headerlink" title="简单示例"></a>简单示例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#  -*- coding: utf-8 -*-</span><br><span class="line">import tweepy</span><br><span class="line">from tweepy import OAuthHandler</span><br><span class="line"></span><br><span class="line">consumer_key = &apos;replace your own account consumer_key&apos;</span><br><span class="line">consumer_secret = &apos;replace your own account consumer_secret&apos;</span><br><span class="line">access_token = &apos;replace your own account access_token&apos;</span><br><span class="line">access_secret = &apos;replace your own account access_secret&apos;</span><br><span class="line"></span><br><span class="line">auth = OAuthHandler(consumer_key,consumer_secret)</span><br><span class="line">auth.set_access_token(access_token,access_secret)</span><br><span class="line"></span><br><span class="line">#api = tweepy.API(auth)</span><br><span class="line">api = tweepy.API(auth,proxy=&quot;127.0.0.1:1080&quot;)#代理</span><br><span class="line"></span><br><span class="line">for status in tweepy.Cursor(api.home_timeline).items(2):#抓取条数</span><br><span class="line">    print (status.text)</span><br></pre></td></tr></table></figure>
 <p>运行代码获得对应twitter账号的首页推文</p>
 
       
@@ -514,8 +513,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -581,6 +589,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#帐号准备"><span class="nav-number">1.</span> <span class="nav-text">帐号准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境配置"><span class="nav-number">2.</span> <span class="nav-text">环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单示例"><span class="nav-number">3.</span> <span class="nav-text">简单示例</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
