@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[twitter爬虫]]></title>
+    <url>%2F2017%2F11%2F22%2Ftwitter%2F</url>
+    <content type="text"><![CDATA[##帐号准备 首先需要注册twitter账号，注册页使用google邮箱，下一页验证手机号。 新建一个twitter application 链接：新建项目按要求填写内容后在keys and access token页面获取对应keys。 ##环境配置安装tweepy： 1pip install tweepy ##简单示例1234567891011121314151617# -*- coding: utf-8 -*-import tweepyfrom tweepy import OAuthHandlerconsumer_key = &apos;replace your own account consumer_key&apos;consumer_secret = &apos;replace your own account consumer_secret&apos;access_token = &apos;replace your own account access_token&apos;access_secret = &apos;replace your own account access_secret&apos;auth = OAuthHandler(consumer_key,consumer_secret)auth.set_access_token(access_token,access_secret)#api = tweepy.API(auth)api = tweepy.API(auth,proxy=&quot;127.0.0.1:1080&quot;)#代理for status in tweepy.Cursor(api.home_timeline).items(2):#抓取条数 print (status.text) 运行代码获得对应twitter账号的首页推文]]></content>
+      <categories>
+        <category>工具积累</category>
+      </categories>
+      <tags>
+        <tag>爬虫</tag>
+        <tag>API</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[markdown语法]]></title>
     <url>%2F2017%2F11%2F18%2FFirst-Blog%2F</url>
     <content type="text"><![CDATA[标题在行首插入 1 到 6 个 # ，对应到标题 1 到 6 阶。blog将最高级的标题自动整理生成为目录 水平线连续三个_或-或* 文本样式加粗：用两个*或_包裹文字斜体：用一个*或_包裹文字删除线：用两个~包裹文字转义：在需转义字符前加\ 列表无序列表： Create a list by starting a line with +, -, or * 有序列表： You can use sequential numbers… …or keep all the numbers as 1. 链接行内形式：1This is an [example link](http://example.com/ &quot;With a Title&quot;). This is an example link.参考形式：123456I get 10 times more traffic from [Google][1] than from[Yahoo][2] or [MSN][3].[1]: http://google.com/ "Google"[2]: http://search.yahoo.com/ "Yahoo Search"[3]: http://search.msn.com/ "MSN Search" I get 10 times more traffic from Google than from Yahoo or MSN.]]></content>
