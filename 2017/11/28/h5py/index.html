@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="我的追寻">
 <meta property="og:description" content="h5py包踩坑指南">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-28T10:38:06.879Z">
+<meta property="og:updated_time" content="2017-11-28T11:07:17.724Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="h5py">
 <meta name="twitter:description" content="h5py包踩坑指南">
@@ -413,10 +413,9 @@
 
       
         <p>h5py文件是存放两类对象的容器，数据集(dataset)和组(group)，dataset类似数组类的数据集合，和numpy的数组差不多。group是像文件夹一样的容器，它好比python中的字典，有键(key)和值(value)。group中可以存放dataset或者其他的group。”键”就是组成员的名称，”值”就是组成员对象本身(组或者数据集)，下面来看下如何创建组和数据集。</p>
-<p>##基本操作<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import h5py</span><br><span class="line">import numpy as np</span><br><span class="line">#生成文件，要是读取文件的话，就把w换成r</span><br><span class="line">f=h5py.File(&quot;mydataset.h5&quot;,&quot;w&quot;)</span><br><span class="line">#创建数据集</span><br><span class="line">d1=f.create_dataset(&quot;dset1&quot;,(3,4),&apos;i&apos;)</span><br><span class="line">#赋值</span><br><span class="line">d1[...]=np.arange(12).reshape((3,4))</span><br><span class="line">#同时创建并赋值</span><br><span class="line">f[&quot;dset2&quot;]=np.arange(15)</span><br><span class="line">#已有numpy数组，创建数据集并赋值</span><br><span class="line">a=np.arange(20)</span><br><span class="line">d1=f.create_dataset(&quot;dset3&quot;,data=a)</span><br><span class="line">for key in f.keys():</span><br><span class="line">    print(f[key].name)</span><br><span class="line">    print(f[key].value)</span><br></pre></td></tr></table></figure></p>
-<p>###group<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import h5py</span><br><span class="line">import numpy as np</span><br><span class="line">f=h5py.File(&quot;myh5py.hdf5&quot;,&quot;w&quot;)</span><br><span class="line"></span><br><span class="line">#创建一个名字为bar的组</span><br><span class="line">g1=f.create_group(&quot;bar&quot;)</span><br><span class="line"></span><br><span class="line">#在bar这个组里面分别创建name为dset1,dset2的数据集并赋值。</span><br><span class="line">g1[&quot;dset1&quot;]=np.arange(10)</span><br><span class="line">g1[&quot;dset2&quot;]=np.arange(12).reshape((3,4))</span><br><span class="line"></span><br><span class="line">for key in g1.keys():</span><br><span class="line">    print(g1[key].name)</span><br><span class="line">    print(g1[key].value)</span><br></pre></td></tr></table></figure></p>
-<p>##文件读写<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">import h5py</span><br><span class="line">import numpy as np</span><br><span class="line">file=h5py.File(&quot;TrainSet_rotate.h5&quot;,&quot;w&quot;)</span><br><span class="line"></span><br><span class="line">data = np.array( [222,333,444] )</span><br><span class="line">label = np.array( [0,1,0] )</span><br><span class="line">img_num = np.array( [0,1,2] )</span><br><span class="line"></span><br><span class="line"># 写入</span><br><span class="line">file.create_dataset(&apos;train_set_x&apos;, data = data)</span><br><span class="line">file.create_dataset(&apos;train_set_y&apos;, data = label)</span><br><span class="line">file.create_dataset(&apos;train_set_num&apos;,data = img_num)</span><br><span class="line"></span><br><span class="line"># 。。。。。。。。。</span><br><span class="line">file.close()</span><br><span class="line"></span><br><span class="line"># 读方式打开文件</span><br><span class="line">file=h5py.File(&apos;TrainSet_rotate.h5&apos;,&apos;r&apos;)</span><br><span class="line"># 尽管后面有 &apos;[:]&apos;, 但是矩阵怎么进去的就是怎么出来的，不会被拉长（matlab后遗症）</span><br><span class="line">train_set_data = file[&apos;train_set_x&apos;][:]</span><br><span class="line">train_set_y = file[&apos;train_set_y&apos;][:]</span><br><span class="line">train_set_img_num = file[&apos;train_set_num&apos;][:]</span><br><span class="line"># .........</span><br><span class="line">file.close()</span><br></pre></td></tr></table></figure></p>
-
+<h2 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import h5py</span><br><span class="line">import numpy as np</span><br><span class="line">#生成文件，要是读取文件的话，就把w换成r</span><br><span class="line">f=h5py.File(&quot;mydataset.h5&quot;,&quot;w&quot;)</span><br><span class="line">#创建数据集</span><br><span class="line">d1=f.create_dataset(&quot;dset1&quot;,(3,4),&apos;i&apos;)</span><br><span class="line">#赋值</span><br><span class="line">d1[...]=np.arange(12).reshape((3,4))</span><br><span class="line">#同时创建并赋值</span><br><span class="line">f[&quot;dset2&quot;]=np.arange(15)</span><br><span class="line">#已有numpy数组，创建数据集并赋值</span><br><span class="line">a=np.arange(20)</span><br><span class="line">d1=f.create_dataset(&quot;dset3&quot;,data=a)</span><br><span class="line">for key in f.keys():</span><br><span class="line">    print(f[key].name)</span><br><span class="line">    print(f[key].value)</span><br></pre></td></tr></table></figure>
+<h3 id="group"><a href="#group" class="headerlink" title="group"></a>group</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import h5py</span><br><span class="line">import numpy as np</span><br><span class="line">f=h5py.File(&quot;myh5py.hdf5&quot;,&quot;w&quot;)</span><br><span class="line"></span><br><span class="line">#创建一个名字为bar的组</span><br><span class="line">g1=f.create_group(&quot;bar&quot;)</span><br><span class="line"></span><br><span class="line">#在bar这个组里面分别创建name为dset1,dset2的数据集并赋值。</span><br><span class="line">g1[&quot;dset1&quot;]=np.arange(10)</span><br><span class="line">g1[&quot;dset2&quot;]=np.arange(12).reshape((3,4))</span><br><span class="line"></span><br><span class="line">for key in g1.keys():</span><br><span class="line">    print(g1[key].name)</span><br><span class="line">    print(g1[key].value)</span><br></pre></td></tr></table></figure>
+<h2 id="文件读写"><a href="#文件读写" class="headerlink" title="文件读写"></a>文件读写</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">import h5py</span><br><span class="line">import numpy as np</span><br><span class="line">file=h5py.File(&quot;TrainSet_rotate.h5&quot;,&quot;w&quot;)</span><br><span class="line"></span><br><span class="line">data = np.array( [222,333,444] )</span><br><span class="line">label = np.array( [0,1,0] )</span><br><span class="line">img_num = np.array( [0,1,2] )</span><br><span class="line"></span><br><span class="line"># 写入</span><br><span class="line">file.create_dataset(&apos;train_set_x&apos;, data = data)</span><br><span class="line">file.create_dataset(&apos;train_set_y&apos;, data = label)</span><br><span class="line">file.create_dataset(&apos;train_set_num&apos;,data = img_num)</span><br><span class="line"></span><br><span class="line"># 。。。。。。。。。</span><br><span class="line">file.close()</span><br><span class="line"></span><br><span class="line"># 读方式打开文件</span><br><span class="line">file=h5py.File(&apos;TrainSet_rotate.h5&apos;,&apos;r&apos;)</span><br><span class="line"># 尽管后面有 &apos;[:]&apos;, 但是矩阵怎么进去的就是怎么出来的，不会被拉长（matlab后遗症）</span><br><span class="line">train_set_data = file[&apos;train_set_x&apos;][:]</span><br><span class="line">train_set_y = file[&apos;train_set_y&apos;][:]</span><br><span class="line">train_set_img_num = file[&apos;train_set_num&apos;][:]</span><br><span class="line"># .........</span><br><span class="line">file.close()</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -508,8 +507,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -575,6 +583,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本操作"><span class="nav-number">1.</span> <span class="nav-text">基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#group"><span class="nav-number">1.1.</span> <span class="nav-text">group</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件读写"><span class="nav-number">2.</span> <span class="nav-text">文件读写</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
