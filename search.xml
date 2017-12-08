@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[快捷键]]></title>
     <url>%2F2017%2F12%2F07%2Fshort-key%2F</url>
-    <content type="text"><![CDATA[Sublime 快捷键 功能 Ctrl+Shift+P 打开命令面板]]></content>
+    <content type="text"><![CDATA[Sublime 快捷键 功能 Ctrl+G 跳转到第几行 Ctrl+W 关闭当前打开文件 Ctrl+Shift+上下键 替换行 Ctrl+Shift+W 关闭所有打开文件 Ctrl+L 选择行，重复可依次增加选择下一行 Ctrl+Shift+L 选择多行 Ctrl+Shift+Enter 在当前行前插入新行 Ctrl+X 删除当前行 Ctrl+M 跳转到对应括号 Ctrl+Shift+M 选中当前括号内容，重复可选着括号本身 Ctrl+N 新建窗口 Ctrl+K+B 开关侧栏 Ctrl+Shift+P 打开命令面板 Ctrl+/ 注释当前行 Ctrl+Shift+/ 当前位置插入注释 Ctrl+Shift+F 查找并替换 F11 全屏 Alt+数字 切换打开第N个文件 Ctrl+D 选中光标所占的文本，继续操作则会选中下一个相同的文本 Alt+F3 选中文本按下快捷键，即可一次性选择全部的相同文本进行同时编辑 Ctrl+Shift+[ 选中代码，按下快捷键，折叠代码 Ctrl+Shift+] 选中代码，按下快捷键，展开代码 Ctrl+← 向左单位性地移动光标，快速移动光标 Ctrl+Shift+← 向左单位性地选中文本 Ctrl+Shift+D 复制光标所在整行，插入到下一行 Eclipse(自定义) 快捷键 功能 Alt+/ 代码辅助 Ctrl+1 快速修复 Ctrl+l 跳转到第几行 Ctrl+W 关闭当前打开文件 Alt+上下键 替换行 Ctrl+Shift+W 关闭所有打开文件 Ctrl+D 删除当前行 Ctrl+/ 注释当前行 Ctrl+← 向左单位性地移动光标，快速移动光标 Ctrl+Shift+← 向左单位性地选中文本 Ctrl+Alt+D 复制光标所在整行，插入到下一行]]></content>
       <categories>
         <category>参考手册</category>
       </categories>
