@@ -85,7 +85,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="lda," />
 
 
 
@@ -96,17 +96,18 @@
 
 
 
-<meta name="description" content="2017-11-18博主目前研究生，博客创建，旨在记录平常的学习笔记与碎碎念学习笔记方面主要是推荐系统相关的学习心得，欢迎留言讨论。 怕什么真理无穷，进一寸有一寸的欢喜">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="http://yoursite.com/about/index.html">
+<meta name="description" content="用 Python 实现 LDA">
+<meta name="keywords" content="lda">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LDA主题模型">
+<meta property="og:url" content="http://yoursite.com/2018/01/16/lda/index.html">
 <meta property="og:site_name" content="我的追寻">
-<meta property="og:description" content="2017-11-18博主目前研究生，博客创建，旨在记录平常的学习笔记与碎碎念学习笔记方面主要是推荐系统相关的学习心得，欢迎留言讨论。 怕什么真理无穷，进一寸有一寸的欢喜">
+<meta property="og:description" content="用 Python 实现 LDA">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-18T13:26:12.995Z">
+<meta property="og:updated_time" content="2018-01-16T06:40:48.444Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
-<meta name="twitter:description" content="2017-11-18博主目前研究生，博客创建，旨在记录平常的学习笔记与碎碎念学习笔记方面主要是推荐系统相关的学习心得，欢迎留言讨论。 怕什么真理无穷，进一寸有一寸的欢喜">
+<meta name="twitter:title" content="LDA主题模型">
+<meta name="twitter:description" content="用 Python 实现 LDA">
 
 
 
@@ -136,13 +137,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/about/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/01/16/lda/"/>
 
 
 
 
 
-  <title>about | 我的追寻</title>
+  <title>LDA主题模型 | 我的追寻</title>
   
 
 
@@ -301,34 +302,178 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/16/lda/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hodge Li">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://q.qlogo.cn/headimg_dl?dst_uin=2991811241&spec=640">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的追寻">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">about</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <p>2017-11-18<br>博主目前研究生，博客创建，旨在记录平常的学习笔记与碎碎念<br>学习笔记方面主要是推荐系统相关的学习心得，欢迎留言讨论。</p>
-<h5 id="怕什么真理无穷，进一寸有一寸的欢喜"><a href="#怕什么真理无穷，进一寸有一寸的欢喜" class="headerlink" title="怕什么真理无穷，进一寸有一寸的欢喜"></a>怕什么真理无穷，进一寸有一寸的欢喜</h5>
+          <h1 class="post-title" itemprop="name headline">LDA主题模型</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-16T14:32:21+08:00">
+                2018-01-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/工具积累/" itemprop="url" rel="index">
+                    <span itemprop="name">工具积累</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">被偷看
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  用 Python 实现 LDA
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h5 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h5><p>爬到的推文做主题分析<br>方法引用自博客：<a href="http://blog.csdn.net/github_36299736/article/details/54966460" target="_blank" rel="noopener">http://blog.csdn.net/github_36299736/article/details/54966460</a></p>
+<p>简单例子：</p>
+<h6 id="LDA-demo-py"><a href="#LDA-demo-py" class="headerlink" title="LDA_demo.py"></a>LDA_demo.py</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"># LDA 例子测试</span><br><span class="line">from nltk.tokenize import RegexpTokenizer</span><br><span class="line">from stop_words import get_stop_words</span><br><span class="line">from nltk.stem.porter import PorterStemmer</span><br><span class="line">from gensim import corpora, models</span><br><span class="line">import gensim</span><br><span class="line"></span><br><span class="line">tokenizer = RegexpTokenizer(r&apos;\w+&apos;)</span><br><span class="line"></span><br><span class="line"># create English stop words list</span><br><span class="line">en_stop = get_stop_words(&apos;en&apos;)</span><br><span class="line"></span><br><span class="line"># Create p_stemmer of class PorterStemmer</span><br><span class="line">p_stemmer = PorterStemmer()</span><br><span class="line"></span><br><span class="line"># create sample documents</span><br><span class="line">doc_a = &quot;Brocolli is good to eat. My brother likes to eat good brocolli, but not my mother.&quot;</span><br><span class="line">doc_b = &quot;My mother spends a lot of time driving my brother around to baseball practice.&quot;</span><br><span class="line">doc_c = &quot;Some health experts suggest that driving may cause increased tension and blood pressure.&quot;</span><br><span class="line">doc_d = &quot;I often feel pressure to perform well at school, but my mother never seems to drive my brother to do better.&quot;</span><br><span class="line">doc_e = &quot;Health professionals say that brocolli is good for your health.&quot;</span><br><span class="line"></span><br><span class="line"># compile sample documents into a list</span><br><span class="line">doc_set = [doc_a, doc_b, doc_c, doc_d, doc_e]</span><br><span class="line"></span><br><span class="line"># list for tokenized documents in loop</span><br><span class="line">texts = []</span><br><span class="line"></span><br><span class="line"># loop through document list</span><br><span class="line">for i in doc_set:</span><br><span class="line">    # clean and tokenize document string</span><br><span class="line">    raw = i.lower()</span><br><span class="line">    tokens = tokenizer.tokenize(raw)</span><br><span class="line"></span><br><span class="line">    # remove stop words from tokens</span><br><span class="line">    stopped_tokens = [i for i in tokens if not i in en_stop]</span><br><span class="line"></span><br><span class="line">    # stem tokens</span><br><span class="line">    stemmed_tokens = [p_stemmer.stem(i) for i in stopped_tokens]</span><br><span class="line"></span><br><span class="line">    # add tokens to list</span><br><span class="line">    texts.append(stemmed_tokens)</span><br><span class="line"></span><br><span class="line"># turn our tokenized documents into a id &lt;-&gt; term dictionary</span><br><span class="line">dictionary = corpora.Dictionary(texts)</span><br><span class="line"></span><br><span class="line"># convert tokenized documents into a document-term matrix</span><br><span class="line">corpus = [dictionary.doc2bow(text) for text in texts]</span><br><span class="line"></span><br><span class="line"># generate LDA model</span><br><span class="line">ldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics=2, id2word = dictionary, passes=20)</span><br><span class="line"></span><br><span class="line">print(ldamodel.print_topics(num_topics=2, num_words=4))</span><br></pre></td></tr></table></figure>
+<h5 id="实现分析"><a href="#实现分析" class="headerlink" title="实现分析"></a>实现分析</h5><p>最后的实现代码来自：<a href="https://github.com/a55509432/python-LDA" target="_blank" rel="noopener">https://github.com/a55509432/python-LDA</a></p>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/lda/" rel="tag"><i class="fa fa-tag"></i> lda</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/14/get-twitters/" rel="next" title="twitter爬虫2">
+                <i class="fa fa-chevron-left"></i> twitter爬虫2
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -337,6 +482,12 @@
 
 
           
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTg5MC84NDU0"></div>
+    </div>
+  
+
 
         </div>
         
@@ -443,7 +594,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#怕什么真理无穷，进一寸有一寸的欢喜"><span class="nav-text">怕什么真理无穷，进一寸有一寸的欢喜</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#需求"><span class="nav-text">需求</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#LDA-demo-py"><span class="nav-text">LDA_demo.py</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#实现分析"><span class="nav-text">实现分析</span></a></li></ol></div>
             
 
           </div>
@@ -617,6 +768,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
