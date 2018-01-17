@@ -85,7 +85,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="pytorch,笔记," />
 
 
 
@@ -96,16 +96,18 @@
 
 
 
-<meta name="description" content="进一寸有一寸的欢喜">
-<meta property="og:type" content="website">
-<meta property="og:title" content="我的追寻">
-<meta property="og:url" content="http://yoursite.com/tags/工具/index.html">
+<meta name="description" content="数据分批训练&amp;不同优化器比较">
+<meta name="keywords" content="pytorch,笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="批训练&amp;优化器">
+<meta property="og:url" content="http://yoursite.com/2018/01/16/pitrain/index.html">
 <meta property="og:site_name" content="我的追寻">
-<meta property="og:description" content="进一寸有一寸的欢喜">
+<meta property="og:description" content="数据分批训练&amp;不同优化器比较">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-17T06:46:35.441Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="我的追寻">
-<meta name="twitter:description" content="进一寸有一寸的欢喜">
+<meta name="twitter:title" content="批训练&amp;优化器">
+<meta name="twitter:description" content="数据分批训练&amp;不同优化器比较">
 
 
 
@@ -135,13 +137,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/工具/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/01/16/pitrain/"/>
 
 
 
 
 
-  <title>标签: 工具 | 我的追寻</title>
+  <title>批训练&优化器 | 我的追寻</title>
   
 
 
@@ -160,7 +162,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -298,54 +300,182 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>工具<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/16/pitrain/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hodge Li">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://q.qlogo.cn/headimg_dl?dst_uin=2991811241&spec=640">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的追寻">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2017/11/18/First-Blog/" itemprop="url">
-              
-                <span itemprop="name">markdown语法</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">批训练&优化器</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-18T16:19:48+08:00"
-              content="2017-11-18" >
-          11-18
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-16T18:26:52+08:00">
+                2018-01-16
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PyTorch笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">PyTorch笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">被偷看
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  数据分批训练&不同优化器比较
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    </div>
+      
 
+      
+        <p>数据先Tensor化再load</p>
+<h6 id="批训练-py"><a href="#批训练-py" class="headerlink" title="批训练.py"></a>批训练.py</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">import torch</span><br><span class="line">import torch.utils.data as Data</span><br><span class="line"></span><br><span class="line">torch.manual_seed(1)    # reproducible</span><br><span class="line"></span><br><span class="line">BATCH_SIZE = 5</span><br><span class="line"># BATCH_SIZE = 8</span><br><span class="line"></span><br><span class="line">x = torch.linspace(1, 10, 10)       # this is x data (torch tensor)</span><br><span class="line">y = torch.linspace(10, 1, 10)       # this is y data (torch tensor)</span><br><span class="line"></span><br><span class="line">torch_dataset = Data.TensorDataset(data_tensor=x, target_tensor=y)</span><br><span class="line">loader = Data.DataLoader(</span><br><span class="line">    dataset=torch_dataset,      # torch TensorDataset format</span><br><span class="line">    batch_size=BATCH_SIZE,      # mini batch size</span><br><span class="line">    shuffle=True,               # random shuffle for training</span><br><span class="line">    num_workers=2,              # subprocesses for loading data</span><br><span class="line">)</span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    for epoch in range(3):   # train entire dataset 3 times</span><br><span class="line">        for step, (batch_x, batch_y) in enumerate(loader):  # for each training step</span><br><span class="line">            # train your data...</span><br><span class="line">            print(&apos;Epoch: &apos;, epoch, &apos;| Step: &apos;, step, &apos;| batch x: &apos;,</span><br><span class="line">                  batch_x.numpy(), &apos;| batch y: &apos;, batch_y.numpy())</span><br></pre></td></tr></table></figure>
+<h5 id="优化器比较"><a href="#优化器比较" class="headerlink" title="优化器比较"></a>优化器比较</h5><p>在数据分批训练的基础上比较几种不同优化器的收敛效果</p>
+<h6 id="优化器-py"><a href="#优化器-py" class="headerlink" title="优化器.py"></a>优化器.py</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">import torch</span><br><span class="line">import torch.utils.data as Data</span><br><span class="line">import torch.nn.functional as F</span><br><span class="line">from torch.autograd import Variable</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"></span><br><span class="line"># torch.manual_seed(1)    # reproducible</span><br><span class="line"></span><br><span class="line">LR = 0.01</span><br><span class="line">BATCH_SIZE = 32</span><br><span class="line">EPOCH = 12</span><br><span class="line"></span><br><span class="line"># fake dataset</span><br><span class="line">x = torch.unsqueeze(torch.linspace(-1, 1, 1000), dim=1)</span><br><span class="line">y = x.pow(2) + 0.1 * torch.normal(torch.zeros(*x.size()))</span><br><span class="line"></span><br><span class="line"># plot dataset</span><br><span class="line"># plt.scatter(x.numpy(), y.numpy())</span><br><span class="line"># plt.show()</span><br><span class="line"></span><br><span class="line"># put dateset into torch dataset</span><br><span class="line">torch_dataset = Data.TensorDataset(data_tensor=x, target_tensor=y)</span><br><span class="line">loader = Data.DataLoader(dataset=torch_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=2, )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># default network</span><br><span class="line">class Net(torch.nn.Module):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        super(Net, self).__init__()</span><br><span class="line">        self.hidden = torch.nn.Linear(1, 20)  # hidden layer</span><br><span class="line">        self.predict = torch.nn.Linear(20, 1)  # output layer</span><br><span class="line"></span><br><span class="line">    def forward(self, x):</span><br><span class="line">        x = F.relu(self.hidden(x))  # activation function for hidden layer</span><br><span class="line">        x = self.predict(x)  # linear output</span><br><span class="line">        return x</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># different nets</span><br><span class="line">net_SGD = Net()</span><br><span class="line">net_Momentum = Net()</span><br><span class="line">net_RMSprop = Net()</span><br><span class="line">net_Adam = Net()</span><br><span class="line">nets = [net_SGD, net_Momentum, net_RMSprop, net_Adam]</span><br><span class="line"></span><br><span class="line"># different optimizers</span><br><span class="line">opt_SGD = torch.optim.SGD(net_SGD.parameters(), lr=LR)</span><br><span class="line">opt_Momentum = torch.optim.SGD(net_Momentum.parameters(), lr=LR, momentum=0.8)</span><br><span class="line">opt_RMSprop = torch.optim.RMSprop(net_RMSprop.parameters(), lr=LR, alpha=0.9)</span><br><span class="line">opt_Adam = torch.optim.Adam(net_Adam.parameters(), lr=LR, betas=(0.9, 0.99))</span><br><span class="line">optimizers = [opt_SGD, opt_Momentum, opt_RMSprop, opt_Adam]</span><br><span class="line"></span><br><span class="line">loss_func = torch.nn.MSELoss()</span><br><span class="line">losses_his = [[], [], [], []]  # record loss</span><br><span class="line"></span><br><span class="line"># training</span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    for epoch in range(EPOCH):</span><br><span class="line">        print(&apos;Epoch: &apos;, epoch)</span><br><span class="line">        for step, (batch_x, batch_y) in enumerate(loader):  # for each training step</span><br><span class="line">            b_x = Variable(batch_x)</span><br><span class="line">            b_y = Variable(batch_y)</span><br><span class="line"></span><br><span class="line">            for net, opt, l_his in zip(nets, optimizers, losses_his):</span><br><span class="line">                output = net(b_x)  # get output for every net</span><br><span class="line">                loss = loss_func(output, b_y)  # compute loss for every net</span><br><span class="line">                opt.zero_grad()  # clear gradients for next train</span><br><span class="line">                loss.backward()  # backpropagation, compute gradients</span><br><span class="line">                opt.step()  # apply gradients</span><br><span class="line">                l_his.append(loss.data[0])  # loss recoder</span><br><span class="line"></span><br><span class="line">    labels = [&apos;SGD&apos;, &apos;Momentum&apos;, &apos;RMSprop&apos;, &apos;Adam&apos;]</span><br><span class="line">    for i, l_his in enumerate(losses_his):</span><br><span class="line">        plt.plot(l_his, label=labels[i])</span><br><span class="line">    plt.legend(loc=&apos;best&apos;)</span><br><span class="line">    plt.xlabel(&apos;Steps&apos;)</span><br><span class="line">    plt.ylabel(&apos;Loss&apos;)</span><br><span class="line">    plt.ylim((0, 0.2))</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/pytorch/" rel="tag"><i class="fa fa-tag"></i> pytorch</a>
+          
+            <a href="/tags/笔记/" rel="tag"><i class="fa fa-tag"></i> 笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/16/lda/" rel="next" title="LDA主题模型">
+                <i class="fa fa-chevron-left"></i> LDA主题模型
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -353,6 +483,12 @@
 
 
           
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTg5MC84NDU0"></div>
+    </div>
+  
+
 
         </div>
         
@@ -373,8 +509,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -440,6 +585,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#批训练-py"><span class="nav-text">批训练.py</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#优化器比较"><span class="nav-text">优化器比较</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#优化器-py"><span class="nav-text">优化器.py</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -576,6 +737,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 
@@ -604,6 +769,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 

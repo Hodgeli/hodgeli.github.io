@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[批训练&优化器]]></title>
+    <url>%2F2018%2F01%2F16%2Fpitrain%2F</url>
+    <content type="text"><![CDATA[数据先Tensor化再load 批训练.py123456789101112131415161718192021222324import torchimport torch.utils.data as Datatorch.manual_seed(1) # reproducibleBATCH_SIZE = 5# BATCH_SIZE = 8x = torch.linspace(1, 10, 10) # this is x data (torch tensor)y = torch.linspace(10, 1, 10) # this is y data (torch tensor)torch_dataset = Data.TensorDataset(data_tensor=x, target_tensor=y)loader = Data.DataLoader( dataset=torch_dataset, # torch TensorDataset format batch_size=BATCH_SIZE, # mini batch size shuffle=True, # random shuffle for training num_workers=2, # subprocesses for loading data)if __name__ == &apos;__main__&apos;: for epoch in range(3): # train entire dataset 3 times for step, (batch_x, batch_y) in enumerate(loader): # for each training step # train your data... print(&apos;Epoch: &apos;, epoch, &apos;| Step: &apos;, step, &apos;| batch x: &apos;, batch_x.numpy(), &apos;| batch y: &apos;, batch_y.numpy()) 优化器比较在数据分批训练的基础上比较几种不同优化器的收敛效果 优化器.py12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879import torchimport torch.utils.data as Dataimport torch.nn.functional as Ffrom torch.autograd import Variableimport matplotlib.pyplot as plt# torch.manual_seed(1) # reproducibleLR = 0.01BATCH_SIZE = 32EPOCH = 12# fake datasetx = torch.unsqueeze(torch.linspace(-1, 1, 1000), dim=1)y = x.pow(2) + 0.1 * torch.normal(torch.zeros(*x.size()))# plot dataset# plt.scatter(x.numpy(), y.numpy())# plt.show()# put dateset into torch datasettorch_dataset = Data.TensorDataset(data_tensor=x, target_tensor=y)loader = Data.DataLoader(dataset=torch_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=2, )# default networkclass Net(torch.nn.Module): def __init__(self): super(Net, self).__init__() self.hidden = torch.nn.Linear(1, 20) # hidden layer self.predict = torch.nn.Linear(20, 1) # output layer def forward(self, x): x = F.relu(self.hidden(x)) # activation function for hidden layer x = self.predict(x) # linear output return x# different netsnet_SGD = Net()net_Momentum = Net()net_RMSprop = Net()net_Adam = Net()nets = [net_SGD, net_Momentum, net_RMSprop, net_Adam]# different optimizersopt_SGD = torch.optim.SGD(net_SGD.parameters(), lr=LR)opt_Momentum = torch.optim.SGD(net_Momentum.parameters(), lr=LR, momentum=0.8)opt_RMSprop = torch.optim.RMSprop(net_RMSprop.parameters(), lr=LR, alpha=0.9)opt_Adam = torch.optim.Adam(net_Adam.parameters(), lr=LR, betas=(0.9, 0.99))optimizers = [opt_SGD, opt_Momentum, opt_RMSprop, opt_Adam]loss_func = torch.nn.MSELoss()losses_his = [[], [], [], []] # record loss# trainingif __name__ == &apos;__main__&apos;: for epoch in range(EPOCH): print(&apos;Epoch: &apos;, epoch) for step, (batch_x, batch_y) in enumerate(loader): # for each training step b_x = Variable(batch_x) b_y = Variable(batch_y) for net, opt, l_his in zip(nets, optimizers, losses_his): output = net(b_x) # get output for every net loss = loss_func(output, b_y) # compute loss for every net opt.zero_grad() # clear gradients for next train loss.backward() # backpropagation, compute gradients opt.step() # apply gradients l_his.append(loss.data[0]) # loss recoder labels = [&apos;SGD&apos;, &apos;Momentum&apos;, &apos;RMSprop&apos;, &apos;Adam&apos;] for i, l_his in enumerate(losses_his): plt.plot(l_his, label=labels[i]) plt.legend(loc=&apos;best&apos;) plt.xlabel(&apos;Steps&apos;) plt.ylabel(&apos;Loss&apos;) plt.ylim((0, 0.2)) plt.show()]]></content>
+      <categories>
+        <category>PyTorch笔记</category>
+      </categories>
+      <tags>
+        <tag>pytorch</tag>
+        <tag>笔记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[LDA主题模型]]></title>
     <url>%2F2018%2F01%2F16%2Flda%2F</url>
     <content type="text"><![CDATA[需求爬到的推文做主题分析方法引用自博客：http://blog.csdn.net/github_36299736/article/details/54966460 简单例子： LDA_demo.py1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253# LDA 例子测试from nltk.tokenize import RegexpTokenizerfrom stop_words import get_stop_wordsfrom nltk.stem.porter import PorterStemmerfrom gensim import corpora, modelsimport gensimtokenizer = RegexpTokenizer(r&apos;\w+&apos;)# create English stop words listen_stop = get_stop_words(&apos;en&apos;)# Create p_stemmer of class PorterStemmerp_stemmer = PorterStemmer()# create sample documentsdoc_a = &quot;Brocolli is good to eat. My brother likes to eat good brocolli, but not my mother.&quot;doc_b = &quot;My mother spends a lot of time driving my brother around to baseball practice.&quot;doc_c = &quot;Some health experts suggest that driving may cause increased tension and blood pressure.&quot;doc_d = &quot;I often feel pressure to perform well at school, but my mother never seems to drive my brother to do better.&quot;doc_e = &quot;Health professionals say that brocolli is good for your health.&quot;# compile sample documents into a listdoc_set = [doc_a, doc_b, doc_c, doc_d, doc_e]# list for tokenized documents in looptexts = []# loop through document listfor i in doc_set: # clean and tokenize document string raw = i.lower() tokens = tokenizer.tokenize(raw) # remove stop words from tokens stopped_tokens = [i for i in tokens if not i in en_stop] # stem tokens stemmed_tokens = [p_stemmer.stem(i) for i in stopped_tokens] # add tokens to list texts.append(stemmed_tokens)# turn our tokenized documents into a id &lt;-&gt; term dictionarydictionary = corpora.Dictionary(texts)# convert tokenized documents into a document-term matrixcorpus = [dictionary.doc2bow(text) for text in texts]# generate LDA modelldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics=2, id2word = dictionary, passes=20)print(ldamodel.print_topics(num_topics=2, num_words=4)) 实现分析最后的实现代码来自：https://github.com/a55509432/python-LDA]]></content>
@@ -36,11 +48,11 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[PyTorch笔记]]></title>
+    <title><![CDATA[保存提取]]></title>
     <url>%2F2018%2F01%2F09%2Ftorch-save%2F</url>
     <content type="text"><![CDATA[保存提取训练好了一个模型, 我们当然想要保存它, 留到下次要用的时候直接提取直接用 保存提取.py12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879import torchfrom torch.autograd import Variableimport matplotlib.pyplot as plt# fake datax = torch.unsqueeze(torch.linspace(-1, 1, 100), dim=1) # x data (tensor), shape=(100, 1)y = x.pow(2) + 0.2 * torch.rand(x.size()) # noisy y data (tensor), shape=(100, 1)x, y = Variable(x, requires_grad=False), Variable(y, requires_grad=False)def save(): # save net1 net1 = torch.nn.Sequential( torch.nn.Linear(1, 10), torch.nn.ReLU(), torch.nn.Linear(10, 1) ) optimizer = torch.optim.SGD(net1.parameters(), lr=0.5) loss_func = torch.nn.MSELoss() for t in range(100): prediction = net1(x) loss = loss_func(prediction, y) optimizer.zero_grad() loss.backward() optimizer.step() # plot result plt.figure(1, figsize=(10, 3)) plt.subplot(131) plt.title(&apos;Net1&apos;) plt.scatter(x.data.numpy(), y.data.numpy()) plt.plot(x.data.numpy(), prediction.data.numpy(), &apos;r-&apos;, lw=5) # 2 ways to save the net torch.save(net1, &apos;net.pkl&apos;) # save entire net torch.save(net1.state_dict(), &apos;net_params.pkl&apos;) # save only the parametersdef restore_net(): # restore entire net1 to net2 net2 = torch.load(&apos;net.pkl&apos;) prediction = net2(x) # plot result plt.subplot(132) plt.title(&apos;Net2&apos;) plt.scatter(x.data.numpy(), y.data.numpy()) plt.plot(x.data.numpy(), prediction.data.numpy(), &apos;r-&apos;, lw=5)def restore_params(): # restore only the parameters in net1 to net3 net3 = torch.nn.Sequential( torch.nn.Linear(1, 10), torch.nn.ReLU(), torch.nn.Linear(10, 1) ) # copy net1&apos;s parameters into net3 net3.load_state_dict(torch.load(&apos;net_params.pkl&apos;)) prediction = net3(x) # plot result plt.subplot(133) plt.title(&apos;Net3&apos;) plt.scatter(x.data.numpy(), y.data.numpy()) plt.plot(x.data.numpy(), prediction.data.numpy(), &apos;r-&apos;, lw=5) plt.show()# save net1save()# restore entire net (may slow)restore_net()# restore only the net parametersrestore_params()]]></content>
       <categories>
-        <category>神经网络</category>
+        <category>PyTorch笔记</category>
       </categories>
       <tags>
         <tag>pytorch</tag>
@@ -126,8 +138,8 @@
         <category>Python踩坑指南</category>
       </categories>
       <tags>
-        <tag>字符串处理</tag>
         <tag>python</tag>
+        <tag>字符串处理</tag>
         <tag>文件读取</tag>
       </tags>
   </entry>
@@ -150,8 +162,8 @@
         <category>Python踩坑指南</category>
       </categories>
       <tags>
-        <tag>字符串处理</tag>
         <tag>python</tag>
+        <tag>字符串处理</tag>
         <tag>文件读取</tag>
       </tags>
   </entry>
