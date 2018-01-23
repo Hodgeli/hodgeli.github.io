@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[helloos]]></title>
+    <url>%2F2018%2F01%2F23%2Fos1%2F</url>
+    <content type="text"><![CDATA[本来一无所有，何谈从头再来？读《30天自制操作系统》笔记。第一天。 概述写出操作系统二进制文件，转换成img，再通过模拟器运行。手工写二进制文件太恐怖，故用汇编语言写代码，编译成操作系统二进制文件。故操作系统的hello world版汇编源文件为： ipl.nas123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960; hello-os; TAB=4 ORG 0x7c00 ; 指明程序装载地址; 标准FAT12格式软盘专用的代码 Stand FAT12 format floppy code JMP entry DB 0xeb, 0x4e, 0x90 DB &quot;HELLOIPL&quot; ; 启动扇区名称（8字节） DW 512 ; 每个扇区（sector）大小（必须512字节） DB 1 ; 簇（cluster）大小（必须为1个扇区） DW 1 ; FAT起始位置（一般为第一个扇区） DB 2 ; FAT个数（必须为2） DW 224 ; 根目录大小（一般为224项） DW 2880 ; 该磁盘大小（必须为2880扇区1440*1024/512） DB 0xf0 ; 磁盘类型（必须为0xf0） DW 9 ; FAT的长度（必??9扇区） DW 18 ; 一个磁道（track）有几个扇区（必须为18） DW 2 ; 磁头数（必??2） DD 0 ; 不使用分区，必须是0 DD 2880 ; 重写一次磁盘大小 DB 0,0,0x29 ; 意义不明（固定） DD 0xffffffff ; （可能是）卷标号码 DB &quot;HELLO-OS &quot; ; 磁盘的名称（必须为11字?，不足填空格） DB &quot;FAT12 &quot; ; 磁盘格式名称（必??8字?，不足填空格） RESB 18 ; 先空出18字节; 程序主体entry: MOV AX,0 ; 初始化寄存器 MOV SS,AX MOV SP,0x7c00 MOV DS,AX MOV ES,AX MOV SI,msgputloop: MOV AL,[SI] ADD SI,1 ; 给SI加1 CMP AL,0 JE fin MOV AH,0x0e ; 显示一个文字 MOV BX,15 ; 指定字符颜色 INT 0x10 ; 调用显卡BIOS JMP putloopfin: HLT ; 让CPU停止，等待指令 JMP fin ; 无限循环msg: DB 0x0a, 0x0a ; 换行两次 DB &quot;hello, world&quot; DB 0x0a ; 换行 DB 0 RESB 0x7dfe-$ ; 填写0x00直到0x001fe DB 0x55, 0xaa 在使用光盘里提供的Makefile文件对应的 make run 命令快捷实现.nas文件编译成.bin然后转换成.img最后装载到模拟器运行。在这一过程中Makefile文件里的copy 命令和 del命令皆报“系统找不到指定文件”错误，对应改成cp 与 rm 命令解决。 Makefile1234567891011121314151617181920212223242526272829303132333435363738# 默认动作default : ../z_tools/make.exe img# 镜像文件生成ipl.bin : ipl.nas Makefile ../z_tools/nask.exe ipl.nas ipl.bin ipl.lsthelloos.img : ipl.bin Makefile ../z_tools/edimg.exe imgin:../z_tools/fdimg0at.tek \ wbinimg src:ipl.bin len:512 from:0 to:0 imgout:helloos.img# 其他指令asm : ../z_tools/make.exe -r ipl.binimg : ../z_tools/make.exe -r helloos.imgrun : ../z_tools/make.exe img cp helloos.img ..\z_tools\qemu\fdimage0.bin ../z_tools/make.exe -C ../z_tools/qemuinstall : ../z_tools/make.exe img ../z_tools/imgtol.com w a: helloos.imgclean : -rm ipl.bin -rm ipl.lstsrc_only : ../z_tools/make.exe clean -rm helloos.img 详细代码已上传至github]]></content>
+      <categories>
+        <category>30*N天自制操作系统</category>
+      </categories>
+      <tags>
+        <tag>汇编</tag>
+        <tag>os</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[批训练&优化器]]></title>
     <url>%2F2018%2F01%2F16%2Fpitrain%2F</url>
     <content type="text"><![CDATA[数据先Tensor化再load 批训练.py123456789101112131415161718192021222324import torchimport torch.utils.data as Datatorch.manual_seed(1) # reproducibleBATCH_SIZE = 5# BATCH_SIZE = 8x = torch.linspace(1, 10, 10) # this is x data (torch tensor)y = torch.linspace(10, 1, 10) # this is y data (torch tensor)torch_dataset = Data.TensorDataset(data_tensor=x, target_tensor=y)loader = Data.DataLoader( dataset=torch_dataset, # torch TensorDataset format batch_size=BATCH_SIZE, # mini batch size shuffle=True, # random shuffle for training num_workers=2, # subprocesses for loading data)if __name__ == &apos;__main__&apos;: for epoch in range(3): # train entire dataset 3 times for step, (batch_x, batch_y) in enumerate(loader): # for each training step # train your data... print(&apos;Epoch: &apos;, epoch, &apos;| Step: &apos;, step, &apos;| batch x: &apos;, batch_x.numpy(), &apos;| batch y: &apos;, batch_y.numpy()) 优化器比较在数据分批训练的基础上比较几种不同优化器的收敛效果 优化器.py12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879import torchimport torch.utils.data as Dataimport torch.nn.functional as Ffrom torch.autograd import Variableimport matplotlib.pyplot as plt# torch.manual_seed(1) # reproducibleLR = 0.01BATCH_SIZE = 32EPOCH = 12# fake datasetx = torch.unsqueeze(torch.linspace(-1, 1, 1000), dim=1)y = x.pow(2) + 0.1 * torch.normal(torch.zeros(*x.size()))# plot dataset# plt.scatter(x.numpy(), y.numpy())# plt.show()# put dateset into torch datasettorch_dataset = Data.TensorDataset(data_tensor=x, target_tensor=y)loader = Data.DataLoader(dataset=torch_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=2, )# default networkclass Net(torch.nn.Module): def __init__(self): super(Net, self).__init__() self.hidden = torch.nn.Linear(1, 20) # hidden layer self.predict = torch.nn.Linear(20, 1) # output layer def forward(self, x): x = F.relu(self.hidden(x)) # activation function for hidden layer x = self.predict(x) # linear output return x# different netsnet_SGD = Net()net_Momentum = Net()net_RMSprop = Net()net_Adam = Net()nets = [net_SGD, net_Momentum, net_RMSprop, net_Adam]# different optimizersopt_SGD = torch.optim.SGD(net_SGD.parameters(), lr=LR)opt_Momentum = torch.optim.SGD(net_Momentum.parameters(), lr=LR, momentum=0.8)opt_RMSprop = torch.optim.RMSprop(net_RMSprop.parameters(), lr=LR, alpha=0.9)opt_Adam = torch.optim.Adam(net_Adam.parameters(), lr=LR, betas=(0.9, 0.99))optimizers = [opt_SGD, opt_Momentum, opt_RMSprop, opt_Adam]loss_func = torch.nn.MSELoss()losses_his = [[], [], [], []] # record loss# trainingif __name__ == &apos;__main__&apos;: for epoch in range(EPOCH): print(&apos;Epoch: &apos;, epoch) for step, (batch_x, batch_y) in enumerate(loader): # for each training step b_x = Variable(batch_x) b_y = Variable(batch_y) for net, opt, l_his in zip(nets, optimizers, losses_his): output = net(b_x) # get output for every net loss = loss_func(output, b_y) # compute loss for every net opt.zero_grad() # clear gradients for next train loss.backward() # backpropagation, compute gradients opt.step() # apply gradients l_his.append(loss.data[0]) # loss recoder labels = [&apos;SGD&apos;, &apos;Momentum&apos;, &apos;RMSprop&apos;, &apos;Adam&apos;] for i, l_his in enumerate(losses_his): plt.plot(l_his, label=labels[i]) plt.legend(loc=&apos;best&apos;) plt.xlabel(&apos;Steps&apos;) plt.ylabel(&apos;Loss&apos;) plt.ylim((0, 0.2)) plt.show()]]></content>
@@ -138,8 +150,8 @@
         <category>Python踩坑指南</category>
       </categories>
       <tags>
-        <tag>python</tag>
         <tag>字符串处理</tag>
+        <tag>python</tag>
         <tag>文件读取</tag>
       </tags>
   </entry>
@@ -162,8 +174,8 @@
         <category>Python踩坑指南</category>
       </categories>
       <tags>
-        <tag>python</tag>
         <tag>字符串处理</tag>
+        <tag>python</tag>
         <tag>文件读取</tag>
       </tags>
   </entry>
