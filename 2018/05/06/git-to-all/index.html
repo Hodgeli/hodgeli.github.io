@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="我的追寻">
 <meta property="og:description" content="git从头总结">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-07T01:35:53.661Z">
+<meta property="og:updated_time" content="2018-05-11T14:05:53.165Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git_to_all">
 <meta name="twitter:description" content="git从头总结">
@@ -462,7 +462,15 @@
 <p>工作现场还在，Git把stash内容存在某个地方了，但是需要恢复一下，有两个办法：<br>一是用<code>git stash apply</code>恢复，但是恢复后，stash内容并不删除，你需要用<code>git stash drop</code>来删除；<br>另一种方式是用<code>git stash pop</code>，恢复的同时把stash内容也删了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ git stash pop</span><br><span class="line">Auto-merging readme.txt</span><br><span class="line">On branch dev</span><br><span class="line">Changes not staged for commit:</span><br><span class="line">  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span><br><span class="line">  (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)</span><br><span class="line"></span><br><span class="line">        modified:   readme.txt</span><br><span class="line"></span><br><span class="line">no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)</span><br><span class="line">Dropped refs/stash@&#123;0&#125; (530fcb79063bbcdeac0b414547158ef130bdca7e)</span><br></pre></td></tr></table></figure></p>
 <p>修改、提交、merge、删除分支、推送到远程仓库</p>
 <h5 id="Feature分支"><a href="#Feature分支" class="headerlink" title="Feature分支"></a>Feature分支</h5><p>添加一个新功能时，你肯定不希望因为一些实验性质的代码，把主分支搞乱了，<br>所以，每添加一个新功能，最好新建一个feature分支，在上面开发，完成后，合并，最后，删除该feature分支。<br>但如果feature分支功能因为某些原因还没merge就需要删除，执行<code>git branch -d 分支名</code>时会<br>销毁失败。Git友情提醒，feature分支还没有被合并，如果删除，将丢失掉修改，<br>如果要强行删除，需要使用命令git branch -D 分支名。</p>
-<h4 id="多人协作"><a href="#多人协作" class="headerlink" title="多人协作"></a>多人协作</h4>
+<h4 id="多人协作"><a href="#多人协作" class="headerlink" title="多人协作"></a>多人协作</h4><h5 id="当多人对同一个远程仓库具有操作权限时："><a href="#当多人对同一个远程仓库具有操作权限时：" class="headerlink" title="当多人对同一个远程仓库具有操作权限时："></a>当多人对同一个远程仓库具有操作权限时：</h5><p>当你从远程仓库克隆时，实际上Git自动把本地的master分支和远程的master分支对应起来了，并且，远程仓库的默认名称是origin<br>多人协作的工作模式通常是这样：</p>
+<ol>
+<li>首先，可以试图用<code>git push origin branch-name</code>推送自己的修改；</li>
+<li>如果推送失败，则因为远程分支比你的本地更新，需要先用<code>git pull</code>试图合并；</li>
+<li>如果合并有冲突，则解决冲突，并在本地提交；</li>
+<li>没有冲突或者解决掉冲突后，再用<code>git push origin branch-name</code>推送就能成功！</li>
+<li>如果git pull提示“no tracking information”，则说明本地分支和远程分支的链接关系没有创建，用命令<code>git branch --set-upstream branch-name origin/branch-name</code>。<h5 id="Fork"><a href="#Fork" class="headerlink" title="Fork"></a>Fork</h5>这种情况是：你不拥有某仓库的push权限，但你可以Fork别人的项目<br>Fork后会在你的github上生成一个一样的仓库，你可以将其与自建仓库等同看待。<br>你在这个仓库上开发，增加了一个很cool的功能，想提交到别人仓库，但是pull request 时可能会出错，因为你fork的repo和现在的别人的repo已经不一样了，<br>因为别人也在开发并push啊。所以你要pull别人仓库最新的代码，然后手动merge冲突，然后再pull request并祈祷别人接受你的pull<h4 id="标签管理"><a href="#标签管理" class="headerlink" title="标签管理"></a>标签管理</h4></li>
+</ol>
+
       
     </div>
     
@@ -644,7 +652,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#个人仓库管理"><span class="nav-text">个人仓库管理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#初始化操作"><span class="nav-text">初始化操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#修改与提交"><span class="nav-text">修改与提交</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#仓库当前的状态"><span class="nav-text">仓库当前的状态</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#后悔药"><span class="nav-text">后悔药</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#撤销修改"><span class="nav-text">撤销修改</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#删除文件"><span class="nav-text">删除文件</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#远程仓库"><span class="nav-text">远程仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分支管理"><span class="nav-text">分支管理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#实战"><span class="nav-text">实战</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解决冲突"><span class="nav-text">解决冲突</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分支管理策略"><span class="nav-text">分支管理策略</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Bug分支"><span class="nav-text">Bug分支</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Feature分支"><span class="nav-text">Feature分支</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多人协作"><span class="nav-text">多人协作</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#个人仓库管理"><span class="nav-text">个人仓库管理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#初始化操作"><span class="nav-text">初始化操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#修改与提交"><span class="nav-text">修改与提交</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#仓库当前的状态"><span class="nav-text">仓库当前的状态</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#后悔药"><span class="nav-text">后悔药</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#撤销修改"><span class="nav-text">撤销修改</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#删除文件"><span class="nav-text">删除文件</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#远程仓库"><span class="nav-text">远程仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分支管理"><span class="nav-text">分支管理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#实战"><span class="nav-text">实战</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解决冲突"><span class="nav-text">解决冲突</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分支管理策略"><span class="nav-text">分支管理策略</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Bug分支"><span class="nav-text">Bug分支</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Feature分支"><span class="nav-text">Feature分支</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多人协作"><span class="nav-text">多人协作</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#当多人对同一个远程仓库具有操作权限时："><span class="nav-text">当多人对同一个远程仓库具有操作权限时：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Fork"><span class="nav-text">Fork</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标签管理"><span class="nav-text">标签管理</span></a></li></ol></div>
             
 
           </div>
@@ -694,7 +702,7 @@
 
 <div class="theme-info">
   
-  <span class="post-count">博客全站共28.4k字</span>
+  <span class="post-count">博客全站共28.8k字</span>
 </div>
         
 <div class="busuanzi-count">
