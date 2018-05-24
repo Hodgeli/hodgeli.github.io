@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Raspberry Pi,CentOs," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="树莓派玩机指南">
+<meta name="keywords" content="Raspberry Pi,CentOs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Raspberry Pi">
+<meta property="og:url" content="http://yoursite.com/2018/05/22/pipipi/index.html">
+<meta property="og:site_name" content="我的追寻">
+<meta property="og:description" content="树莓派玩机指南">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-24T03:59:53.458Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Raspberry Pi">
+<meta name="twitter:description" content="树莓派玩机指南">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/22/pipipi/"/>
+
+
+
+
+
+  <title>Raspberry Pi | 我的追寻</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">我的追寻</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">进一寸有一寸的欢喜</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/22/pipipi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hodge Li">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://q.qlogo.cn/headimg_dl?dst_uin=2991811241&spec=640">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的追寻">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Raspberry Pi</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-22T23:09:38+08:00">
+                2018-05-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Raspberry-Pi/" itemprop="url" rel="index">
+                    <span itemprop="name">Raspberry Pi</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">被偷看
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  树莓派玩机指南
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>以下部分是以CentOs为例，但发现使用不方便，故丢在引用里，重写。</p>
+<blockquote><br>##### 系统烧录<br><a href="http://shumeipai.nxez.com/raspberry-pi-os-collection" target="_blank" rel="noopener">适用于树莓派的系统列表</a><br>这次用CentOs做例子讲解<br><a href="http://mirror.centos.org/altarch/7/isos/armhfp/" target="_blank" rel="noopener">CentOs系统镜像列表</a><br>下载下来的后缀为.raw.xz的文件要解压成.raw<br>然后用Win32DiskImager工具烧录到闪存卡<br>将闪存卡插入树莓派，通电，连接网线。<br>##### 局域网连接<br>树莓派算是做好了，如何食用呢？<br>###### 有路由器<br>将电脑和树莓派用网线连接到同一路由器<br>1. 如果有路由器访问权限，直接查看树莓派的IP地址<br>2. 用ipscaner工具可以查看同意局域网内的设备IP地址<br><br>###### 无路由器<br>电脑联网并将网络设置为共享模式<br>树莓派用网线连接电脑（可用网线转接器）<br>cmd输入命令<code>arp -a</code><br>在接口197.168.137.1下面的第一个IP地址即为电脑共享给树莓派的IP<br><br>获得了IP就好说话了，用putty也好cmder也好，只要支持ssh访问的都行<br>命令<code>ssh username@ip</code>即可连接<br><br>##### 初始化配置<br>###### SD卡扩展到实际容量<br>在终端中输入<code>fdisk /dev/mmcblk0</code>进入硬盘分区软件<br>在软件中输入：<br>p——查看旧分区情况<br>d——删除分区，并按照提示删除第三个分区<br>n——添加一个分区，空间起始位置按照系统默认（默认是最大空间）<br>p——查看新分区情况<br>w——写入分区信息并退出软件<br>在终端中输入：<code>sudo reboot</code>重启树莓派<br>在树莓派开机后在终端输入： <code>resize2fs /dev/mmcblk0p3</code>重新加载分区信息<br>使用：<code>df -h</code>查看新的分区信息表<br>###### 设置网络配置信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nmcli  d  wifi　　#查看周围的wifi</span><br><span class="line">nmcli d wifi connect yourSSID password &apos;yourpassword&apos;  #连接wifi  </span><br><span class="line">nmcli d  show wlan0  #查看wlan0的状态</span><br></pre></td></tr></table></figure><br><br>接下来设置网络配置信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vi etc/sysconfig/network-scripts/ifcfg-0000   #0000是wifi的名字</span><br><span class="line"></span><br><span class="line">BOOTPROTO=static              #静态IP</span><br><span class="line">IPADDR=192.168.0.160       #IP地址</span><br><span class="line">GATEWAY=192.168.1.1    #默认网关</span><br><span class="line">NETMASK=255.255.255.0  #子网掩码</span><br></pre></td></tr></table></figure><br><br>###### 创建新用户<br>新建用户并初始化密码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adduser yourusername</span><br><span class="line">passwd yourusername</span><br></pre></td></tr></table></figure><br><br>linux会判断密码复杂度，不过可以强行忽略<br>给新建用户授权：<br>新创建的用户并不能使用sudo命令，需要给他添加授权。<br>sudo命令的授权管理是在sudoers文件里的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost /]# ls -l /etc/sudoers</span><br><span class="line">-r--r-----. 1 root root 3938 Apr 10 20:27 /etc/sudoers</span><br></pre></td></tr></table></figure><br><br>只有只读的权限，如果想要修改的话，需要先添加w权限<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost /]# chmod -v u+w /etc/sudoers</span><br><span class="line">mode of ‘/etc/sudoers’ changed from 0440 (r--r-----) to 0640 (rw-r-----)</span><br></pre></td></tr></table></figure><br><br>然后就可以添加内容了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost /]# vi /etc/sudoers</span><br></pre></td></tr></table></figure><br><br>在下面的一行下追加新增的用户:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">## Allow root to run any commands anywher  </span><br><span class="line">root    ALL=(ALL)       ALL  </span><br><span class="line">Hodge  ALL=(ALL)       ALL  #这个是新增的用户</span><br></pre></td></tr></table></figure><br><br>记得将写权限收回:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost /]# chmod -v u-w /etc/sudoers</span><br><span class="line">mode of ‘/etc/sudoers’ changed from 0640 (rw-r-----) to 0440 (r--r-----)</span><br></pre></td></tr></table></figure><br><br>###### 更换阿里源<br>1. 备份<br><code>mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup</code><br>2. 下载新的CentOS-Base.repo 到/etc/yum.repos.d/<br><code>wget http://mirrors.aliyun.com/repo/Centos-altarch-7.repo -O /etc/yum.repos.d/CentOS-Base.repo</code><br>3. 初始化<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost yum.repos.d]# yum clean all</span><br><span class="line">[root@localhost yum.repos.d]# yum makecache</span><br></pre></td></tr></table></figure><br><br></blockquote>
+
+<h5 id="系统烧录"><a href="#系统烧录" class="headerlink" title="系统烧录"></a>系统烧录</h5><p><a href="http://shumeipai.nxez.com/raspberry-pi-os-collection" target="_blank" rel="noopener">适用于树莓派的系统列表</a><br>这次用Raspbain做例子讲解<br><a href="https://www.raspberrypi.org/downloads/" target="_blank" rel="noopener">Raspbain系统下载</a><br>下载下来的后缀为.zip的文件要解压成.img<br>然后用Win32DiskImager工具烧录到闪存卡<br>将闪存卡插入树莓派，通电，连接网线。</p>
+<h5 id="局域网连接"><a href="#局域网连接" class="headerlink" title="局域网连接"></a>局域网连接</h5><p>树莓派算是做好了，如何食用呢？</p>
+<h6 id="有路由器"><a href="#有路由器" class="headerlink" title="有路由器"></a>有路由器</h6><p>将电脑和树莓派用网线连接到同一路由器</p>
+<ol>
+<li>如果有路由器访问权限，直接查看树莓派的IP地址</li>
+<li>用ipscaner工具可以查看同意局域网内的设备IP地址</li>
+</ol>
+<h6 id="无路由器"><a href="#无路由器" class="headerlink" title="无路由器"></a>无路由器</h6><p>电脑联网并将网络设置为共享模式<br>树莓派用网线连接电脑（可用网线转接器）<br>cmd输入命令<code>arp -a</code><br>在接口197.168.137.1下面的第一个IP地址即为电脑共享给树莓派的IP<br>可用ping命令测试</p>
+<p>获得了IP就好说话了，用putty也好cmder也好，只要支持ssh访问的都行<br>命令<code>ssh username@ip</code>即可连接</p>
+<h6 id="关于ssh"><a href="#关于ssh" class="headerlink" title="关于ssh"></a>关于ssh</h6><p>获取树莓派IP后用ssh工具连接时可能出现连接被拒绝等报错<br>可参考：<a href="http://shumeipai.nxez.com/2017/02/27/raspbian-ssh-connection-refused.html" target="_blank" rel="noopener">树莓派新系统SSH连接被拒绝的解决方法</a></p>
+<h5 id="初始化配置"><a href="#初始化配置" class="headerlink" title="初始化配置"></a>初始化配置</h5><h6 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h6><p><code>sudo passwd pi</code></p>
+<h6 id="开启root用户"><a href="#开启root用户" class="headerlink" title="开启root用户"></a>开启root用户</h6><p>由于root用户默认密码为空，因此无法登陆。登陆默认用户pi给root设置密码后即可开启root用户<br>可使用<code>su - root</code>切换用户</p>
+<h6 id="SD卡扩展到实际容量"><a href="#SD卡扩展到实际容量" class="headerlink" title="SD卡扩展到实际容量"></a>SD卡扩展到实际容量</h6><p>使用：<code>df -h</code>查看新的分区信息表<br>最新的Raspbain系统已自动充分利用闪存卡空间了，无需额外设置。</p>
+<h6 id="设置网络配置信息"><a href="#设置网络配置信息" class="headerlink" title="设置网络配置信息"></a>设置网络配置信息</h6><p>连接无线网：</p>
+<ol>
+<li>用户可以在未启动树莓派的状态下单独修改 /boot/wpa_supplicant.conf 文件（内存卡插电脑）配置 WiFi 的 SSID 和密码，这样树莓派启动后会自行读取 wpa_supplicant.conf 配置文件连接 WiFi 设备。</li>
+<li>树莓派启动状态下使用<code>sudo nano /etc/wpa_supplicant/wpa_supplicant.conf</code>打开该文件</li>
+</ol>
+<p>编辑内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">country=CN</span><br><span class="line">ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev</span><br><span class="line">update_config=1</span><br><span class="line"> </span><br><span class="line">network=&#123;</span><br><span class="line">ssid=&quot;WiFi-A&quot;</span><br><span class="line">psk=&quot;12345678&quot;</span><br><span class="line">key_mgmt=WPA-PSK</span><br><span class="line">priority=1</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">network=&#123;</span><br><span class="line">ssid=&quot;WiFi-B&quot;</span><br><span class="line">psk=&quot;12345678&quot;</span><br><span class="line">key_mgmt=WPA-PSK</span><br><span class="line">priority=2</span><br><span class="line">scan_ssid=1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>ssid:网络的ssid<br>psk:密码<br>priority:连接优先级，数字越大优先级越高（不可以是负数）<br>scan_ssid:连接隐藏WiFi时需要指定该值为1<br>如果你的 WiFi 没有密码或使用WEP加密<code>key_mgmt=NONE</code><br>如果你的 WiFi 使用WPA/WPA2加密<code>key_mgmt=WPA-PSK</code></p>
+<p>配置静态IP：<br>修改/etc/dhcpcd.conf 文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">interface eth0</span><br><span class="line"></span><br><span class="line">static ip_address=192.168.0.10/24</span><br><span class="line">static routers=192.168.0.1</span><br><span class="line">static domain_name_servers=192.168.0.1</span><br><span class="line"></span><br><span class="line">interface wlan0</span><br><span class="line"></span><br><span class="line">static ip_address=192.168.0.200/24</span><br><span class="line">static routers=192.168.0.1</span><br><span class="line">static domain_name_servers=192.168.0.1</span><br></pre></td></tr></table></figure></p>
+<p>上面的配置文件中 , eth0是有线的配置  , wlan0是无线配置<br>ip_address就是静态IP , 后面要接/24<br>routers是网关<br>static domain_name_servers是DNS</p>
+<h6 id="更换软件源"><a href="#更换软件源" class="headerlink" title="更换软件源"></a>更换软件源</h6><p>选取<a href="https://lug.ustc.edu.cn/wiki/mirrors/help/raspbian" target="_blank" rel="noopener">中科大的软件源</a></p>
+<ol>
+<li>备份<br><code>mv /etc/apt/sources.list /etc/apt/sources.list.backup</code></li>
+<li><p>新建sources.list并写入如下内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">deb http://mirrors.ustc.edu.cn/raspbian/raspbian/ jessie main non-free contrib</span><br><span class="line">deb-src http://mirrors.ustc.edu.cn/raspbian/raspbian/ jessie main non-free contrib</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>更新软件列表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h5 id="架设服务器"><a href="#架设服务器" class="headerlink" title="架设服务器"></a>架设服务器</h5><p><a href="http://shumeipai.nxez.com/2018/04/25/install-pi-dashboard-with-nginx-php7-on-pi.html" target="_blank" rel="noopener">http://shumeipai.nxez.com/2018/04/25/install-pi-dashboard-with-nginx-php7-on-pi.html</a></p>
+<h5 id="远程访问"><a href="#远程访问" class="headerlink" title="远程访问"></a>远程访问</h5><h6 id="远程桌面"><a href="#远程桌面" class="headerlink" title="远程桌面"></a>远程桌面</h6><p><a href="https://www.cnblogs.com/edgexie/p/6527992.html" target="_blank" rel="noopener">https://www.cnblogs.com/edgexie/p/6527992.html</a></p>
+<h6 id="nat123"><a href="#nat123" class="headerlink" title="nat123"></a>nat123</h6>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Raspberry-Pi/" rel="tag"><i class="fa fa-tag"></i> Raspberry Pi</a>
+          
+            <a href="/tags/CentOs/" rel="tag"><i class="fa fa-tag"></i> CentOs</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/18/cs231n/" rel="next" title="起步与KNN">
+                <i class="fa fa-chevron-left"></i> 起步与KNN
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTg5MC84NDU0"></div>
+    </div>
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://q.qlogo.cn/headimg_dl?dst_uin=2991811241&spec=640"
+                alt="Hodge Li" />
+            
+              <p class="site-author-name" itemprop="name">Hodge Li</p>
+              <p class="site-description motion-element" itemprop="description">进一寸有一寸的欢喜</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#系统烧录"><span class="nav-text">系统烧录</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#局域网连接"><span class="nav-text">局域网连接</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#有路由器"><span class="nav-text">有路由器</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#无路由器"><span class="nav-text">无路由器</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#关于ssh"><span class="nav-text">关于ssh</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#初始化配置"><span class="nav-text">初始化配置</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#修改密码"><span class="nav-text">修改密码</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#开启root用户"><span class="nav-text">开启root用户</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#SD卡扩展到实际容量"><span class="nav-text">SD卡扩展到实际容量</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#设置网络配置信息"><span class="nav-text">设置网络配置信息</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#更换软件源"><span class="nav-text">更换软件源</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#架设服务器"><span class="nav-text">架设服务器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#远程访问"><span class="nav-text">远程访问</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#远程桌面"><span class="nav-text">远程桌面</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#nat123"><span class="nav-text">nat123</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017/11/18 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hodge Li</span>
+
+  
+</div>
+
+
+  <div class="powered-by">
+  
+  <span id="busuanzi_container_site_uv">
+  Valar Morghulis
+</span>
+</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">
+  </div>
+
+
+
+<div class="theme-info">
+  
+  <span class="post-count">博客全站共31.5k字</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

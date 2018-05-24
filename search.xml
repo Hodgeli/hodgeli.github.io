@@ -1,9 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Raspberry Pi]]></title>
+    <url>%2F2018%2F05%2F22%2Fpipipi%2F</url>
+    <content type="text"><![CDATA[以下部分是以CentOs为例，但发现使用不方便，故丢在引用里，重写。 ##### 系统烧录适用于树莓派的系统列表这次用CentOs做例子讲解CentOs系统镜像列表下载下来的后缀为.raw.xz的文件要解压成.raw然后用Win32DiskImager工具烧录到闪存卡将闪存卡插入树莓派，通电，连接网线。##### 局域网连接树莓派算是做好了，如何食用呢？###### 有路由器将电脑和树莓派用网线连接到同一路由器1. 如果有路由器访问权限，直接查看树莓派的IP地址2. 用ipscaner工具可以查看同意局域网内的设备IP地址###### 无路由器电脑联网并将网络设置为共享模式树莓派用网线连接电脑（可用网线转接器）cmd输入命令arp -a在接口197.168.137.1下面的第一个IP地址即为电脑共享给树莓派的IP获得了IP就好说话了，用putty也好cmder也好，只要支持ssh访问的都行命令ssh username@ip即可连接##### 初始化配置###### SD卡扩展到实际容量在终端中输入fdisk /dev/mmcblk0进入硬盘分区软件在软件中输入：p——查看旧分区情况d——删除分区，并按照提示删除第三个分区n——添加一个分区，空间起始位置按照系统默认（默认是最大空间）p——查看新分区情况w——写入分区信息并退出软件在终端中输入：sudo reboot重启树莓派在树莓派开机后在终端输入： resize2fs /dev/mmcblk0p3重新加载分区信息使用：df -h查看新的分区信息表###### 设置网络配置信息123nmcli d wifi #查看周围的wifinmcli d wifi connect yourSSID password &apos;yourpassword&apos; #连接wifi nmcli d show wlan0 #查看wlan0的状态接下来设置网络配置信息123456vi etc/sysconfig/network-scripts/ifcfg-0000 #0000是wifi的名字BOOTPROTO=static #静态IPIPADDR=192.168.0.160 #IP地址GATEWAY=192.168.1.1 #默认网关NETMASK=255.255.255.0 #子网掩码###### 创建新用户新建用户并初始化密码：12adduser yourusernamepasswd yourusernamelinux会判断密码复杂度，不过可以强行忽略给新建用户授权：新创建的用户并不能使用sudo命令，需要给他添加授权。sudo命令的授权管理是在sudoers文件里的12[root@localhost /]# ls -l /etc/sudoers-r--r-----. 1 root root 3938 Apr 10 20:27 /etc/sudoers只有只读的权限，如果想要修改的话，需要先添加w权限12[root@localhost /]# chmod -v u+w /etc/sudoersmode of ‘/etc/sudoers’ changed from 0440 (r--r-----) to 0640 (rw-r-----)然后就可以添加内容了1[root@localhost /]# vi /etc/sudoers在下面的一行下追加新增的用户:123## Allow root to run any commands anywher root ALL=(ALL) ALL Hodge ALL=(ALL) ALL #这个是新增的用户记得将写权限收回:12[root@localhost /]# chmod -v u-w /etc/sudoersmode of ‘/etc/sudoers’ changed from 0640 (rw-r-----) to 0440 (r--r-----)###### 更换阿里源1. 备份mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup2. 下载新的CentOS-Base.repo 到/etc/yum.repos.d/wget http://mirrors.aliyun.com/repo/Centos-altarch-7.repo -O /etc/yum.repos.d/CentOS-Base.repo3. 初始化12[root@localhost yum.repos.d]# yum clean all[root@localhost yum.repos.d]# yum makecache 系统烧录适用于树莓派的系统列表这次用Raspbain做例子讲解Raspbain系统下载下载下来的后缀为.zip的文件要解压成.img然后用Win32DiskImager工具烧录到闪存卡将闪存卡插入树莓派，通电，连接网线。 局域网连接树莓派算是做好了，如何食用呢？ 有路由器将电脑和树莓派用网线连接到同一路由器 如果有路由器访问权限，直接查看树莓派的IP地址 用ipscaner工具可以查看同意局域网内的设备IP地址 无路由器电脑联网并将网络设置为共享模式树莓派用网线连接电脑（可用网线转接器）cmd输入命令arp -a在接口197.168.137.1下面的第一个IP地址即为电脑共享给树莓派的IP可用ping命令测试 获得了IP就好说话了，用putty也好cmder也好，只要支持ssh访问的都行命令ssh username@ip即可连接 关于ssh获取树莓派IP后用ssh工具连接时可能出现连接被拒绝等报错可参考：树莓派新系统SSH连接被拒绝的解决方法 初始化配置修改密码sudo passwd pi 开启root用户由于root用户默认密码为空，因此无法登陆。登陆默认用户pi给root设置密码后即可开启root用户可使用su - root切换用户 SD卡扩展到实际容量使用：df -h查看新的分区信息表最新的Raspbain系统已自动充分利用闪存卡空间了，无需额外设置。 设置网络配置信息连接无线网： 用户可以在未启动树莓派的状态下单独修改 /boot/wpa_supplicant.conf 文件（内存卡插电脑）配置 WiFi 的 SSID 和密码，这样树莓派启动后会自行读取 wpa_supplicant.conf 配置文件连接 WiFi 设备。 树莓派启动状态下使用sudo nano /etc/wpa_supplicant/wpa_supplicant.conf打开该文件 编辑内容如下：123456789101112131415161718country=CNctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdevupdate_config=1 network=&#123;ssid=&quot;WiFi-A&quot;psk=&quot;12345678&quot;key_mgmt=WPA-PSKpriority=1&#125; network=&#123;ssid=&quot;WiFi-B&quot;psk=&quot;12345678&quot;key_mgmt=WPA-PSKpriority=2scan_ssid=1&#125; ssid:网络的ssidpsk:密码priority:连接优先级，数字越大优先级越高（不可以是负数）scan_ssid:连接隐藏WiFi时需要指定该值为1如果你的 WiFi 没有密码或使用WEP加密key_mgmt=NONE如果你的 WiFi 使用WPA/WPA2加密key_mgmt=WPA-PSK 配置静态IP：修改/etc/dhcpcd.conf 文件1234567891011interface eth0static ip_address=192.168.0.10/24static routers=192.168.0.1static domain_name_servers=192.168.0.1interface wlan0static ip_address=192.168.0.200/24static routers=192.168.0.1static domain_name_servers=192.168.0.1 上面的配置文件中 , eth0是有线的配置 , wlan0是无线配置ip_address就是静态IP , 后面要接/24routers是网关static domain_name_servers是DNS 更换软件源选取中科大的软件源 备份mv /etc/apt/sources.list /etc/apt/sources.list.backup 新建sources.list并写入如下内容 12deb http://mirrors.ustc.edu.cn/raspbian/raspbian/ jessie main non-free contribdeb-src http://mirrors.ustc.edu.cn/raspbian/raspbian/ jessie main non-free contrib 更新软件列表 1sudo apt-get update 架设服务器http://shumeipai.nxez.com/2018/04/25/install-pi-dashboard-with-nginx-php7-on-pi.html 远程访问远程桌面https://www.cnblogs.com/edgexie/p/6527992.html nat123]]></content>
+      <categories>
+        <category>Raspberry Pi</category>
+      </categories>
+      <tags>
+        <tag>Raspberry Pi</tag>
+        <tag>CentOs</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[起步与KNN]]></title>
+    <url>%2F2018%2F05%2F18%2Fcs231n%2F</url>
+    <content type="text"><![CDATA[基于卷积神经网络（CNN）的视觉识别 挑战 视觉点变化，观察的视角差异 规模尺度变化,巨人与小恶魔 内容可能是形态可变化的，扭曲的猫 观察物被遮挡 光照条件影响及其大 背景图像的影响 类型内的影响，比如‘主持人’这一分类范围较广 图片分类流程： 输入：N张图片组成的数据集，每张图片有一个明确的label 学习：利用数据集去学习每个label的特征，称之为“训练一个分类器”或“学习一个模型” 评估：用新的数据集去测试训练好的分类器，计算准确率 Nearest Neighbor Classifier最近邻分类器和CNN无关、也极少用于实践，但能帮我们了解图片分类问题思路：对于训练集，读取成为长*宽*3的矩阵。对于测试集，与前面训练集中的图片比较，找出与其最相似的图片则他们分为一类图片比较方法：1、计算两矩阵中对应两两位置的差值的和2、计算两矩阵中对应两两位置的差值的平方和然后再开根号1Evaluate on the test set only a single time, at the very end. 1将您的训练集分成训练集和验证集。使用验证集来调整所有超参数。最后在测试集上运行一次并报告性能。 Nearest Neighbor Classifier 的优缺点：优点：简单易懂，低训练成本。缺点：测试成本过高。逐像素距离根本不对应于感知或语义相似性。 交叉验证在给定的建模样本中，拿出大部分样本进行建模型，留小部分样本用刚建立的模型进行预报，并求这小部分样本的预报误差，记录它们的平方加和。这个过程一直进行，直到所有的样本都被预报了一次而且仅被预报一次。把每个样本的预报误差平方加和，称为PRESS(predicted Error Sum of Squares)。]]></content>
+      <categories>
+        <category>CS231n</category>
+      </categories>
+      <tags>
+        <tag>神经网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Python Web]]></title>
+    <url>%2F2018%2F05%2F18%2Fpyweb%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>Python踩坑指南</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>web</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[opensuse安装]]></title>
     <url>%2F2018%2F05%2F08%2Fopensuse%2F</url>
-    <content type="text"><![CDATA[官网下载leap版下载U盘刻录工具Rufus制作好启动盘]]></content>
+    <content type="text"><![CDATA[官网下载leap版下载U盘刻录工具Rufus 神器，不多提。制作好启动盘分区方案选专家模式，自定义。安装结束后进入windows的磁盘管理器把opensuse对应的几个磁盘的卷标删除即可。]]></content>
       <categories>
         <category>linux</category>
       </categories>
@@ -251,7 +286,7 @@
   <entry>
     <title><![CDATA[快捷键]]></title>
     <url>%2F2017%2F12%2F07%2Fshort-key%2F</url>
-    <content type="text"><![CDATA[Sublime 快捷键 功能 Ctrl+G 跳转到第几行 Ctrl+W 关闭当前打开文件 Ctrl+Shift+上下键 替换行 Ctrl+Shift+W 关闭所有打开文件 Ctrl+L 选择行，重复可依次增加选择下一行 Ctrl+Shift+L 选择多行 Ctrl+Shift+Enter 在当前行前插入新行 Ctrl+X 删除当前行 Ctrl+M 跳转到对应括号 Ctrl+Shift+M 选中当前括号内容，重复可选着括号本身 Ctrl+N 新建窗口 Ctrl+K+B 开关侧栏 Ctrl+Shift+P 打开命令面板 Ctrl+/ 注释当前行 Ctrl+Shift+/ 当前位置插入注释 Ctrl+Shift+F 查找并替换 F11 全屏 Alt+数字 切换打开第N个文件 Ctrl+D 选中光标所占的文本，继续操作则会选中下一个相同的文本 Alt+F3 选中文本按下快捷键，即可一次性选择全部的相同文本进行同时编辑 Ctrl+Shift+[ 选中代码，按下快捷键，折叠代码 Ctrl+Shift+] 选中代码，按下快捷键，展开代码 Ctrl+← 向左单位性地移动光标，快速移动光标 Ctrl+Shift+← 向左单位性地选中文本 Ctrl+Shift+D 复制光标所在整行，插入到下一行 Eclipse(自定义) 快捷键 功能 Alt+/ 代码辅助 Ctrl+1 快速修复 Ctrl+l 跳转到第几行 Ctrl+W 关闭当前打开文件 Alt+上下键 替换行 Ctrl+Shift+W 关闭所有打开文件 Ctrl+D 删除当前行 Ctrl+/ 注释当前行 Ctrl+← 向左单位性地移动光标，快速移动光标 Ctrl+Shift+← 向左单位性地选中文本 Ctrl+Alt+D 复制光标所在整行，插入到下一行 Windows 快捷键 功能 win+A 打开活动中心 win+I 打开电脑设置 win+K 打开连接面板，连接到无线显示和音频设备 win+加号键 放大 win+SHIFT+↑ 垂直最大化活动窗口，保持当前宽度 win+CTRL+D 创建一个新的虚拟桌面 win+CTRL+F4 关闭当前的虚拟桌面]]></content>
+    <content type="text"><![CDATA[Sublime 快捷键 功能 Ctrl+G 跳转到第几行 Ctrl+W 关闭当前打开文件 Ctrl+Shift+上下键 替换行 Ctrl+Shift+W 关闭所有打开文件 Ctrl+L 选择行，重复可依次增加选择下一行 Ctrl+Shift+L 选择多行 Ctrl+Shift+Enter 在当前行前插入新行 Ctrl+X 删除当前行 Ctrl+M 跳转到对应括号 Ctrl+Shift+M 选中当前括号内容，重复可选着括号本身 Ctrl+N 新建窗口 Ctrl+K+B 开关侧栏 Ctrl+Shift+P 打开命令面板 Ctrl+/ 注释当前行 Ctrl+Shift+/ 当前位置插入注释 Ctrl+Shift+F 查找并替换 F11 全屏 Alt+数字 切换打开第N个文件 Ctrl+D 选中光标所占的文本，继续操作则会选中下一个相同的文本 Alt+F3 选中文本按下快捷键，即可一次性选择全部的相同文本进行同时编辑 Ctrl+Shift+[ 选中代码，按下快捷键，折叠代码 Ctrl+Shift+] 选中代码，按下快捷键，展开代码 Ctrl+← 向左单位性地移动光标，快速移动光标 Ctrl+Shift+← 向左单位性地选中文本 Ctrl+Shift+D 复制光标所在整行，插入到下一行 Eclipse(自定义) 快捷键 功能 Alt+/ 代码辅助 Ctrl+1 快速修复 Ctrl+l 跳转到第几行 Ctrl+W 关闭当前打开文件 Alt+上下键 替换行 Ctrl+Shift+W 关闭所有打开文件 Ctrl+D 删除当前行 Ctrl+/ 注释当前行 Ctrl+← 向左单位性地移动光标，快速移动光标 Ctrl+Shift+← 向左单位性地选中文本 Ctrl+Alt+D 复制光标所在整行，插入到下一行 Windows 快捷键 功能 win+A 打开活动中心 win+I 打开电脑设置 win+K 打开连接面板，连接到无线显示和音频设备 win+加号键 放大 win+SHIFT+↑ 垂直最大化活动窗口，保持当前宽度 win+CTRL+D 创建一个新的虚拟桌面 win+CTRL+F4 关闭当前的虚拟桌面 Chrome 快捷键 功能 ctrl+T 打开新标签页 ctrl+Tab 下一个标签页 alt+D 定焦到地址栏]]></content>
       <categories>
         <category>参考手册</category>
       </categories>
@@ -280,8 +315,8 @@
         <category>Python踩坑指南</category>
       </categories>
       <tags>
-        <tag>python</tag>
         <tag>字符串处理</tag>
+        <tag>python</tag>
         <tag>文件读取</tag>
       </tags>
   </entry>
@@ -304,8 +339,8 @@
         <category>Python踩坑指南</category>
       </categories>
       <tags>
-        <tag>python</tag>
         <tag>字符串处理</tag>
+        <tag>python</tag>
         <tag>文件读取</tag>
       </tags>
   </entry>
