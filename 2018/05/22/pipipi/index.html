@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="我的追寻">
 <meta property="og:description" content="树莓派玩机指南">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-29T01:55:02.355Z">
+<meta property="og:updated_time" content="2018-05-29T02:15:28.370Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Raspberry Pi">
 <meta name="twitter:description" content="树莓派玩机指南">
@@ -477,7 +477,7 @@
 <p>nat123自启动<br>要保证在断网、断电、重启后nat123服务自动启动：</p>
 <ol>
 <li><p>编写autonat123.sh脚本放在/mnt目录下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cd /home/pi/Public/nat123</span><br><span class="line">#echo &quot;1&quot; &gt; times.log</span><br><span class="line">ps -fe|grep nat123linux.sh |grep -v grep</span><br><span class="line">if [ $? -ne 0 ];then</span><br><span class="line">echo &quot;1&quot; &gt;&gt; runtimes.log</span><br><span class="line">mono nat123linux.sh autologin username passwd</span><br><span class="line">#else</span><br><span class="line">#echo &quot;.....nat123linux.....is.........runing.......................&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">cd /home/pi/Public/nat123</span><br><span class="line">#echo &quot;1&quot; &gt; times.log</span><br><span class="line">ps -fe|grep nat123linux.sh |grep -v grep</span><br><span class="line">if [ $? -ne 0 ];then</span><br><span class="line">var=`date +%Y/%m/%d-%H:%M:%S`</span><br><span class="line">echo $var &gt;&gt; runtimes.log</span><br><span class="line">mono nat123linux.sh autologin username passwd</span><br><span class="line">#else</span><br><span class="line">#echo &quot;.....nat123linux.....is.........runing.......................&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>通过<code>crontab -e</code>设置自动任务，每10小时运行autonat123.sh<br>将以下指令加入文件最后<code>0 */10 * * * cd /mnt &amp;&amp; sh autonat123.sh</code></p>
 </li>
@@ -524,6 +524,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/29/vim/" rel="prev" title="vim">
+                vim <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -606,7 +610,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -628,7 +632,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -713,7 +717,7 @@
 
 <div class="theme-info">
   
-  <span class="post-count">博客全站共32.2k字</span>
+  <span class="post-count">博客全站共33.1k字</span>
 </div>
         
 <div class="busuanzi-count">

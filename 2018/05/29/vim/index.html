@@ -85,7 +85,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="vim," />
 
 
 
@@ -96,16 +96,18 @@
 
 
 
-<meta name="description" content="进一寸有一寸的欢喜">
-<meta property="og:type" content="website">
-<meta property="og:title" content="我的追寻">
-<meta property="og:url" content="http://yoursite.com/tags/CentOs/index.html">
+<meta name="description" content="vim 学习笔记">
+<meta name="keywords" content="vim">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vim">
+<meta property="og:url" content="http://yoursite.com/2018/05/29/vim/index.html">
 <meta property="og:site_name" content="我的追寻">
-<meta property="og:description" content="进一寸有一寸的欢喜">
+<meta property="og:description" content="vim 学习笔记">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-31T02:51:36.498Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="我的追寻">
-<meta name="twitter:description" content="进一寸有一寸的欢喜">
+<meta name="twitter:title" content="vim">
+<meta name="twitter:description" content="vim 学习笔记">
 
 
 
@@ -135,13 +137,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/CentOs/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/05/29/vim/"/>
 
 
 
 
 
-  <title>标签: CentOs | 我的追寻</title>
+  <title>vim | 我的追寻</title>
   
 
 
@@ -160,7 +162,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -298,54 +300,586 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>CentOs<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/29/vim/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hodge Li">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://q.qlogo.cn/headimg_dl?dst_uin=2991811241&spec=640">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的追寻">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/05/22/pipipi/" itemprop="url">
-              
-                <span itemprop="name">Raspberry Pi</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">vim</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-22T23:09:38+08:00"
-              content="2018-05-22" >
-          05-22
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-29T11:05:59+08:00">
+                2018-05-29
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/工具积累/" itemprop="url" rel="index">
+                    <span itemprop="name">工具积累</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">被偷看
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  vim 学习笔记
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h5 id="基础操作"><a href="#基础操作" class="headerlink" title="基础操作"></a>基础操作</h5><table>
+<thead>
+<tr>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">操作</th>
+<th style="text-align:center">记忆方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">:q</td>
+<td style="text-align:center">退出</td>
+<td style="text-align:center">quit</td>
+</tr>
+<tr>
+<td style="text-align:center">:w</td>
+<td style="text-align:center">存盘</td>
+<td style="text-align:center">write</td>
+</tr>
+<tr>
+<td style="text-align:center">:e</td>
+<td style="text-align:center">打开新文件</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">:r</td>
+<td style="text-align:center">读取文件</td>
+<td style="text-align:center">read</td>
+</tr>
+<tr>
+<td style="text-align:center">:!</td>
+<td style="text-align:center">强行</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">:set nu</td>
+<td style="text-align:center">显示行号</td>
+<td style="text-align:center">number</td>
+</tr>
+<tr>
+<td style="text-align:center">:set nonu</td>
+<td style="text-align:center">隐藏行号</td>
+<td style="text-align:center">no number</td>
+</tr>
+<tr>
+<td style="text-align:center">Ctrl + f</td>
+<td style="text-align:center">翻到下一页（向前翻页）</td>
+<td style="text-align:center">front</td>
+</tr>
+<tr>
+<td style="text-align:center">Ctrl + b</td>
+<td style="text-align:center">翻到上一页（向后翻页）</td>
+<td style="text-align:center">back</td>
+</tr>
+<tr>
+<td style="text-align:center">Ctrl + u</td>
+<td style="text-align:center">向前翻半页</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">Ctrl + d</td>
+<td style="text-align:center">向后翻半页</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">^</td>
+<td style="text-align:center">移到行头</td>
+<td style="text-align:center">往上就到行头了</td>
+</tr>
+<tr>
+<td style="text-align:center">$</td>
+<td style="text-align:center">移到行尾</td>
+<td style="text-align:center">写完一行就要给一行的钱</td>
+</tr>
+<tr>
+<td style="text-align:center">w</td>
+<td style="text-align:center">下一个单词</td>
+<td style="text-align:center">word</td>
+</tr>
+<tr>
+<td style="text-align:center">b</td>
+<td style="text-align:center">前一个单词</td>
+<td style="text-align:center">behind（在。。。后面）</td>
+</tr>
+<tr>
+<td style="text-align:center">e</td>
+<td style="text-align:center">下一单词尾</td>
+<td style="text-align:center">end</td>
+</tr>
+<tr>
+<td style="text-align:center">#G</td>
+<td style="text-align:center">跳到某一行</td>
+<td style="text-align:center">大哥(G)说到哪就到哪</td>
+</tr>
+<tr>
+<td style="text-align:center">i</td>
+<td style="text-align:center">光标前插入</td>
+<td style="text-align:center">insert</td>
+</tr>
+<tr>
+<td style="text-align:center">a</td>
+<td style="text-align:center">光标后加入</td>
+<td style="text-align:center">add</td>
+</tr>
+<tr>
+<td style="text-align:center">A</td>
+<td style="text-align:center">在行末加入</td>
+<td style="text-align:center">在一个词后是小a,一个行后就是大A</td>
+</tr>
+<tr>
+<td style="text-align:center">o</td>
+<td style="text-align:center">另起一行加入</td>
+<td style="text-align:center">一个小鸡蛋（小o）掉下来了摔开了花</td>
+</tr>
+<tr>
+<td style="text-align:center">O</td>
+<td style="text-align:center">上一行加入</td>
+<td style="text-align:center">吐一个大泡泡（大O）飞上去破了</td>
+</tr>
+</tbody>
+</table>
+<h5 id="行内删除"><a href="#行内删除" class="headerlink" title="行内删除"></a>行内删除</h5><table>
+<thead>
+<tr>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">操作</th>
+<th style="text-align:center">记忆方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">cw</td>
+<td style="text-align:center">删除一个单词（一部分不包括空格）</td>
+<td style="text-align:center">吃掉一个 word</td>
+</tr>
+<tr>
+<td style="text-align:center">c$</td>
+<td style="text-align:center">删除一行到行尾</td>
+<td style="text-align:center">刚写的一行被删了，钱也拿不到了</td>
+</tr>
+<tr>
+<td style="text-align:center">c^</td>
+<td style="text-align:center">删除一行到行头</td>
+<td style="text-align:center">往上吃，一直吃到头         </td>
+</tr>
+<tr>
+<td style="text-align:center">x</td>
+<td style="text-align:center">删除一个字符</td>
+<td style="text-align:center">看你不爽就打上“x”</td>
+</tr>
+</tbody>
+</table>
+<h5 id="删除操作"><a href="#删除操作" class="headerlink" title="删除操作"></a>删除操作</h5><table>
+<thead>
+<tr>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">操作</th>
+<th style="text-align:center">记忆方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">dd</td>
+<td style="text-align:center">删除一行</td>
+<td style="text-align:center">del dir</td>
+</tr>
+<tr>
+<td style="text-align:center">dw</td>
+<td style="text-align:center">删除单词到尾部（包括空格）</td>
+<td style="text-align:center">del word</td>
+</tr>
+<tr>
+<td style="text-align:center">de</td>
+<td style="text-align:center">删除单词到尾部（不包括尾部空格）</td>
+<td style="text-align:center">del end</td>
+</tr>
+<tr>
+<td style="text-align:center">d$</td>
+<td style="text-align:center">删除当前到行尾的所有字符</td>
+<td style="text-align:center">del $(代表尾部)</td>
+</tr>
+<tr>
+<td style="text-align:center">d^</td>
+<td style="text-align:center">删除当前到行首的所有字符</td>
+<td style="text-align:center">del ^(代表行首)</td>
+</tr>
+<tr>
+<td style="text-align:center">J</td>
+<td style="text-align:center">合并当前行</td>
+<td style="text-align:center">一个大钩子(J)把下面的一行拉到自己行尾</td>
+</tr>
+<tr>
+<td style="text-align:center">u</td>
+<td style="text-align:center">撤销上次操作</td>
+<td style="text-align:center">undo</td>
+</tr>
+<tr>
+<td style="text-align:center">U</td>
+<td style="text-align:center">撤销当前行所有操作</td>
+<td style="text-align:center">事情闹大了，得有个更大的UNDO才能恢复</td>
+</tr>
+<tr>
+<td style="text-align:center">Ctrl + r</td>
+<td style="text-align:center">恢复undo</td>
+<td style="text-align:center">recover</td>
+</tr>
+</tbody>
+</table>
+<h5 id="复制粘贴"><a href="#复制粘贴" class="headerlink" title="复制粘贴"></a>复制粘贴</h5><table>
+<thead>
+<tr>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">操作</th>
+<th style="text-align:center">记忆方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">yy</td>
+<td style="text-align:center">复制当前行整行的内容到缓冲区</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">p</td>
+<td style="text-align:center">读取缓冲区中的内容，并粘贴到光标当前的位置</td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<h5 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h5><table>
+<thead>
+<tr>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">操作</th>
+<th style="text-align:center">记忆方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">/word</td>
+<td style="text-align:center">从上而下查</td>
+<td style="text-align:center">/是从上而下写的吧</td>
+</tr>
+<tr>
+<td style="text-align:center">?word</td>
+<td style="text-align:center">从下而上查找</td>
+<td style="text-align:center">字符在哪儿呢（？）回头找找吧</td>
+</tr>
+<tr>
+<td style="text-align:center">n</td>
+<td style="text-align:center">定位下一个匹配的</td>
+<td style="text-align:center">相当于向下查找下一个 next</td>
+</tr>
+<tr>
+<td style="text-align:center">N</td>
+<td style="text-align:center">定位上一个匹配的</td>
+<td style="text-align:center">相当于向上查找上一个</td>
+</tr>
+</tbody>
+</table>
+<h5 id="替换"><a href="#替换" class="headerlink" title="替换"></a>替换</h5><table>
+<thead>
+<tr>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">操作</th>
+<th style="text-align:center">记忆方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">:s/1/2</td>
+<td style="text-align:center">搜索当前行第一个1并用2代替</td>
+<td style="text-align:center">search</td>
+</tr>
+<tr>
+<td style="text-align:center">:s/1/2/g</td>
+<td style="text-align:center">搜索当前行所有的1并用2代替</td>
+<td style="text-align:center">global</td>
+</tr>
+<tr>
+<td style="text-align:center">:#,#s/1/2/g</td>
+<td style="text-align:center">在#,#间搜索所有1并用2替换</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">:%s/1/2/g</td>
+<td style="text-align:center">在整个文档中将1替换为2</td>
+<td style="text-align:center">100％（全部）</td>
+</tr>
+<tr>
+<td style="text-align:center">:s/1/2/c</td>
+<td style="text-align:center">每次替换都给出提示确认</td>
+<td style="text-align:center">cue提示</td>
+</tr>
+<tr>
+<td style="text-align:center">r</td>
+<td style="text-align:center">取代光标所在处的字符</td>
+<td style="text-align:center">replace</td>
+</tr>
+<tr>
+<td style="text-align:center">R</td>
+<td style="text-align:center">取代字符直到按Esc为止</td>
+<td style="text-align:center">强力replace</td>
+</tr>
+</tbody>
+</table>
+<h5 id="多文件"><a href="#多文件" class="headerlink" title="多文件"></a>多文件</h5><table>
+<thead>
+<tr>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">操作</th>
+<th style="text-align:center">记忆方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">:args</td>
+<td style="text-align:center">显示多文件信息(会在末行提示当前打开了哪些档)</td>
+<td style="text-align:center">are globals</td>
+</tr>
+<tr>
+<td style="text-align:center">:next</td>
+<td style="text-align:center">切换到下一个文件</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">:prev</td>
+<td style="text-align:center">切换到上一个文件</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">:first</td>
+<td style="text-align:center">定位首文件</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">:last</td>
+<td style="text-align:center">定位尾文件</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">Ctrl + ^</td>
+<td style="text-align:center">快速切换到编辑器中切换前的文件</td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<h5 id="光标移动"><a href="#光标移动" class="headerlink" title="光标移动"></a>光标移动</h5><table>
+<thead>
+<tr>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">操作</th>
+<th style="text-align:center">记忆方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">)</td>
+<td style="text-align:center">光标移至句尾</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">}</td>
+<td style="text-align:center">光标移至段落开头</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">n+</td>
+<td style="text-align:center">光标下移n行</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">n-</td>
+<td style="text-align:center">光标上移n行</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">n$</td>
+<td style="text-align:center">光标移至第n行尾</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">H</td>
+<td style="text-align:center">光标移至屏幕顶行</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">M</td>
+<td style="text-align:center">光标移至屏幕中间行</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">L</td>
+<td style="text-align:center">光标移至屏幕最后行</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">0（数字）</td>
+<td style="text-align:center">光标移至当前行首</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">$</td>
+<td style="text-align:center">光标移至当前行尾</td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<p>nz：将第n行滚至屏幕顶部，不指定n时将当前行滚至屏幕顶部。 </p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vim/" rel="tag"><i class="fa fa-tag"></i> vim</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/22/pipipi/" rel="next" title="Raspberry Pi">
+                <i class="fa fa-chevron-left"></i> Raspberry Pi
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -353,6 +887,12 @@
 
 
           
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTg5MC84NDU0"></div>
+    </div>
+  
+
 
         </div>
         
@@ -373,8 +913,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -440,6 +989,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#基础操作"><span class="nav-text">基础操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#行内删除"><span class="nav-text">行内删除</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#删除操作"><span class="nav-text">删除操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#复制粘贴"><span class="nav-text">复制粘贴</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查找"><span class="nav-text">查找</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#替换"><span class="nav-text">替换</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#多文件"><span class="nav-text">多文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#光标移动"><span class="nav-text">光标移动</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -576,6 +1141,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 
@@ -604,6 +1173,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
