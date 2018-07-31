@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[nginx]]></title>
+    <url>%2F2018%2F07%2F31%2Fnginx%2F</url>
+    <content type="text"><![CDATA[tornadoTornado是一种Web服务器软件的开源版本。Tornado和现在的主流Web服务器框架（包括大多数Python的框架）有着明显的区别：它是非阻塞式服务器，而且速度相当快。得利于其非阻塞的方式和对epoll的运用，Tornado每秒可以处理数以千计的连接，因此Tornado是实时Web服务的一个理想框架。 hello tornado最小应用：123456789101112131415161718192021222324252627import tornado.httpserverimport tornado.ioloopimport tornado.optionsimport tornado.webfrom tornado.options import define, optionsdefine(&quot;port&quot;, default=8001, help=&quot;run on the given port&quot;, type=int)class MainHandler(tornado.web.RequestHandler): def get(self): self.write(&quot;Hello, Tornado&quot;)def main(): tornado.options.parse_command_line() application = tornado.web.Application([ (r&quot;/&quot;, MainHandler), ]) http_server = tornado.httpserver.HTTPServer(application) http_server.listen(options.port) tornado.ioloop.IOLoop.instance().start()if __name__ == &quot;__main__&quot;: main() nginxNginx是一个高性能的HTTP和反向代理服务器，其特点是占有内存少，并发能力强。反向代理（Reverse Proxy）方式是指以代理服务器来接受internet上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给internet上请求连接的客户端，此时代理服务器对外就表现为一个反向代理服务器。安全反向代理有许多用途： 可以提供从防火墙外部代理服务器到防火墙内部安全内容服务器的加密连接。 可以允许客户机安全地连接到代理服务器，从而有利于安全地传输信息（如信用卡号）。 安全反向代理会造成各安全连接因加密数据所涉及的系统开销而变慢。但是，由于 SSL 提供了高速缓存机制，所以连接双方可以重复使用先前协商的安全参数，从而大大降低后续连接的系统开销。hello nginx配置文件放在 /etc/nginx/sites-enabled本来是放在 /etc/nginx/sites-available 然后用软链接链到/etc/nginx/sites-enabled但我不知怎么链过去文件总是空白的，所以简单粗暴复制过去。重启nginxsudo /etc/init.d/nginx restartnginx 代理 tornado在/etc/nginx/sites-enabled创建配置文件12345678910111213141516171819202122232425# this is the real tornado service upstream tornado &#123; server 127.0.0.1:8001; &#125; server &#123; listen 8000; root /var/www/tornado/; index app.py; server_name server; location / &#123; if (!-e $request_filename) &#123; rewrite ^/(.*)$ /center.py/$1 last; &#125; &#125; location ~ / &#123; proxy_pass_header Server; proxy_set_header Host $http_host; proxy_set_header X-Real-IP $remote_addr; proxy_set_header X-Scheme $scheme; proxy_pass http://tornado; &#125; &#125; 所有 http://localhost:8000 的请求都会转发到upstream tornado{}里面列出的服务里面。 supervisor安装sudo apt-get install supervisor安装成功后,supervisor就会默认启动将每个进程的配置文件单独拆分,放在/etc/supervisor/conf.d/目录下,以.conf作为扩展名配置文件内容：12[program:tornado_hello]command=python /var/www/tornado/hello.py 重启supervisor,让配置文件生效,然后启动test进程:12supervisorctl updatesupervisorctl]]></content>
+      <categories>
+        <category>nginx</category>
+      </categories>
+      <tags>
+        <tag>nginx</tag>
+        <tag>tornado</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[caffe-deploy]]></title>
     <url>%2F2018%2F07%2F30%2Fcaffe-deploy%2F</url>
-    <content type="text"><![CDATA[hello]]></content>
+    <content type="text"><![CDATA[简介Caffe，全称Convolutional Architecture for Fast Feature Embedding。是一种常用的深度学习框架，主要应用在视频、图像处理方面的应用上。此次主要唠唠关于它的部署]]></content>
       <categories>
         <category>caffe</category>
       </categories>
