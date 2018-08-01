@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="我的追寻">
 <meta property="og:description" content="用nginx反向代理tornado">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-31T06:59:35.194Z">
+<meta property="og:updated_time" content="2018-07-31T07:04:39.552Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nginx">
 <meta name="twitter:description" content="用nginx反向代理tornado">
@@ -418,9 +418,10 @@
 <ol>
 <li>可以提供从防火墙外部代理服务器到防火墙内部安全内容服务器的加密连接。</li>
 <li>可以允许客户机安全地连接到代理服务器，从而有利于安全地传输信息（如信用卡号）。</li>
-<li>安全反向代理会造成各安全连接因加密数据所涉及的系统开销而变慢。但是，由于 SSL 提供了高速缓存机制，所以连接双方可以重复使用先前协商的安全参数，从而大大降低后续连接的系统开销。<h6 id="hello-nginx"><a href="#hello-nginx" class="headerlink" title="hello nginx"></a>hello nginx</h6>配置文件放在 /etc/nginx/sites-enabled<br>本来是放在 /etc/nginx/sites-available 然后用软链接链到/etc/nginx/sites-enabled<br>但我不知怎么链过去文件总是空白的，所以简单粗暴复制过去。<br>重启nginx<code>sudo /etc/init.d/nginx restart</code><h5 id="nginx-代理-tornado"><a href="#nginx-代理-tornado" class="headerlink" title="nginx 代理 tornado"></a>nginx 代理 tornado</h5>在/etc/nginx/sites-enabled创建配置文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"># this is the real tornado service                                      </span><br><span class="line">upstream tornado &#123;                                                       </span><br><span class="line">    server 127.0.0.1:8001;  </span><br><span class="line">&#125;                                                                                                           </span><br><span class="line">server &#123;                                                                </span><br><span class="line">    listen   8000;                                            </span><br><span class="line">    root /var/www/tornado/; </span><br><span class="line">    index app.py;                                              </span><br><span class="line">   </span><br><span class="line">    server_name server;    </span><br><span class="line"></span><br><span class="line">    location / &#123;                                                             </span><br><span class="line">        if (!-e $request_filename) &#123;                                             </span><br><span class="line">            rewrite ^/(.*)$ /center.py/$1 last;                                      </span><br><span class="line">        &#125;                                                                      </span><br><span class="line">    &#125;                                                                       </span><br><span class="line">                                 </span><br><span class="line">    location ~ / &#123;      </span><br><span class="line">        proxy_pass_header Server;                                               </span><br><span class="line">        proxy_set_header Host $http_host;                                  </span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;                              </span><br><span class="line">        proxy_set_header X-Scheme $scheme;                                     </span><br><span class="line">        proxy_pass http://tornado;   </span><br><span class="line">    &#125;                                                                      </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<li>安全反向代理会造成各安全连接因加密数据所涉及的系统开销而变慢。但是，由于 SSL 提供了高速缓存机制，所以连接双方可以重复使用先前协商的安全参数，从而大大降低后续连接的系统开销。</li>
 </ol>
+<h6 id="hello-nginx"><a href="#hello-nginx" class="headerlink" title="hello nginx"></a>hello nginx</h6><p>配置文件放在 /etc/nginx/sites-enabled<br>本来是放在 /etc/nginx/sites-available 然后用软链接链到/etc/nginx/sites-enabled<br>但我不知怎么链过去文件总是空白的，所以简单粗暴复制过去。<br>重启nginx<code>sudo /etc/init.d/nginx restart</code></p>
+<h5 id="nginx-代理-tornado"><a href="#nginx-代理-tornado" class="headerlink" title="nginx 代理 tornado"></a>nginx 代理 tornado</h5><p>在/etc/nginx/sites-enabled创建配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"># this is the real tornado service                                      </span><br><span class="line">upstream tornado &#123;                                                       </span><br><span class="line">    server 127.0.0.1:8001;  </span><br><span class="line">&#125;                                                                                                           </span><br><span class="line">server &#123;                                                                </span><br><span class="line">    listen   8000;                                            </span><br><span class="line">    root /var/www/tornado/; </span><br><span class="line">    index app.py;                                              </span><br><span class="line">   </span><br><span class="line">    server_name server;    </span><br><span class="line"></span><br><span class="line">    location / &#123;                                                             </span><br><span class="line">        if (!-e $request_filename) &#123;                                             </span><br><span class="line">            rewrite ^/(.*)$ /center.py/$1 last;                                      </span><br><span class="line">        &#125;                                                                      </span><br><span class="line">    &#125;                                                                       </span><br><span class="line">                                 </span><br><span class="line">    location ~ / &#123;      </span><br><span class="line">        proxy_pass_header Server;                                               </span><br><span class="line">        proxy_set_header Host $http_host;                                  </span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;                              </span><br><span class="line">        proxy_set_header X-Scheme $scheme;                                     </span><br><span class="line">        proxy_pass http://tornado;   </span><br><span class="line">    &#125;                                                                      </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>所有 <a href="http://localhost:8000" target="_blank" rel="noopener">http://localhost:8000</a> 的请求都会转发到upstream tornado{}里面列出的服务里面。</p>
 <h5 id="supervisor"><a href="#supervisor" class="headerlink" title="supervisor"></a>supervisor</h5><p>安装<code>sudo apt-get install supervisor</code><br>安装成功后,supervisor就会默认启动<br>将每个进程的配置文件单独拆分,放在/etc/supervisor/conf.d/目录下,以.conf作为扩展名<br>配置文件内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[program:tornado_hello]</span><br><span class="line">command=python /var/www/tornado/hello.py</span><br></pre></td></tr></table></figure></p>
 <p>重启supervisor,让配置文件生效,然后启动test进程:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">supervisorctl update</span><br><span class="line">supervisorctl</span><br></pre></td></tr></table></figure></p>
@@ -465,6 +466,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/31/raspbian-sources/" rel="prev" title="raspbian_sources">
+                raspbian_sources <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -547,7 +552,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">37</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -558,7 +563,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -569,7 +574,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">42</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -654,7 +659,7 @@
 
 <div class="theme-info">
   
-  <span class="post-count">博客全站共33.9k字</span>
+  <span class="post-count">博客全站共35.5k字</span>
 </div>
         
 <div class="busuanzi-count">
