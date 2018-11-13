@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="我的追寻">
 <meta property="og:description" content="caffe-deploy各种坑">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-30T03:48:50.110Z">
+<meta property="og:updated_time" content="2018-08-01T03:12:28.712Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="caffe-deploy">
 <meta name="twitter:description" content="caffe-deploy各种坑">
@@ -413,6 +413,12 @@
 
       
         <h5 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h5><p>Caffe，全称Convolutional Architecture for Fast Feature Embedding。是一种常用的深度学习框架，主要应用在视频、图像处理方面的应用上。<br>此次主要唠唠关于它的部署</p>
+<h5 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libhdf5-serial-dev protobuf-compiler</span><br><span class="line">sudo apt-get install --no-install-recommends libboost-all-dev</span><br><span class="line">sudo apt-get install libatlas-base-dev</span><br><span class="line">sudo apt-get install libhdf5-serial-dev</span><br><span class="line">sudo apt-get install python-dev</span><br><span class="line">sudo apt-get install libgflags-dev libgoogle-glog-dev liblmdb-dev</span><br></pre></td></tr></table></figure>
+<p>在caffe-master/python下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">for req in $(cat requirements.txt); do pip install $req; done</span><br></pre></td></tr></table></figure></p>
+<h5 id="下载Caffe"><a href="#下载Caffe" class="headerlink" title="下载Caffe"></a>下载Caffe</h5><p><code>git clone https://github.com/BVLC/caffe.git</code>贼卡，可以去github用其他工具下载。<br>解压：<code>unzip -n caffe-master.zip -d ./</code></p>
+<h5 id="安装caffe"><a href="#安装caffe" class="headerlink" title="安装caffe"></a>安装caffe</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd caffe</span><br><span class="line">cp Makefile.config.example Makefile.config</span><br></pre></td></tr></table></figure>
+<p>在Makefile.config文件中把CPU_ONLY := 1的注释给去掉<br>修改如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include /usr/include/hdf5/serial</span><br><span class="line">LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib /usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/hdf5/serial</span><br></pre></td></tr></table></figure></p>
+<p>计算能力 mkl &gt; openlas &gt;atlas，为了简便，默认atlas</p>
 
       
     </div>
@@ -540,7 +546,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -551,7 +557,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -562,7 +568,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -597,7 +603,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#简介"><span class="nav-text">简介</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#简介"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#安装依赖"><span class="nav-text">安装依赖</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#下载Caffe"><span class="nav-text">下载Caffe</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#安装caffe"><span class="nav-text">安装caffe</span></a></li></ol></div>
             
 
           </div>
@@ -647,7 +653,7 @@
 
 <div class="theme-info">
   
-  <span class="post-count">博客全站共35.5k字</span>
+  <span class="post-count">博客全站共39.1k字</span>
 </div>
         
 <div class="busuanzi-count">

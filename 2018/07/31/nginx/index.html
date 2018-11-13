@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="我的追寻">
 <meta property="og:description" content="用nginx反向代理tornado">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-31T07:04:39.552Z">
+<meta property="og:updated_time" content="2018-08-01T02:08:29.438Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nginx">
 <meta name="twitter:description" content="用nginx反向代理tornado">
@@ -412,7 +412,7 @@
       
 
       
-        <h5 id="tornado"><a href="#tornado" class="headerlink" title="tornado"></a>tornado</h5><p>Tornado是一种Web服务器软件的开源版本。Tornado和现在的主流Web服务器框架（包括大多数Python的框架）有着明显的区别：它是非阻塞式服务器，而且速度相当快。<br>得利于其非阻塞的方式和对epoll的运用，Tornado每秒可以处理数以千计的连接，因此Tornado是实时Web服务的一个理想框架。</p>
+        <h5 id="tornado"><a href="#tornado" class="headerlink" title="tornado"></a>tornado</h5><p>Tornado是一种Web服务器软件的开源版本。Tornado和现在的主流Web服务器框架（包括大多数Python的框架）有着明显的区别：它是非阻塞式服务器，而且速度相当快。<br>得利于其非阻塞的方式和对epoll的运用，Tornado每秒可以处理数以千计的连接，因此Tornado是实时Web服务的一个理想框架。<code>pip install tarnado</code></p>
 <h6 id="hello-tornado"><a href="#hello-tornado" class="headerlink" title="hello tornado"></a>hello tornado</h6><p>最小应用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">import tornado.httpserver</span><br><span class="line">import tornado.ioloop</span><br><span class="line">import tornado.options</span><br><span class="line">import tornado.web</span><br><span class="line"></span><br><span class="line">from tornado.options import define, options</span><br><span class="line"></span><br><span class="line">define(&quot;port&quot;, default=8001, help=&quot;run on the given port&quot;, type=int)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class MainHandler(tornado.web.RequestHandler):</span><br><span class="line">    def get(self):</span><br><span class="line">        self.write(&quot;Hello, Tornado&quot;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def main():</span><br><span class="line">    tornado.options.parse_command_line()</span><br><span class="line">    application = tornado.web.Application([</span><br><span class="line">        (r&quot;/&quot;, MainHandler),</span><br><span class="line">    ])</span><br><span class="line">    http_server = tornado.httpserver.HTTPServer(application)</span><br><span class="line">    http_server.listen(options.port)</span><br><span class="line">    tornado.ioloop.IOLoop.instance().start()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure></p>
 <h5 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h5><p>Nginx是一个高性能的HTTP和反向代理服务器，其特点是占有内存少，并发能力强。<br>反向代理（Reverse Proxy）方式是指以代理服务器来接受internet上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给internet上请求连接的客户端，此时代理服务器对外就表现为一个反向代理服务器。<br>安全反向代理有许多用途：</p>
 <ol>
@@ -552,7 +552,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -563,7 +563,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -574,7 +574,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -659,7 +659,7 @@
 
 <div class="theme-info">
   
-  <span class="post-count">博客全站共35.5k字</span>
+  <span class="post-count">博客全站共39.1k字</span>
 </div>
         
 <div class="busuanzi-count">
