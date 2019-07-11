@@ -424,7 +424,7 @@
 <li>学习：利用数据集去学习每个label的特征，称之为“训练一个分类器”或“学习一个模型”</li>
 <li>评估：用新的数据集去测试训练好的分类器，计算准确率</li>
 </ol>
-<h5 id="Nearest-Neighbor-Classifier"><a href="#Nearest-Neighbor-Classifier" class="headerlink" title="Nearest Neighbor Classifier"></a>Nearest Neighbor Classifier</h5><p>最近邻分类器和CNN无关、也极少用于实践，但能帮我们了解图片分类问题<br>思路：对于训练集，读取成为长*宽*3的矩阵。对于测试集，与前面训练集中的图片比较，找出与其最相似的图片则他们分为一类<br>图片比较方法：<br>1、计算两矩阵中对应两两位置的差值的和<br><img src="http://cs231n.github.io/assets/nneg.jpeg" alt="L1 distance"><br>2、计算两矩阵中对应两两位置的差值的平方和然后再开根号<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Evaluate on the test set only a single time, at the very end.</span><br></pre></td></tr></table></figure></p>
+<h5 id="Nearest-Neighbor-Classifier"><a href="#Nearest-Neighbor-Classifier" class="headerlink" title="Nearest Neighbor Classifier"></a>Nearest Neighbor Classifier</h5><p>最近邻分类器和CNN无关、也极少用于实践，但能帮我们了解图片分类问题<br>思路：对于训练集，读取成为长*宽*3的矩阵。对于测试集，与前面训练集中的图片比较，找出与其最相似的图片则他们分为一类<br>图片比较方法：<br>1、计算两矩阵中对应两两位置的差值的和<br><img src="http://cs231n.github.io/assets/nneg.jpeg" alt="L1 distance"><br>2、计算两矩阵中对应两两位置的差值的平方和然后再开根号<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Evaluate <span class="keyword">on</span> <span class="keyword">the</span> test <span class="keyword">set</span> only a single <span class="built_in">time</span>, <span class="keyword">at</span> <span class="keyword">the</span> very <span class="keyword">end</span>.</span><br></pre></td></tr></table></figure></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">将您的训练集分成训练集和验证集。使用验证集来调整所有超参数。最后在测试集上运行一次并报告性能。</span><br></pre></td></tr></table></figure>
 <p>Nearest Neighbor Classifier 的优缺点：优点：简单易懂，低训练成本。缺点：测试成本过高。逐像素距离根本不对应于感知或语义相似性。</p>
 <h5 id="交叉验证"><a href="#交叉验证" class="headerlink" title="交叉验证"></a>交叉验证</h5><p>在给定的建模样本中，拿出大部分样本进行建模型，留小部分样本用刚建立的模型进行预报，并求这小部分样本的预报误差，记录它们的平方加和。这个过程一直进行，直到所有的样本都被预报了一次而且仅被预报一次。把每个样本的预报误差平方加和，称为PRESS(predicted Error Sum of Squares)。</p>
@@ -553,7 +553,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -660,7 +660,7 @@
 
 <div class="theme-info">
   
-  <span class="post-count">博客全站共39.1k字</span>
+  <span class="post-count">博客全站共39.6k字</span>
 </div>
         
 

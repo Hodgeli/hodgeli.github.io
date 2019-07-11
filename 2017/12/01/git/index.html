@@ -407,11 +407,11 @@
       
 
       
-        <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><h3 id="下载并安装git软件然后直接可以上手了！！！"><a href="#下载并安装git软件然后直接可以上手了！！！" class="headerlink" title="下载并安装git软件然后直接可以上手了！！！"></a>下载并安装git软件然后直接可以上手了！！！</h3><p>打开Git Bash，cd到你要创建成版本库的目录（最好是空目录，重要文件目录记得备份）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git init</span><br><span class="line">Initialized empty Git repository in I:/git/vine_dataset/.git/</span><br></pre></td></tr></table></figure></p>
+        <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><h3 id="下载并安装git软件然后直接可以上手了！！！"><a href="#下载并安装git软件然后直接可以上手了！！！" class="headerlink" title="下载并安装git软件然后直接可以上手了！！！"></a>下载并安装git软件然后直接可以上手了！！！</h3><p>打开Git Bash，cd到你要创建成版本库的目录（最好是空目录，重要文件目录记得备份）<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git init</span><br><span class="line">Initialized empty Git repository <span class="keyword">in</span> <span class="string">I:</span><span class="regexp">/git/</span>vine_dataset<span class="regexp">/.git/</span></span><br></pre></td></tr></table></figure></p>
 <p>接下来可以在这个文件夹里为所欲为（不要碰默认隐藏的功能文件夹.git）</p>
-<h3 id="把一个文件放到Git仓库只需要两步"><a href="#把一个文件放到Git仓库只需要两步" class="headerlink" title="把一个文件放到Git仓库只需要两步"></a>把一个文件放到Git仓库只需要两步</h3><p>第一步，用命令<code>git add</code>告诉Git，把文件添加到仓库：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add 修改的文件名</span><br></pre></td></tr></table></figure></p>
+<h3 id="把一个文件放到Git仓库只需要两步"><a href="#把一个文件放到Git仓库只需要两步" class="headerlink" title="把一个文件放到Git仓库只需要两步"></a>把一个文件放到Git仓库只需要两步</h3><p>第一步，用命令<code>git add</code>告诉Git，把文件添加到仓库：<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">add</span><span class="bash"> 修改的文件名</span></span><br></pre></td></tr></table></figure></p>
 <p>PS:<code>git add xx</code>命令可以将xx文件添加到暂存区，如果有很多改动可以通过<code>git add -A .</code>来一次添加所有改变的文件。<br>注意 -A 选项后面还有一个句点 .  <code>git add -A</code>表示添加所有内容， <code>git add .</code> 表示添加新文件和编辑过的文件不包括删除的文件; <code>git add -u</code> 表示添加编辑或者删除的文件，不包括新添加的文件。</p>
-<p>第二步，用命令<code>git commit</code>告诉Git，把文件提交到仓库：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m 提交描述</span><br></pre></td></tr></table></figure></p>
+<p>第二步，用命令<code>git commit</code>告诉Git，把文件提交到仓库：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git commit -m 提交描述</span></span><br></pre></td></tr></table></figure></p>
 <h3 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h3><p><code>git status</code></p>
 <p>让我们时刻掌握仓库当前的状态，反馈类似<code>nothing to commit, working tree clean</code><br><code>git diff 文件名</code></p>
 <p>查看具体修改</p>
@@ -429,9 +429,9 @@
 <p>删除文件，可用<code>git checkout -- test.txt</code>还原</p>
 <h2 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h2><h3 id="在继续阅读后续内容前，请自行注册GitHub账号。由于你的本地Git仓库和GitHub仓库之间的传输是通过SSH加密的，所以，需要一点设置"><a href="#在继续阅读后续内容前，请自行注册GitHub账号。由于你的本地Git仓库和GitHub仓库之间的传输是通过SSH加密的，所以，需要一点设置" class="headerlink" title="在继续阅读后续内容前，请自行注册GitHub账号。由于你的本地Git仓库和GitHub仓库之间的传输是通过SSH加密的，所以，需要一点设置"></a>在继续阅读后续内容前，请自行注册GitHub账号。由于你的本地Git仓库和GitHub仓库之间的传输是通过SSH加密的，所以，需要一点设置</h3><h5 id="第1步：创建SSH-Key。在用户主目录下，看看有没有-ssh目录，如果有，再看看这个目录下有没有id-rsa和id-rsa-pub这两个文件，如果已经有了，可直接跳到下一步。如果没有，打开Shell（Windows下打开Git-Bash），创建SSH-Key"><a href="#第1步：创建SSH-Key。在用户主目录下，看看有没有-ssh目录，如果有，再看看这个目录下有没有id-rsa和id-rsa-pub这两个文件，如果已经有了，可直接跳到下一步。如果没有，打开Shell（Windows下打开Git-Bash），创建SSH-Key" class="headerlink" title="第1步：创建SSH Key。在用户主目录下，看看有没有.ssh目录，如果有，再看看这个目录下有没有id_rsa和id_rsa.pub这两个文件，如果已经有了，可直接跳到下一步。如果没有，打开Shell（Windows下打开Git Bash），创建SSH Key"></a>第1步：创建SSH Key。在用户主目录下，看看有没有.ssh目录，如果有，再看看这个目录下有没有id_rsa和id_rsa.pub这两个文件，如果已经有了，可直接跳到下一步。如果没有，打开Shell（Windows下打开Git Bash），创建SSH Key</h5><p><code>ssh-keygen -t rsa -C &quot;youremail@example.com&quot;</code></p>
 <p>你需要把邮件地址换成你自己的邮件地址，然后一路回车，使用默认值即可，由于这个Key也不是用于军事目的，所以也无需设置密码。<br>如果一切顺利的话，可以在用户主目录里找到.ssh目录，里面有id_rsa和id_rsa.pub两个文件，这两个就是SSH Key的秘钥对，id_rsa是私钥，不能泄露出去，id_rsa.pub是公钥，可以放心地告诉任何人。</p>
-<h5 id="第2步：登陆GitHub，打开“settings”，“SSH-and-GPG-Keys”页面添加你的id-rsa-pub内容"><a href="#第2步：登陆GitHub，打开“settings”，“SSH-and-GPG-Keys”页面添加你的id-rsa-pub内容" class="headerlink" title="第2步：登陆GitHub，打开“settings”，“SSH and GPG Keys”页面添加你的id_rsa.pub内容"></a>第2步：登陆GitHub，打开“settings”，“SSH and GPG Keys”页面添加你的<code>id_rsa.pub</code>内容</h5><p>在GitHub创建一个同名Git仓库，在本地的对应的Git仓库下运行命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin git@github.com:Hodgeli/vine_dataset.git</span><br><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure></p>
+<h5 id="第2步：登陆GitHub，打开“settings”，“SSH-and-GPG-Keys”页面添加你的id-rsa-pub内容"><a href="#第2步：登陆GitHub，打开“settings”，“SSH-and-GPG-Keys”页面添加你的id-rsa-pub内容" class="headerlink" title="第2步：登陆GitHub，打开“settings”，“SSH and GPG Keys”页面添加你的id_rsa.pub内容"></a>第2步：登陆GitHub，打开“settings”，“SSH and GPG Keys”页面添加你的<code>id_rsa.pub</code>内容</h5><p>在GitHub创建一个同名Git仓库，在本地的对应的Git仓库下运行命令<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin git@github<span class="selector-class">.com</span>:Hodgeli/vine_dataset.git</span><br><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure></p>
 <p>由于远程库是空的，我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令<code>git push origin master</code></p>
-<h4 id="从远程库克隆"><a href="#从远程库克隆" class="headerlink" title="从远程库克隆"></a>从远程库克隆</h4><p>在github创建新仓库（repository）:    cloneTest<br>用命令git clone克隆一个本地库：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone git@github.com:Hodgeli/cloneTest.git</span><br></pre></td></tr></table></figure></p>
+<h4 id="从远程库克隆"><a href="#从远程库克隆" class="headerlink" title="从远程库克隆"></a>从远程库克隆</h4><p>在github创建新仓库（repository）:    cloneTest<br>用命令git clone克隆一个本地库：<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="keyword">clone</span> <span class="title">git</span>@github.com:Hodgeli/cloneTest.git</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -557,7 +557,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -664,7 +664,7 @@
 
 <div class="theme-info">
   
-  <span class="post-count">博客全站共39.1k字</span>
+  <span class="post-count">博客全站共39.6k字</span>
 </div>
         
 

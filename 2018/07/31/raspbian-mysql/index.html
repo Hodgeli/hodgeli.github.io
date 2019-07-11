@@ -407,17 +407,17 @@
       
 
       
-        <h5 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h5><p>使用管理员权限运行apt-get获取最新的MySQL及Python编程接口（之后用于数据库编程）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install mysql-server python-mysqldb</span><br></pre></td></tr></table></figure></p>
+        <h5 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h5><p>使用管理员权限运行apt-get获取最新的MySQL及Python编程接口（之后用于数据库编程）：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="builtin-name">get</span> install mysql-server python-mysqldb</span><br></pre></td></tr></table></figure></p>
 <p>安装如果失败则按照上篇博文raspbian_sources更换源<br>安装成功后直接结束，并未提示输入数据库密码</p>
 <h5 id="密码设置"><a href="#密码设置" class="headerlink" title="密码设置"></a>密码设置</h5><p>参考：<br>sudo mysql -u root -p</p>
 <p>select Host,User,plugin from mysql.user where User=’root’;</p>
 <p>plugin(加密方式)是unix_socket</p>
-<p>运行如下三条命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">update mysql.user set plugin=&apos;mysql_native_password&apos;; #重置加密方式</span><br><span class="line">update mysql.user set password=PASSWORD(&quot;newpassword&quot;) where User=&apos;root&apos;; #设置新密码</span><br><span class="line">flush privileges; #刷新权限信息</span><br></pre></td></tr></table></figure></p>
+<p>运行如下三条命令：<br><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> mysql.<span class="keyword">user</span> <span class="keyword">set</span> plugin=<span class="string">'mysql_native_password'</span>; #重置加密方式</span><br><span class="line"><span class="keyword">update</span> mysql.<span class="keyword">user</span> <span class="keyword">set</span> <span class="keyword">password</span>=<span class="keyword">PASSWORD</span>(<span class="string">"newpassword"</span>) <span class="keyword">where</span> <span class="keyword">User</span>=<span class="string">'root'</span>; #设置新密码</span><br><span class="line">flush privileges; #刷新权限信息</span><br></pre></td></tr></table></figure></p>
 <h5 id="远程访问"><a href="#远程访问" class="headerlink" title="远程访问"></a>远程访问</h5><p>修改配置文件：/etc/mysql/mariadb.conf.d/50-server.cnf<br>注释掉bind-address项</p>
 <p>只有这些仍然不够，我们只是开启了MySQL监听远程连接的选项，接下来需要给对应的MySQL账户分配权限，允许使用该账户远程连接到MySQL</p>
 <p>查看账号信息：<code>select User, host from mysql.user;</code></p>
-<p>root账户中的host项是localhost表示该账号只能进行本地登录，我们需要修改权限，输入命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRANT ALL PRIVILEGES ON *.* TO &apos;root&apos;@&apos;%&apos; IDENTIFIED BY &apos;password&apos; WITH GRANT OPTION;</span><br></pre></td></tr></table></figure></p>
-<p>修改权限。%表示针对所有IP，password表示将用这个密码登录root用户，如果想只让某个IP段的主机连接，可以修改为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRANT ALL PRIVILEGES ON *.* TO &apos;root&apos;@&apos;192.168.100.%&apos; IDENTIFIED BY &apos;my-new-password&apos; WITH GRANT OPTION;</span><br></pre></td></tr></table></figure></p>
+<p>root账户中的host项是localhost表示该账号只能进行本地登录，我们需要修改权限，输入命令：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GRANT</span> ALL <span class="keyword">PRIVILEGES</span> <span class="keyword">ON</span> *.* <span class="keyword">TO</span> <span class="string">'root'</span>@<span class="string">'%'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'password'</span> <span class="keyword">WITH</span> <span class="keyword">GRANT</span> <span class="keyword">OPTION</span>;</span><br></pre></td></tr></table></figure></p>
+<p>修改权限。%表示针对所有IP，password表示将用这个密码登录root用户，如果想只让某个IP段的主机连接，可以修改为<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GRANT</span> ALL <span class="keyword">PRIVILEGES</span> <span class="keyword">ON</span> *.* <span class="keyword">TO</span> <span class="string">'root'</span>@<span class="string">'192.168.100.%'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'my-new-password'</span> <span class="keyword">WITH</span> <span class="keyword">GRANT</span> <span class="keyword">OPTION</span>;</span><br></pre></td></tr></table></figure></p>
 <p>注意：此时远程连接的密码可能与你在本地登录时的密码不同了，主要看你在IDENTIFIED BY后面给了什么密码<br>最后别忘了<code>FLUSH PRIVILEGES;</code></p>
 <p>重启数据库<code>sudo /etc/init.d/mysql restart</code></p>
 <p>如果这些都做完了，还是不能连接，可以看一下端口是不是被防火墙拦截了</p>
@@ -548,7 +548,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -655,7 +655,7 @@
 
 <div class="theme-info">
   
-  <span class="post-count">博客全站共39.1k字</span>
+  <span class="post-count">博客全站共39.6k字</span>
 </div>
         
 

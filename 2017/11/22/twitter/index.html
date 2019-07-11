@@ -411,8 +411,8 @@
 <li>首先需要注册twitter账号，注册页使用google邮箱，下一页验证手机号。</li>
 <li>新建一个twitter application 链接：<a href="https://apps.twitter.com/app/new" target="_blank" rel="noopener">新建项目</a><br>按要求填写内容后在keys and access token页面获取对应keys。</li>
 </ul>
-<h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><p>安装tweepy：<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install tweepy</span><br></pre></td></tr></table></figure></p>
-<h2 id="简单示例"><a href="#简单示例" class="headerlink" title="简单示例"></a>简单示例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#  -*- coding: utf-8 -*-</span><br><span class="line">import tweepy</span><br><span class="line">from tweepy import OAuthHandler</span><br><span class="line"></span><br><span class="line">consumer_key = &apos;replace your own account consumer_key&apos;</span><br><span class="line">consumer_secret = &apos;replace your own account consumer_secret&apos;</span><br><span class="line">access_token = &apos;replace your own account access_token&apos;</span><br><span class="line">access_secret = &apos;replace your own account access_secret&apos;</span><br><span class="line"></span><br><span class="line">auth = OAuthHandler(consumer_key,consumer_secret)</span><br><span class="line">auth.set_access_token(access_token,access_secret)</span><br><span class="line"></span><br><span class="line">#api = tweepy.API(auth)</span><br><span class="line">api = tweepy.API(auth,proxy=&quot;127.0.0.1:1080&quot;)#代理</span><br><span class="line"></span><br><span class="line">for status in tweepy.Cursor(api.home_timeline).items(2):#抓取条数</span><br><span class="line">    print (status.text)</span><br></pre></td></tr></table></figure>
+<h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><p>安装tweepy：<br>  <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip <span class="keyword">install</span> tweepy</span><br></pre></td></tr></table></figure></p>
+<h2 id="简单示例"><a href="#简单示例" class="headerlink" title="简单示例"></a>简单示例</h2><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  -*- coding: utf-8 -*-</span></span><br><span class="line">import tweepy</span><br><span class="line">from tweepy import OAuthHandler</span><br><span class="line"></span><br><span class="line">consumer_key = 'replace your own account consumer_key'</span><br><span class="line">consumer_secret = 'replace your own account consumer_secret'</span><br><span class="line">access_token = 'replace your own account access_token'</span><br><span class="line">access_secret = 'replace your own account access_secret'</span><br><span class="line"></span><br><span class="line">auth = OAuthHandler(consumer_key,consumer_secret)</span><br><span class="line">auth.set_access_token(access_token,access_secret)</span><br><span class="line"></span><br><span class="line"><span class="comment">#api = tweepy.API(auth)</span></span><br><span class="line">api = tweepy.API(auth,proxy=<span class="string">"127.0.0.1:1080"</span>)<span class="comment">#代理</span></span><br><span class="line"></span><br><span class="line">for status in tweepy.Cursor(api.home_timeline).items(2):<span class="comment">#抓取条数</span></span><br><span class="line">    print (status.text)</span><br></pre></td></tr></table></figure>
 <p>运行代码获得对应twitter账号的首页推文</p>
 
       
@@ -541,7 +541,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -648,7 +648,7 @@
 
 <div class="theme-info">
   
-  <span class="post-count">博客全站共39.1k字</span>
+  <span class="post-count">博客全站共39.6k字</span>
 </div>
         
 
