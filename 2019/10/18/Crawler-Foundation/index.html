@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="我的追寻">
 <meta property="og:description" content="爬虫基础">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-21T01:40:40.465Z">
+<meta property="og:updated_time" content="2019-10-21T01:46:54.664Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Crawler_Foundation">
 <meta name="twitter:description" content="爬虫基础">
@@ -415,7 +415,35 @@
 <h4 id="请求"><a href="#请求" class="headerlink" title="请求"></a>请求</h4><h5 id="请求头"><a href="#请求头" class="headerlink" title="请求头"></a>请求头</h5><ul>
 <li>Cookie：也常用复数形式 Cookies ，这是网站为了辨别用户进行会话跟踪而存储在用户本地<br>的数据。它的主要功能是维持当前访问会话。例如，我们输入用户名和密码成功登录某个网<br>站后，服务器会用会话保存登录状态信息，后面我们每次刷新或请求该站点的其他页面时，<br>会发现都是登录状态，这就是 Cookies 的功能。 Cookies 里有信息标识了我们所对应的服务器<br>的会话，每次浏览器在请求该站点的页面时，都会在请求头中加上 Cookies 并将其发送给服<br>务器，服务器通过 Cookies 识别出是我们自己，并且查出当前状态是登录状态，所以返回结<br>果就是登录之后才能看到的网页内容；</li>
 <li>Referer：此内容用来标识这个请求是从哪个页面发过来的，服务器可以拿到这一信息并做相<br>应的处理，如做来源统计、防盗链处理等；</li>
-<li>User-Agent：简称 UA ，它是一个特殊的字符串头，可以使服务器识别客户使用的操作系统<br>及版本，浏览器及版本等信息 在做爬虫时加上此信息，可以伪装为浏览器；如果不加，很<br>可能会被识别为爬虫<h5 id="请求体"><a href="#请求体" class="headerlink" title="请求体"></a>请求体</h5>Content-Type|提交数据的方式<br>-|-<br>application/x-www-form-urlencoded|表单数据<br>multipart/form-data|表单文件上传<br>application/json|序列化JSON数据<br>text/xml|XML数据<h4 id="响应"><a href="#响应" class="headerlink" title="响应"></a>响应</h4><h5 id="响应头"><a href="#响应头" class="headerlink" title="响应头"></a>响应头</h5></li>
+<li>User-Agent：简称 UA ，它是一个特殊的字符串头，可以使服务器识别客户使用的操作系统<br>及版本，浏览器及版本等信息 在做爬虫时加上此信息，可以伪装为浏览器；如果不加，很<br>可能会被识别为爬虫</li>
+</ul>
+<h5 id="请求体"><a href="#请求体" class="headerlink" title="请求体"></a>请求体</h5><table>
+<thead>
+<tr>
+<th style="text-align:center">Content-Type</th>
+<th style="text-align:center">提交数据的方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">application/x-www-form-urlencoded</td>
+<td style="text-align:center">表单数据</td>
+</tr>
+<tr>
+<td style="text-align:center">multipart/form-data</td>
+<td style="text-align:center">表单文件上传</td>
+</tr>
+<tr>
+<td style="text-align:center">application/json</td>
+<td style="text-align:center">序列化JSON数据</td>
+</tr>
+<tr>
+<td style="text-align:center">text/xml</td>
+<td style="text-align:center">XML数据</td>
+</tr>
+</tbody>
+</table>
+<h4 id="响应"><a href="#响应" class="headerlink" title="响应"></a>响应</h4><h5 id="响应头"><a href="#响应头" class="headerlink" title="响应头"></a>响应头</h5><ul>
 <li>Server：务器的信息，比如名称、版本号等</li>
 <li>Content-Type：文档类型，指定返回的数据类型是什么，如 text/html 代表返回 HTML 文档，application/x-javascript 则代表返回 JavaScript文件， image/jpeg则代表返回图片</li>
 <li>Set-Cookie：设置 Cookies。响应头中的 Set-Cookie 告诉浏览器需要将此内容放在 Cookies中，下次请求携带 Cookies 请求。</li>
@@ -475,6 +503,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/21/urllib/" rel="prev" title="基本库的使用">
+                基本库的使用 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -557,7 +589,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -664,7 +696,7 @@
 
 <div class="theme-info">
   
-  <span class="post-count">博客全站共41.1k字</span>
+  <span class="post-count">博客全站共42.3k字</span>
 </div>
         
 
