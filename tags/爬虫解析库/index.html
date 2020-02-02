@@ -85,7 +85,7 @@
 
 
 
-  <meta name="keywords" content="神经网络,pytorch," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -96,18 +96,16 @@
 
 
 
-<meta name="description" content="CNN实现mnist图片识别">
-<meta name="keywords" content="神经网络,pytorch">
-<meta property="og:type" content="article">
-<meta property="og:title" content="CNN">
-<meta property="og:url" content="http://yoursite.com/2018/01/30/CNN/index.html">
+<meta name="description" content="进一寸有一寸的欢喜">
+<meta property="og:type" content="website">
+<meta property="og:title" content="我的追寻">
+<meta property="og:url" content="http://yoursite.com/tags/爬虫解析库/index.html">
 <meta property="og:site_name" content="我的追寻">
-<meta property="og:description" content="CNN实现mnist图片识别">
+<meta property="og:description" content="进一寸有一寸的欢喜">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-30T07:25:33.399Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CNN">
-<meta name="twitter:description" content="CNN实现mnist图片识别">
+<meta name="twitter:title" content="我的追寻">
+<meta name="twitter:description" content="进一寸有一寸的欢喜">
 
 
 
@@ -137,13 +135,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/01/30/CNN/"/>
+  <link rel="canonical" href="http://yoursite.com/tags/爬虫解析库/"/>
 
 
 
 
 
-  <title>CNN | 我的追寻</title>
+  <title>标签: 爬虫解析库 | 我的追寻</title>
   
 
 
@@ -162,7 +160,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -300,179 +298,54 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
+  
+  
+  
+  <div class="post-block tag">
 
-  
+    <div id="posts" class="posts-collapse">
+      <div class="collection-title">
+        <h1>爬虫解析库<small>标签</small>
+        </h1>
+      </div>
 
-  
-  
-  
+      
+        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/30/CNN/">
+    <header class="post-header">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Hodge Li">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://q.qlogo.cn/headimg_dl?dst_uin=2991811241&spec=640">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我的追寻">
-    </span>
-
-    
-      <header class="post-header">
-
+      <h2 class="post-title">
         
+            <a class="post-title-link" href="/2019/10/25/analytic-library/" itemprop="url">
+              
+                <span itemprop="name">analytic_library</span>
+              
+            </a>
         
-          <h1 class="post-title" itemprop="name headline">CNN</h1>
-        
+      </h2>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-30T15:15:23+08:00">
-                2018-01-30
-              </time>
-            
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2019-10-25T16:51:51+08:00"
+              content="2019-10-25" >
+          10-25
+        </time>
+      </div>
 
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/PyTorch笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">PyTorch笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-              <div class="post-description">
-                  CNN实现mnist图片识别
-              </div>
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <h5 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h5><p>利用卷积神经网络实现对mnist手写数字图片的识别<br>其中用到了批训练方法</p>
-<h6 id="CNN-py"><a href="#CNN-py" class="headerlink" title="CNN.py"></a>CNN.py</h6><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="comment"># third-party library</span></span><br><span class="line"><span class="built_in">import</span> torch</span><br><span class="line"><span class="built_in">import</span> torch.nn as nn</span><br><span class="line">from torch.autograd <span class="built_in">import</span> Variable</span><br><span class="line"><span class="built_in">import</span> torch.utils.data as Data</span><br><span class="line"><span class="built_in">import</span> torchvision</span><br><span class="line"></span><br><span class="line"><span class="comment"># torch.manual_seed(1)    # reproducible</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Hyper Parameters</span></span><br><span class="line"><span class="attr">EPOCH</span> = <span class="number">1</span>               <span class="comment"># train the training data n times, to save time, we just train 1 epoch</span></span><br><span class="line"><span class="attr">BATCH_SIZE</span> = <span class="number">50</span></span><br><span class="line"><span class="attr">LR</span> = <span class="number">0.001</span>              <span class="comment"># learning rate</span></span><br><span class="line"><span class="attr">DOWNLOAD_MNIST</span> = False</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Mnist digits dataset</span></span><br><span class="line"><span class="keyword">if</span> not(os.path.exists('./mnist/')) <span class="literal">or</span> not os.listdir('./mnist/'):</span><br><span class="line">    <span class="comment"># not mnist dir or mnist is empyt dir</span></span><br><span class="line">    <span class="attr">DOWNLOAD_MNIST</span> = True</span><br><span class="line"></span><br><span class="line"><span class="attr">train_data</span> = torchvision.datasets.MNIST(</span><br><span class="line">    <span class="attr">root='./mnist/',</span></span><br><span class="line">    <span class="attr">train=True,</span>                                     <span class="comment"># this is training data</span></span><br><span class="line">    <span class="attr">transform=torchvision.transforms.ToTensor(),</span>    <span class="comment"># Converts a PIL.Image or numpy.ndarray to</span></span><br><span class="line">                                                    <span class="comment"># torch.FloatTensor of shape (C x H x W) and normalize in the range [0.0, 1.0]</span></span><br><span class="line">    <span class="attr">download=DOWNLOAD_MNIST,</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Data Loader for easy mini-batch return in training, the image batch shape will be (50, 1, 28, 28)</span></span><br><span class="line"><span class="attr">train_loader</span> = Data.DataLoader(<span class="attr">dataset=train_data,</span> <span class="attr">batch_size=BATCH_SIZE,</span> <span class="attr">shuffle=True)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># convert test data into Variable, pick 2000 samples to speed up testing</span></span><br><span class="line"><span class="attr">test_data</span> = torchvision.datasets.MNIST(<span class="attr">root='./mnist/',</span> <span class="attr">train=False)</span></span><br><span class="line"><span class="attr">test_x</span> = Variable(torch.unsqueeze(test_data.test_data, <span class="attr">dim=1),</span> <span class="attr">volatile=True).type(torch.FloatTensor)[:2000]/255.</span>   <span class="comment"># shape from (2000, 28, 28) to (2000, 1, 28, 28), value in range(0,1)</span></span><br><span class="line"><span class="attr">test_y</span> = test_data.test_labels[:<span class="number">2000</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class CNN(nn.Module):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        super(CNN, self).__init__()</span><br><span class="line">        self.<span class="attr">conv1</span> = nn.Sequential(         <span class="comment"># input shape (1, 28, 28)</span></span><br><span class="line">            nn.Conv2d(</span><br><span class="line">                <span class="attr">in_channels=1,</span>              <span class="comment"># input height</span></span><br><span class="line">                <span class="attr">out_channels=16,</span>            <span class="comment"># n_filters</span></span><br><span class="line">                <span class="attr">kernel_size=5,</span>              <span class="comment"># filter size</span></span><br><span class="line">                <span class="attr">stride=1,</span>                   <span class="comment"># filter movement/step</span></span><br><span class="line">                <span class="attr">padding=2,</span>                  <span class="comment"># if want same width and length of this image after con2d, padding=(kernel_size-1)/2 if stride=1</span></span><br><span class="line">            ),                              <span class="comment"># output shape (16, 28, 28)</span></span><br><span class="line">            nn.ReLU(),                      <span class="comment"># activation</span></span><br><span class="line">            nn.MaxPool2d(<span class="attr">kernel_size=2),</span>    <span class="comment"># choose max value in 2x2 area, output shape (16, 14, 14)</span></span><br><span class="line">        )</span><br><span class="line">        self.<span class="attr">conv2</span> = nn.Sequential(         <span class="comment"># input shape (1, 14, 14)</span></span><br><span class="line">            nn.Conv2d(<span class="number">16</span>, <span class="number">32</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">2</span>),     <span class="comment"># output shape (32, 14, 14)</span></span><br><span class="line">            nn.ReLU(),                      <span class="comment"># activation</span></span><br><span class="line">            nn.MaxPool2d(<span class="number">2</span>),                <span class="comment"># output shape (32, 7, 7)</span></span><br><span class="line">        )</span><br><span class="line">        self.<span class="attr">out</span> = nn.Linear(<span class="number">32</span> * <span class="number">7</span> * <span class="number">7</span>, <span class="number">10</span>)   <span class="comment"># fully connected layer, output 10 classes</span></span><br><span class="line"></span><br><span class="line">    def forward(self, x):</span><br><span class="line">        <span class="attr">x</span> = self.conv1(x)</span><br><span class="line">        <span class="attr">x</span> = self.conv2(x)</span><br><span class="line">        <span class="attr">x</span> = x.view(x.size(<span class="number">0</span>), -<span class="number">1</span>)           <span class="comment"># flatten the output of conv2 to (batch_size, 32 * 7 * 7)</span></span><br><span class="line">        <span class="attr">output</span> = self.out(x)</span><br><span class="line">        return output, x    <span class="comment"># return x for visualization</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="attr">cnn</span> = CNN()</span><br><span class="line"></span><br><span class="line"><span class="attr">optimizer</span> = torch.optim.Adam(cnn.parameters(), <span class="attr">lr=LR)</span>   <span class="comment"># optimize all cnn parameters</span></span><br><span class="line"><span class="attr">loss_func</span> = nn.CrossEntropyLoss()                       <span class="comment"># the target label is not one-hotted</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># training and testing</span></span><br><span class="line">for epoch <span class="keyword">in</span> range(EPOCH):</span><br><span class="line">    for step, (x, y) <span class="keyword">in</span> enumerate(train_loader):   <span class="comment"># gives batch data, normalize x when iterate train_loader</span></span><br><span class="line">        <span class="attr">b_x</span> = Variable(x)   <span class="comment"># batch x</span></span><br><span class="line">        <span class="attr">b_y</span> = Variable(y)   <span class="comment"># batch y</span></span><br><span class="line"></span><br><span class="line">        <span class="attr">output</span> = cnn(b_x)[<span class="number">0</span>]               <span class="comment"># cnn output</span></span><br><span class="line">        <span class="attr">loss</span> = loss_func(output, b_y)   <span class="comment"># cross entropy loss</span></span><br><span class="line">        optimizer.zero_grad()           <span class="comment"># clear gradients for this training step</span></span><br><span class="line">        loss.backward()                 <span class="comment"># backpropagation, compute gradients</span></span><br><span class="line">        optimizer.step()                <span class="comment"># apply gradients</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> step % <span class="number">50</span> == <span class="number">0</span>:</span><br><span class="line">            test_output, <span class="attr">last_layer</span> = cnn(test_x)</span><br><span class="line">            <span class="attr">pred_y</span> = torch.max(test_output, <span class="number">1</span>)[<span class="number">1</span>].data.squeeze()</span><br><span class="line">            <span class="attr">accuracy</span> = sum(<span class="attr">pred_y</span> == test_y) / float(test_y.size(<span class="number">0</span>))</span><br><span class="line">            print('Epoch: ', epoch, '| train loss: %.<span class="number">4</span>f' % loss.data[<span class="number">0</span>], '| test accuracy: %.<span class="number">2</span>f' % accuracy)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># print 10 predictions from test data</span></span><br><span class="line">test_output, <span class="attr">_</span> = cnn(test_x[:<span class="number">10</span>])</span><br><span class="line"><span class="attr">pred_y</span> = torch.max(test_output, <span class="number">1</span>)[<span class="number">1</span>].data.numpy().squeeze()</span><br><span class="line">print(pred_y, 'prediction number')</span><br><span class="line">print(test_y[:<span class="number">10</span>].numpy(), 'real number')</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/神经网络/" rel="tag"><i class="fa fa-tag"></i> 神经网络</a>
-          
-            <a href="/tags/pytorch/" rel="tag"><i class="fa fa-tag"></i> pytorch</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/01/26/hashtag-microblog/" rel="next" title="Hashtag Recommendation for Multimodal Microblog Using Co-Attention Network">
-                <i class="fa fa-chevron-left"></i> Hashtag Recommendation for Multimodal Microblog Using Co-Attention Network
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/01/30/LSTM/" rel="prev" title="LSTM">
-                LSTM <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
+    </header>
   </article>
 
 
-
-    <div class="post-spread">
       
     </div>
+
   </div>
+  
+  
+  
+
+  
 
 
           </div>
@@ -480,12 +353,6 @@
 
 
           
-  
-    <div class="comments" id="comments">
-      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTg5MC84NDU0"></div>
-    </div>
-  
-
 
         </div>
         
@@ -506,17 +373,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -582,22 +440,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#需求"><span class="nav-text">需求</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#CNN-py"><span class="nav-text">CNN.py</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -726,10 +568,6 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
-
-
 
   
 
@@ -758,17 +596,6 @@
 
 
 
-  
-    <script type="text/javascript">
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
   
 
 
