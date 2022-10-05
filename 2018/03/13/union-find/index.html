@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>并查集union_find | 我的追寻</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="union_find算法流程">
+<meta name="keywords" content="算法,union-find">
+<meta property="og:type" content="article">
+<meta property="og:title" content="并查集union_find">
+<meta property="og:url" content="http://yoursite.com/2018/03/13/union-find/index.html">
+<meta property="og:site_name" content="我的追寻">
+<meta property="og:description" content="union_find算法流程">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-15T13:15:36.029Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="并查集union_find">
+<meta name="twitter:description" content="union_find算法流程">
+  
+    <link rel="alternate" href="/atom.xml" title="我的追寻" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">我的追寻</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">进一寸有一寸的欢喜</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-union-find" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/13/union-find/" class="article-date">
+  <time datetime="2018-03-13T08:19:46.000Z" itemprop="datePublished">2018-03-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/算法/">算法</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      并查集union_find
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="动态连通性"><a href="#动态连通性" class="headerlink" title="动态连通性"></a>动态连通性</h5><p>问题的输入是一列整数对，其中每个整数都表示一个某种类型的对象，一对整数p、q可以被理解为“p和q是相连的”。我们假设“相连”是一种等价关系，这也就意味着它具有：</p>
+<blockquote>
+<p>自反性：p和p是相连的。<br>对称性：如果p和q是相连的，那么q和p也是相连的。<br>传递性：如果p和q是相连的且q和r是相连的，那么p和r也是相连的。</p>
+</blockquote>
+<p>等价关系能够将对象分为多个等价类。在这里，当且仅当两个对象相连时它们才属于同一个等价类。我们的目标是编写一个程序来过滤掉序列中所有无意义的整数对（两个整数均来自于同一个等价类中）。换句话说，当程序从输入中读取了整数对p和q时，如果已知的所有整数对都不能说明p和q是相连的，那么则将这一对整数写入到输出中。如果已知的数据可以说明p和q是相连的，那么程序应该忽略p、q这对整数并继续处理输入中的下一对整数</p>
+<h5 id="quick-find"><a href="#quick-find" class="headerlink" title="quick-find"></a>quick-find</h5><h6 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h6><p>所有N个数据对应数组id[N]，初始化数组id[i]=i;即第i个数据的所属分量为i;<br>对于输入的数据对p,q:<br>先判断是否在同一分量，否的话调用union方法：即将后者的分量内所有数据的分量标识改为前者的分量标识。</p>
+<h6 id="UF-java"><a href="#UF-java" class="headerlink" title="UF.java"></a>UF.java</h6><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> edu.princeton.cs.algs4.StdIn;</span><br><span class="line"><span class="keyword">import</span> edu.princeton.cs.algs4.StdOut;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> UF</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span>[] id;<span class="comment">// 分量id</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> <span class="keyword">count</span>;<span class="comment">// 分量总数</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> UF(<span class="keyword">int</span> N)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">count</span> = N;</span><br><span class="line">		id = <span class="keyword">new</span> <span class="keyword">int</span>[N];</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			id[i] = i;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">int</span> <span class="keyword">count</span>()<span class="comment">// 返回分量总数</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">count</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">boolean</span> connected(<span class="keyword">int</span> p, <span class="keyword">int</span> q)<span class="comment">// p,q是否在同一分量</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">find</span>(p) == <span class="keyword">find</span>(q);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">int</span> <span class="keyword">find</span>(<span class="keyword">int</span> p)<span class="comment">// p所在分量的标识符</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> id[p];</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> union(<span class="keyword">int</span> p, <span class="keyword">int</span> q)<span class="comment">// 连接p,q</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> pId = <span class="keyword">find</span>(p);</span><br><span class="line">		<span class="keyword">int</span> qId = <span class="keyword">find</span>(q);</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; id.length; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (id[i] == pId)</span><br><span class="line">			&#123;</span><br><span class="line">				id[i] = qId;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">count</span>--;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> N = StdIn.readInt();</span><br><span class="line">		UF uf = <span class="keyword">new</span> UF(N);</span><br><span class="line">		<span class="keyword">int</span> flag = <span class="number">0</span>;<span class="comment">// 输入计数器</span></span><br><span class="line">		<span class="keyword">while</span> (!StdIn.isEmpty())</span><br><span class="line">		&#123;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">int</span> p = StdIn.readInt();</span><br><span class="line">			<span class="keyword">int</span> q = StdIn.readInt();</span><br><span class="line">			flag++;</span><br><span class="line">			<span class="keyword">if</span> (uf.connected(p, q))</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">continue</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			uf.union(p, q);</span><br><span class="line">			<span class="keyword">if</span> (flag % <span class="number">100</span> == <span class="number">0</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				System.out.<span class="keyword">println</span>(flag);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		StdOut.<span class="keyword">println</span>(N);</span><br><span class="line">		StdOut.<span class="keyword">println</span>(uf.<span class="keyword">count</span>() + <span class="string">"components"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h6><p>假设使用本算法解决动态连通性问题并且最后只得到一个连通分量，<br>那么一共要调用N-1次union()操作。每次connected()会调用两次find(),<br>每次find()调用要访问一次数组，而归并两个分量的union()操作会调用两次find()<br>所以该情况下至少要进行(2+2+N-1)*(N-1)~N^2次数组访问。</p>
+<p>显然该算法在largeUF.txt(100万级别的输入)条件下运行时间过长。</p>
+<h5 id="quick-union"><a href="#quick-union" class="headerlink" title="quick-union"></a>quick-union</h5><h6 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h6><p>每个触点所对应的id[]元素都是同一个分量中的另一个触点的名称（也可能是它自己）<br>所有N个数据对应数组id[N]，初始化数组id[i]=i;即第i个数据的所属分量为i;<br>对于输入的数据对p,q:<br>先判断是否在同一分量，否的话调用union方法：即跟随链接到达各自的根触点，<br>然后将一个根触点链接到另一根触点即实现一个分量重命名为另一个分量。</p>
+<h6 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h6><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> edu.princeton.cs.algs4.StdIn;</span><br><span class="line"><span class="keyword">import</span> edu.princeton.cs.algs4.StdOut;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> UF</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span>[] id;<span class="comment">// 分量id</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> <span class="keyword">count</span>;<span class="comment">// 分量总数</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> UF(<span class="keyword">int</span> N)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">count</span> = N;</span><br><span class="line">		id = <span class="keyword">new</span> <span class="keyword">int</span>[N];</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			id[i] = i;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">int</span> <span class="keyword">count</span>()<span class="comment">// 返回分量总数</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">count</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">boolean</span> connected(<span class="keyword">int</span> p, <span class="keyword">int</span> q)<span class="comment">// p,q是否在同一分量</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">find</span>(p) == <span class="keyword">find</span>(q);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">int</span> <span class="keyword">find</span>(<span class="keyword">int</span> p)<span class="comment">// p所在分量的标识符</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span>(p != id[p])</span><br><span class="line">		&#123;</span><br><span class="line">			p = id[p];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> p;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> union(<span class="keyword">int</span> p, <span class="keyword">int</span> q)<span class="comment">// 连接p,q</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> pRoot = <span class="keyword">find</span>(p);</span><br><span class="line">		<span class="keyword">int</span> qRoot = <span class="keyword">find</span>(q);</span><br><span class="line">		id[pRoot] = qRoot;</span><br><span class="line">		<span class="keyword">count</span>--;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> N = StdIn.readInt();</span><br><span class="line">		UF uf = <span class="keyword">new</span> UF(N);</span><br><span class="line">		<span class="keyword">int</span> flag = <span class="number">0</span>;<span class="comment">// 输入计数器</span></span><br><span class="line">		<span class="keyword">while</span> (!StdIn.isEmpty())</span><br><span class="line">		&#123;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">int</span> p = StdIn.readInt();</span><br><span class="line">			<span class="keyword">int</span> q = StdIn.readInt();</span><br><span class="line">			flag++;</span><br><span class="line">			<span class="keyword">if</span> (uf.connected(p, q))</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">continue</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			uf.union(p, q);</span><br><span class="line">			<span class="keyword">if</span> (flag % <span class="number">100</span> == <span class="number">0</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				System.out.<span class="keyword">println</span>(flag);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		StdOut.<span class="keyword">println</span>(N);</span><br><span class="line">		StdOut.<span class="keyword">println</span>(uf.<span class="keyword">count</span>() + <span class="string">"components"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h6><p>find()方法访问数组的次数是给定触点在树中深度的两倍再加1，<br>union()和connected()访问数组的次数分别为两次find()+1和两次find()操作。<br>假设使用本算法解决动态连通性问题并且最后只得到一个连通分量，对于最底层数与root数用union()<br>进行的数组访问次数为2N+1+2,因此处理整个N对数据所需的访问数组次数为2(1+2+…+N)~N^2。</p>
+<h5 id="加权quick-union"><a href="#加权quick-union" class="headerlink" title="加权quick-union"></a>加权quick-union</h5><h6 id="简介-2"><a href="#简介-2" class="headerlink" title="简介"></a>简介</h6><p>在quick-union的基础上，更改union方法，使得每次将较小的树连接在较大树的根节点上<br>以此减少整棵树的高度，故而减少数组访问次数</p>
+<h6 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h6><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> edu.princeton.cs.algs4.StdIn;</span><br><span class="line"><span class="keyword">import</span> edu.princeton.cs.algs4.StdOut;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> UF</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span>[] id;<span class="comment">// 分量id</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span>[] sz;<span class="comment">// 各节点所对应分量的大小</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> <span class="keyword">count</span>;<span class="comment">// 分量总数</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> UF(<span class="keyword">int</span> N)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">count</span> = N;</span><br><span class="line">		id = <span class="keyword">new</span> <span class="keyword">int</span>[N];</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			id[i] = i;</span><br><span class="line">		&#125;</span><br><span class="line">		sz = <span class="keyword">new</span> <span class="keyword">int</span>[N];</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			sz[i] = <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">int</span> <span class="keyword">count</span>()<span class="comment">// 返回分量总数</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">count</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">boolean</span> connected(<span class="keyword">int</span> p, <span class="keyword">int</span> q)<span class="comment">// p,q是否在同一分量</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">find</span>(p) == <span class="keyword">find</span>(q);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">int</span> <span class="keyword">find</span>(<span class="keyword">int</span> p)<span class="comment">// p所在分量的标识符</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span> (p != id[p])</span><br><span class="line">		&#123;</span><br><span class="line">			p = id[p];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> p;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> union(<span class="keyword">int</span> p, <span class="keyword">int</span> q)<span class="comment">// 连接p,q</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> i = <span class="keyword">find</span>(p);</span><br><span class="line">		<span class="keyword">int</span> j = <span class="keyword">find</span>(q);</span><br><span class="line">		<span class="keyword">if</span> (sz[i] &lt; sz[j])</span><br><span class="line">		&#123;</span><br><span class="line">			id[i] = j;</span><br><span class="line">			sz[j] += sz[i];</span><br><span class="line">		&#125; <span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			id[j] = i;</span><br><span class="line">			sz[i] += sz[j];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">count</span>--;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> N = StdIn.readInt();</span><br><span class="line">		UF uf = <span class="keyword">new</span> UF(N);</span><br><span class="line">		<span class="keyword">int</span> flag = <span class="number">0</span>;<span class="comment">// 输入计数器</span></span><br><span class="line">		<span class="keyword">while</span> (!StdIn.isEmpty())</span><br><span class="line">		&#123;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">int</span> p = StdIn.readInt();</span><br><span class="line">			<span class="keyword">int</span> q = StdIn.readInt();</span><br><span class="line">			flag++;</span><br><span class="line">			<span class="keyword">if</span> (uf.connected(p, q))</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">continue</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			uf.union(p, q);</span><br><span class="line">			<span class="keyword">if</span> (flag % <span class="number">100</span> == <span class="number">0</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				System.out.<span class="keyword">println</span>(flag);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		StdOut.<span class="keyword">println</span>(N);</span><br><span class="line">		StdOut.<span class="keyword">println</span>(uf.<span class="keyword">count</span>() + <span class="string">"components"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h6><p>加权quick-union算法在处理N个触点和M条连接时最多访问数组cMlgN次，c为常数。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/13/union-find/" data-id="cl8vfrwvk007dogc5dtv5oo0z" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/union-find/">union-find</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/03/15/sort/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          sort
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/01/30/pytorch-base/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">pytorch_base</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/30-N天自制操作系统/">30*N天自制操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/">LeetCode</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PyTorch笔记/">PyTorch笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python踩坑指南/">Python踩坑指南</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Raspberry-Pi/">Raspberry Pi</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/caffe/">caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/raspbian/">raspbian</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/函数库/">函数库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/参考手册/">参考手册</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/学习方法/">学习方法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具积累/">工具积累</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/整理/">整理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/爬虫/">爬虫</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/目标检测/">目标检测</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/神经网络/">神经网络</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/读论文/">读论文</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/API/">API</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AlexNet/">AlexNet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Array/">Array</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Attention-Network/">Attention Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOs/">CentOs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP基础/">HTTP基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode/">LeetCode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MLP/">MLP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Raspberry-Pi/">Raspberry Pi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/String/">String</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/caffe/">caffe</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/deploy/">deploy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lda/">lda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/object-detect/">object_detect</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/os/">os</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pytorch/">pytorch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raspbian/">raspbian</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrapy/">scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sort/">sort</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tornado/">tornado</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/twitter/">twitter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/union-find/">union-find</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/下载/">下载</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代理的基本原理/">代理的基本原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/会话与Cookies/">会话与Cookies</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/函数/">函数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/包使用/">包使用</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/双系统/">双系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符串处理/">字符串处理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/工具/">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/快捷键/">快捷键</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/整理/">整理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/文件读取/">文件读取</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/汇编/">汇编</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫/">爬虫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫原理/">爬虫原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫基础库/">爬虫基础库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫实践/">爬虫实践</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫解析库/">爬虫解析库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/神经网络/">神经网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/笔记/">笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网页基础/">网页基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/视频处理/">视频处理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/读论文/">读论文</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/阅读/">阅读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/AlexNet/" style="font-size: 10px;">AlexNet</a> <a href="/tags/Array/" style="font-size: 12.5px;">Array</a> <a href="/tags/Attention-Network/" style="font-size: 10px;">Attention Network</a> <a href="/tags/CentOs/" style="font-size: 10px;">CentOs</a> <a href="/tags/HTTP基础/" style="font-size: 10px;">HTTP基础</a> <a href="/tags/LeetCode/" style="font-size: 17.5px;">LeetCode</a> <a href="/tags/MLP/" style="font-size: 10px;">MLP</a> <a href="/tags/Raspberry-Pi/" style="font-size: 10px;">Raspberry Pi</a> <a href="/tags/String/" style="font-size: 10px;">String</a> <a href="/tags/caffe/" style="font-size: 12.5px;">caffe</a> <a href="/tags/deploy/" style="font-size: 10px;">deploy</a> <a href="/tags/ffmpeg/" style="font-size: 10px;">ffmpeg</a> <a href="/tags/git/" style="font-size: 12.5px;">git</a> <a href="/tags/lda/" style="font-size: 10px;">lda</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object-detect/" style="font-size: 10px;">object_detect</a> <a href="/tags/os/" style="font-size: 10px;">os</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/pytorch/" style="font-size: 20px;">pytorch</a> <a href="/tags/raspbian/" style="font-size: 12.5px;">raspbian</a> <a href="/tags/scrapy/" style="font-size: 10px;">scrapy</a> <a href="/tags/sort/" style="font-size: 12.5px;">sort</a> <a href="/tags/tornado/" style="font-size: 10px;">tornado</a> <a href="/tags/twitter/" style="font-size: 10px;">twitter</a> <a href="/tags/union-find/" style="font-size: 10px;">union-find</a> <a href="/tags/vim/" style="font-size: 10px;">vim</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/下载/" style="font-size: 10px;">下载</a> <a href="/tags/代理的基本原理/" style="font-size: 10px;">代理的基本原理</a> <a href="/tags/会话与Cookies/" style="font-size: 10px;">会话与Cookies</a> <a href="/tags/函数/" style="font-size: 12.5px;">函数</a> <a href="/tags/包使用/" style="font-size: 10px;">包使用</a> <a href="/tags/双系统/" style="font-size: 10px;">双系统</a> <a href="/tags/字符串处理/" style="font-size: 15px;">字符串处理</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/快捷键/" style="font-size: 10px;">快捷键</a> <a href="/tags/整理/" style="font-size: 10px;">整理</a> <a href="/tags/文件读取/" style="font-size: 15px;">文件读取</a> <a href="/tags/汇编/" style="font-size: 10px;">汇编</a> <a href="/tags/爬虫/" style="font-size: 15px;">爬虫</a> <a href="/tags/爬虫原理/" style="font-size: 10px;">爬虫原理</a> <a href="/tags/爬虫基础库/" style="font-size: 10px;">爬虫基础库</a> <a href="/tags/爬虫实践/" style="font-size: 10px;">爬虫实践</a> <a href="/tags/爬虫解析库/" style="font-size: 10px;">爬虫解析库</a> <a href="/tags/神经网络/" style="font-size: 20px;">神经网络</a> <a href="/tags/笔记/" style="font-size: 12.5px;">笔记</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/网页基础/" style="font-size: 10px;">网页基础</a> <a href="/tags/视频处理/" style="font-size: 10px;">视频处理</a> <a href="/tags/读论文/" style="font-size: 10px;">读论文</a> <a href="/tags/阅读/" style="font-size: 10px;">阅读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/10/05/test-new-begin/">test_new_begin</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/14/LeetCode-String/">LeetCode_String</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/09/read/">read</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/08/sort-out/">sort_out</a>
+          </li>
+        
+          <li>
+            <a href="/2020/02/19/CVTEpro/">CVTEpro</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 Hodge Li<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

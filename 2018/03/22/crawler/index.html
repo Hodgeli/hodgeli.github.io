@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>crawler | 我的追寻</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="基本爬虫结构与简单实例">
+<meta name="keywords" content="爬虫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="crawler">
+<meta property="og:url" content="http://yoursite.com/2018/03/22/crawler/index.html">
+<meta property="og:site_name" content="我的追寻">
+<meta property="og:description" content="基本爬虫结构与简单实例">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-22T06:10:29.190Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="crawler">
+<meta name="twitter:description" content="基本爬虫结构与简单实例">
+  
+    <link rel="alternate" href="/atom.xml" title="我的追寻" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">我的追寻</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">进一寸有一寸的欢喜</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-crawler" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/22/crawler/" class="article-date">
+  <time datetime="2018-03-22T05:52:15.000Z" itemprop="datePublished">2018-03-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/爬虫/">爬虫</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      crawler
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h5><p>爬虫可分为几大模块：</p>
+<ul>
+<li>URL管理器：管理已经下载与未下载的网页URL（内存、数据库、缓存数据库）</li>
+<li>下载器：通过url下载网页内容；urllib2（Python3中改名urllib）、request（更强大）</li>
+<li>解析器：通过一定规则将下载器所得内容解析获取有价值信息；BeautifulSoup(html.parser、lxml )、正则</li>
+</ul>
+<h6 id="调度程序"><a href="#调度程序" class="headerlink" title="调度程序"></a>调度程序</h6><p>爬虫的控制中心，宏观上控制整个爬虫逻辑<br>spider_main.py<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">""</span><span class="string">" </span></span><br><span class="line"><span class="string">@author: Hodge</span></span><br><span class="line"><span class="string">@func: 爬虫调度程序</span></span><br><span class="line"><span class="string">@time: 2018/3/21 12:00 </span></span><br><span class="line"><span class="string">"</span><span class="string">""</span></span><br><span class="line"></span><br><span class="line">from baike_spider import url_manager, html_downloader, html_parser, html_outputer</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SpiderMain</span>(<span class="title">object</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        <span class="keyword">self</span>.urls = url_manager.UrlManager()</span><br><span class="line">        <span class="keyword">self</span>.download = html_downloader.HtmlDownloader()</span><br><span class="line">        <span class="keyword">self</span>.parser = html_parser.HtmlParser()</span><br><span class="line">        <span class="keyword">self</span>.outputer = html_outputer.HtmlOutputer()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">craw</span><span class="params">(<span class="keyword">self</span>, root_url)</span></span><span class="symbol">:</span></span><br><span class="line">        count = <span class="number">1</span></span><br><span class="line">        <span class="keyword">self</span>.urls.add_new_url(root_url)</span><br><span class="line">        <span class="keyword">while</span> <span class="keyword">self</span>.urls.has_new_url()<span class="symbol">:</span></span><br><span class="line">            <span class="symbol">try:</span></span><br><span class="line">                new_url = <span class="keyword">self</span>.urls.get_new_url</span><br><span class="line">                print(<span class="string">"craw %d : %s"</span> % (count, new_url))</span><br><span class="line">                html_cont = <span class="keyword">self</span>.download.download(new_url)</span><br><span class="line">                new_urls, new_data = <span class="keyword">self</span>.parser.parser(new_url, html_cont)</span><br><span class="line">                <span class="keyword">self</span>.urls.add_new_urls(new_urls)</span><br><span class="line">                <span class="keyword">self</span>.outputer.collect_data(new_data)</span><br><span class="line">                count += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> count == <span class="number">20</span><span class="symbol">:</span></span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">            <span class="symbol">except:</span></span><br><span class="line">                print(<span class="string">"craw failed"</span>)</span><br><span class="line">        <span class="keyword">self</span>.outputer.output_html()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name_<span class="number">_</span> == <span class="string">'__main__'</span><span class="symbol">:</span></span><br><span class="line">    root_url = <span class="string">"https://baike.baidu.com/item/Python/407313"</span></span><br><span class="line">    obj_spider = SpiderMain()</span><br><span class="line">    obj_spider.craw(root_url)</span><br></pre></td></tr></table></figure></p>
+<h6 id="下载器"><a href="#下载器" class="headerlink" title="下载器"></a>下载器</h6><p>通过给定的URL获取对应的网页源代码，并处理编码问题<br>html_downloader.py<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">""" </span></span><br><span class="line"><span class="string">@author: Hodge</span></span><br><span class="line"><span class="string">@file: html_downloader.py </span></span><br><span class="line"><span class="string">@time: 2018/3/21 12:01 </span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">from</span> urllib <span class="keyword">import</span> request</span><br><span class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> quote</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HtmlDownloader</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">download</span><span class="params">(self, url)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> url <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line">        url_ = quote(url, safe=string.printable)</span><br><span class="line">        response = request.urlopen(url_)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> response.getcode() != <span class="number">200</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> response.read().decode(<span class="string">"utf-8"</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    hd = HtmlDownloader()</span><br><span class="line">    html = hd.download(<span class="string">"https://baike.baidu.com/item/Python/407313"</span>)</span><br><span class="line">    print(html)</span><br></pre></td></tr></table></figure></p>
+<h6 id="解析器"><a href="#解析器" class="headerlink" title="解析器"></a>解析器</h6><p>根据下载器获取的网页源码，解析出下一次爬取的目标网页urls和当前页面的有价值信息<br>html_parser.py<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">""" </span></span><br><span class="line"><span class="string">@author: Hodge</span></span><br><span class="line"><span class="string">@file: html_parser.py </span></span><br><span class="line"><span class="string">@time: 2018/3/21 12:01 </span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> urllib.parse <span class="keyword">as</span> urlparse</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HtmlParser</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parser</span><span class="params">(self, page_url, html_cont)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> page_url <span class="keyword">is</span> <span class="keyword">None</span> <span class="keyword">or</span> html_cont <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        soup = BeautifulSoup(html_cont, <span class="string">"html.parser"</span>)</span><br><span class="line">        new_urls = self._get_new_urls(page_url, soup)</span><br><span class="line">        new_data = self._get_new_data(page_url, soup)</span><br><span class="line">        <span class="keyword">return</span> new_urls, new_data</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_get_new_urls</span><span class="params">(self, page_url, soup)</span>:</span></span><br><span class="line">        new_urls = set()</span><br><span class="line">        links = soup.find_all(<span class="string">'a'</span>, href=re.compile(<span class="string">r"/item/"</span>))</span><br><span class="line">        <span class="keyword">for</span> link <span class="keyword">in</span> links:</span><br><span class="line">            new_url = link[<span class="string">'href'</span>]</span><br><span class="line">            new_full_url = urlparse.urljoin(page_url, new_url)</span><br><span class="line">            new_urls.add(new_full_url)</span><br><span class="line">        <span class="keyword">return</span> new_urls</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_get_new_data</span><span class="params">(self, page_url, soup)</span>:</span></span><br><span class="line">        res_data = &#123;<span class="string">'url'</span>: page_url&#125;</span><br><span class="line">        <span class="comment"># &lt;dd class="lemmaWgt-lemmaTitle-title"&gt; &lt;h1&gt;Python&lt;/h1&gt;</span></span><br><span class="line">        title_node = soup.find(<span class="string">'dd'</span>, class_=<span class="string">"lemmaWgt-lemmaTitle-title"</span>).find(<span class="string">'h1'</span>)</span><br><span class="line">        res_data[<span class="string">'title'</span>] = title_node.get_text()</span><br><span class="line"></span><br><span class="line">        summary_node = soup.find(<span class="string">'div'</span>, class_=<span class="string">"lemma-summary"</span>)</span><br><span class="line">        res_data[<span class="string">'summary'</span>] = summary_node.get_text()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res_data</span><br></pre></td></tr></table></figure></p>
+<h6 id="url管理器"><a href="#url管理器" class="headerlink" title="url管理器"></a>url管理器</h6><p>管理已经下载与未下载的网页URLs，同时负责url的拼接等操作。<br>url_manager.py<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">""</span><span class="string">" </span></span><br><span class="line"><span class="string">@author: Hodge</span></span><br><span class="line"><span class="string">@file: url_manager.py </span></span><br><span class="line"><span class="string">@time: 2018/3/21 12:01 </span></span><br><span class="line"><span class="string">"</span><span class="string">""</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UrlManager</span>(<span class="title">object</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        <span class="keyword">self</span>.new_urls = set()</span><br><span class="line">        <span class="keyword">self</span>.old_urls = set()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_new_url</span><span class="params">(<span class="keyword">self</span>, url)</span></span><span class="symbol">:</span></span><br><span class="line">        <span class="keyword">if</span> url is <span class="symbol">None:</span></span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">if</span> url <span class="keyword">not</span> <span class="keyword">in</span> <span class="keyword">self</span>.new_urls <span class="keyword">and</span> url <span class="keyword">not</span> <span class="keyword">in</span> <span class="keyword">self</span>.<span class="symbol">old_urls:</span></span><br><span class="line">            <span class="keyword">self</span>.new_urls.add(url)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">has_new_url</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        <span class="keyword">return</span> len(<span class="keyword">self</span>.new_urls) != <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    @property</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_new_url</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        new_url = <span class="keyword">self</span>.new_urls.pop()</span><br><span class="line">        <span class="keyword">self</span>.old_urls.add(new_url)</span><br><span class="line">        <span class="keyword">return</span> new_url</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_new_urls</span><span class="params">(<span class="keyword">self</span>, urls)</span></span><span class="symbol">:</span></span><br><span class="line">        <span class="keyword">if</span> urls is None <span class="keyword">or</span> len(urls) == <span class="number">0</span><span class="symbol">:</span></span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">for</span> url <span class="keyword">in</span> <span class="symbol">urls:</span></span><br><span class="line">            <span class="keyword">self</span>.add_new_url(url)</span><br></pre></td></tr></table></figure></p>
+<h5 id="结果输出"><a href="#结果输出" class="headerlink" title="结果输出"></a>结果输出</h5><p>将解析的有价值数据格式化输出保存到指定文件，注意编码问题。<br>html_outputer.py<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">""" </span></span><br><span class="line"><span class="string">@author: Hodge</span></span><br><span class="line"><span class="string">@file: html_outputer.py </span></span><br><span class="line"><span class="string">@time: 2018/3/21 12:02 </span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HtmlOutputer</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.datas = []</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">collect_data</span><span class="params">(self, data)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> data <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        self.datas.append(data)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">output_html</span><span class="params">(self)</span>:</span></span><br><span class="line">        fout = open(<span class="string">'output.html'</span>, <span class="string">'w'</span>, encoding=<span class="string">'utf-8'</span>)</span><br><span class="line">        fout.write(<span class="string">"&lt;html&gt;"</span>)</span><br><span class="line">        fout.write(<span class="string">"&lt;body&gt;"</span>)</span><br><span class="line">        fout.write(<span class="string">"&lt;a&gt;"</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> data <span class="keyword">in</span> self.datas:</span><br><span class="line">            <span class="comment"># 屏蔽掉原来的，重新写一个更美观的输出效果</span></span><br><span class="line">            <span class="comment"># fout.write("&lt;tr&gt;")</span></span><br><span class="line">            <span class="comment"># fout.write("&lt;td&gt;%s&lt;/td&gt;" % data['url'])</span></span><br><span class="line">            <span class="comment"># fout.write("&lt;td&gt;%s&lt;/td&gt;" % data['title'])</span></span><br><span class="line">            <span class="comment"># fout.write("&lt;td&gt;%s&lt;/td&gt;" % data['summary'])</span></span><br><span class="line">            <span class="comment"># fout.write("&lt;/tr&gt;")</span></span><br><span class="line">            fout.write(<span class="string">'&lt;a href="%s"&gt;%s&lt;/a&gt;'</span> % (data[<span class="string">'url'</span>], data[<span class="string">'title'</span>]))</span><br><span class="line">            fout.write(<span class="string">'&lt;p&gt;%s&lt;/p&gt;'</span> % data[<span class="string">'summary'</span>])</span><br><span class="line"></span><br><span class="line">        fout.write(<span class="string">"&lt;/a&gt;"</span>)</span><br><span class="line">        fout.write(<span class="string">"&lt;/body&gt;"</span>)</span><br><span class="line">        fout.write(<span class="string">"&lt;/html&gt;"</span>)</span><br><span class="line"></span><br><span class="line">        fout.close()</span><br></pre></td></tr></table></figure></p>
+<p>这只是最简单基础的爬虫结构，将来可在此基础上针对性扩展。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/22/crawler/" data-id="cl8vfrwqm0010ogc5s3gnc4qd" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫/">爬虫</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/03/28/heapsort/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          heapsort
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/15/sort/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">sort</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/30-N天自制操作系统/">30*N天自制操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/">LeetCode</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PyTorch笔记/">PyTorch笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python踩坑指南/">Python踩坑指南</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Raspberry-Pi/">Raspberry Pi</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/caffe/">caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/raspbian/">raspbian</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/函数库/">函数库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/参考手册/">参考手册</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/学习方法/">学习方法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具积累/">工具积累</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/整理/">整理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/爬虫/">爬虫</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/目标检测/">目标检测</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/神经网络/">神经网络</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/读论文/">读论文</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/API/">API</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AlexNet/">AlexNet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Array/">Array</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Attention-Network/">Attention Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOs/">CentOs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP基础/">HTTP基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode/">LeetCode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MLP/">MLP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Raspberry-Pi/">Raspberry Pi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/String/">String</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/caffe/">caffe</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/deploy/">deploy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lda/">lda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/object-detect/">object_detect</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/os/">os</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pytorch/">pytorch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raspbian/">raspbian</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrapy/">scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sort/">sort</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tornado/">tornado</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/twitter/">twitter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/union-find/">union-find</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/下载/">下载</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代理的基本原理/">代理的基本原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/会话与Cookies/">会话与Cookies</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/函数/">函数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/包使用/">包使用</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/双系统/">双系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符串处理/">字符串处理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/工具/">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/快捷键/">快捷键</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/整理/">整理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/文件读取/">文件读取</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/汇编/">汇编</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫/">爬虫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫原理/">爬虫原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫基础库/">爬虫基础库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫实践/">爬虫实践</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫解析库/">爬虫解析库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/神经网络/">神经网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/笔记/">笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网页基础/">网页基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/视频处理/">视频处理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/读论文/">读论文</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/阅读/">阅读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/AlexNet/" style="font-size: 10px;">AlexNet</a> <a href="/tags/Array/" style="font-size: 12.5px;">Array</a> <a href="/tags/Attention-Network/" style="font-size: 10px;">Attention Network</a> <a href="/tags/CentOs/" style="font-size: 10px;">CentOs</a> <a href="/tags/HTTP基础/" style="font-size: 10px;">HTTP基础</a> <a href="/tags/LeetCode/" style="font-size: 17.5px;">LeetCode</a> <a href="/tags/MLP/" style="font-size: 10px;">MLP</a> <a href="/tags/Raspberry-Pi/" style="font-size: 10px;">Raspberry Pi</a> <a href="/tags/String/" style="font-size: 10px;">String</a> <a href="/tags/caffe/" style="font-size: 12.5px;">caffe</a> <a href="/tags/deploy/" style="font-size: 10px;">deploy</a> <a href="/tags/ffmpeg/" style="font-size: 10px;">ffmpeg</a> <a href="/tags/git/" style="font-size: 12.5px;">git</a> <a href="/tags/lda/" style="font-size: 10px;">lda</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object-detect/" style="font-size: 10px;">object_detect</a> <a href="/tags/os/" style="font-size: 10px;">os</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/pytorch/" style="font-size: 20px;">pytorch</a> <a href="/tags/raspbian/" style="font-size: 12.5px;">raspbian</a> <a href="/tags/scrapy/" style="font-size: 10px;">scrapy</a> <a href="/tags/sort/" style="font-size: 12.5px;">sort</a> <a href="/tags/tornado/" style="font-size: 10px;">tornado</a> <a href="/tags/twitter/" style="font-size: 10px;">twitter</a> <a href="/tags/union-find/" style="font-size: 10px;">union-find</a> <a href="/tags/vim/" style="font-size: 10px;">vim</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/下载/" style="font-size: 10px;">下载</a> <a href="/tags/代理的基本原理/" style="font-size: 10px;">代理的基本原理</a> <a href="/tags/会话与Cookies/" style="font-size: 10px;">会话与Cookies</a> <a href="/tags/函数/" style="font-size: 12.5px;">函数</a> <a href="/tags/包使用/" style="font-size: 10px;">包使用</a> <a href="/tags/双系统/" style="font-size: 10px;">双系统</a> <a href="/tags/字符串处理/" style="font-size: 15px;">字符串处理</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/快捷键/" style="font-size: 10px;">快捷键</a> <a href="/tags/整理/" style="font-size: 10px;">整理</a> <a href="/tags/文件读取/" style="font-size: 15px;">文件读取</a> <a href="/tags/汇编/" style="font-size: 10px;">汇编</a> <a href="/tags/爬虫/" style="font-size: 15px;">爬虫</a> <a href="/tags/爬虫原理/" style="font-size: 10px;">爬虫原理</a> <a href="/tags/爬虫基础库/" style="font-size: 10px;">爬虫基础库</a> <a href="/tags/爬虫实践/" style="font-size: 10px;">爬虫实践</a> <a href="/tags/爬虫解析库/" style="font-size: 10px;">爬虫解析库</a> <a href="/tags/神经网络/" style="font-size: 20px;">神经网络</a> <a href="/tags/笔记/" style="font-size: 12.5px;">笔记</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/网页基础/" style="font-size: 10px;">网页基础</a> <a href="/tags/视频处理/" style="font-size: 10px;">视频处理</a> <a href="/tags/读论文/" style="font-size: 10px;">读论文</a> <a href="/tags/阅读/" style="font-size: 10px;">阅读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/10/05/test-new-begin/">test_new_begin</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/14/LeetCode-String/">LeetCode_String</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/09/read/">read</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/08/sort-out/">sort_out</a>
+          </li>
+        
+          <li>
+            <a href="/2020/02/19/CVTEpro/">CVTEpro</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 Hodge Li<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

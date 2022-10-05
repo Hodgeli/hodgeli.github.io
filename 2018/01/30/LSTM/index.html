@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>LSTM | 我的追寻</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="RNN的LSTM网络实现mnist图片识别">
+<meta name="keywords" content="神经网络,pytorch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LSTM">
+<meta property="og:url" content="http://yoursite.com/2018/01/30/LSTM/index.html">
+<meta property="og:site_name" content="我的追寻">
+<meta property="og:description" content="RNN的LSTM网络实现mnist图片识别">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-30T07:29:57.480Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LSTM">
+<meta name="twitter:description" content="RNN的LSTM网络实现mnist图片识别">
+  
+    <link rel="alternate" href="/atom.xml" title="我的追寻" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">我的追寻</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">进一寸有一寸的欢喜</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-LSTM" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/30/LSTM/" class="article-date">
+  <time datetime="2018-01-30T07:26:12.000Z" itemprop="datePublished">2018-01-30</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/PyTorch笔记/">PyTorch笔记</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      LSTM
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h5><p>利用循环神经网络的LSTM网络实现对mnist手写数字图片的识别<br>其中用到了批训练方法<br><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">import</span> torch</span><br><span class="line">from torch <span class="built_in">import</span> nn</span><br><span class="line">from torch.autograd <span class="built_in">import</span> Variable</span><br><span class="line"><span class="built_in">import</span> torchvision.datasets as dsets</span><br><span class="line"><span class="built_in">import</span> torchvision.transforms as transforms</span><br><span class="line"></span><br><span class="line"><span class="comment"># torch.manual_seed(1)    # reproducible</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Hyper Parameters</span></span><br><span class="line"><span class="attr">EPOCH</span> = <span class="number">1</span>               <span class="comment"># train the training data n times, to save time, we just train 1 epoch</span></span><br><span class="line"><span class="attr">BATCH_SIZE</span> = <span class="number">64</span></span><br><span class="line"><span class="attr">TIME_STEP</span> = <span class="number">28</span>          <span class="comment"># rnn time step / image height</span></span><br><span class="line"><span class="attr">INPUT_SIZE</span> = <span class="number">28</span>         <span class="comment"># rnn input size / image width</span></span><br><span class="line"><span class="attr">LR</span> = <span class="number">0.01</span>               <span class="comment"># learning rate</span></span><br><span class="line"><span class="attr">DOWNLOAD_MNIST</span> = False   <span class="comment"># set to True if haven't download the data</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Mnist digital dataset</span></span><br><span class="line"><span class="attr">train_data</span> = dsets.MNIST(</span><br><span class="line">    <span class="attr">root='./mnist/',</span></span><br><span class="line">    <span class="attr">train=True,</span>                         <span class="comment"># this is training data</span></span><br><span class="line">    <span class="attr">transform=transforms.ToTensor(),</span>    <span class="comment"># Converts a PIL.Image or numpy.ndarray to</span></span><br><span class="line">                                        <span class="comment"># torch.FloatTensor of shape (C x H x W) and normalize in the range [0.0, 1.0]</span></span><br><span class="line">    <span class="attr">download=DOWNLOAD_MNIST,</span>            <span class="comment"># download it if you don't have it</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Data Loader for easy mini-batch return in training</span></span><br><span class="line"><span class="attr">train_loader</span> = torch.utils.data.DataLoader(<span class="attr">dataset=train_data,</span> <span class="attr">batch_size=BATCH_SIZE,</span> <span class="attr">shuffle=True)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># convert test data into Variable, pick 2000 samples to speed up testing</span></span><br><span class="line"><span class="attr">test_data</span> = dsets.MNIST(<span class="attr">root='./mnist/',</span> <span class="attr">train=False,</span> <span class="attr">transform=transforms.ToTensor())</span></span><br><span class="line"><span class="attr">test_x</span> = Variable(test_data.test_data, <span class="attr">volatile=True).type(torch.FloatTensor)[:2000]/255.</span>   <span class="comment"># shape (2000, 28, 28) value in range(0,1)</span></span><br><span class="line"><span class="attr">test_y</span> = test_data.test_labels.numpy().squeeze()[:<span class="number">2000</span>]    <span class="comment"># covert to numpy array</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class RNN(nn.Module):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        super(RNN, self).__init__()</span><br><span class="line"></span><br><span class="line">        self.<span class="attr">rnn</span> = nn.LSTM(         <span class="comment"># if use nn.RNN(), it hardly learns</span></span><br><span class="line">            <span class="attr">input_size=INPUT_SIZE,</span></span><br><span class="line">            <span class="attr">hidden_size=64,</span>         <span class="comment"># rnn hidden unit</span></span><br><span class="line">            <span class="attr">num_layers=1,</span>           <span class="comment"># number of rnn layer</span></span><br><span class="line">            <span class="attr">batch_first=True,</span>       <span class="comment"># input &amp; output will has batch size as 1s dimension. e.g. (batch, time_step, input_size)</span></span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        self.<span class="attr">out</span> = nn.Linear(<span class="number">64</span>, <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">    def forward(self, x):</span><br><span class="line">        <span class="comment"># x shape (batch, time_step, input_size)</span></span><br><span class="line">        <span class="comment"># r_out shape (batch, time_step, output_size)</span></span><br><span class="line">        <span class="comment"># h_n shape (n_layers, batch, hidden_size)</span></span><br><span class="line">        <span class="comment"># h_c shape (n_layers, batch, hidden_size)</span></span><br><span class="line">        r_out, (h_n, h_c) = self.rnn(x, None)   <span class="comment"># None represents zero initial hidden state</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># choose r_out at the last time step</span></span><br><span class="line">        <span class="attr">out</span> = self.out(r_out[:, -<span class="number">1</span>, :])</span><br><span class="line">        return out</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="attr">rnn</span> = RNN()</span><br><span class="line">print(rnn)</span><br><span class="line"></span><br><span class="line"><span class="attr">optimizer</span> = torch.optim.Adam(rnn.parameters(), <span class="attr">lr=LR)</span>   <span class="comment"># optimize all cnn parameters</span></span><br><span class="line"><span class="attr">loss_func</span> = nn.CrossEntropyLoss()                       <span class="comment"># the target label is not one-hotted</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># training and testing</span></span><br><span class="line">for epoch <span class="keyword">in</span> range(EPOCH):</span><br><span class="line">    for step, (x, y) <span class="keyword">in</span> enumerate(train_loader):        <span class="comment"># gives batch data</span></span><br><span class="line">        <span class="attr">b_x</span> = Variable(x.view(-<span class="number">1</span>, <span class="number">28</span>, <span class="number">28</span>))              <span class="comment"># reshape x to (batch, time_step, input_size)</span></span><br><span class="line">        <span class="attr">b_y</span> = Variable(y)                               <span class="comment"># batch y</span></span><br><span class="line"></span><br><span class="line">        <span class="attr">output</span> = rnn(b_x)                               <span class="comment"># rnn output</span></span><br><span class="line">        <span class="attr">loss</span> = loss_func(output, b_y)                   <span class="comment"># cross entropy loss</span></span><br><span class="line">        optimizer.zero_grad()                           <span class="comment"># clear gradients for this training step</span></span><br><span class="line">        loss.backward()                                 <span class="comment"># backpropagation, compute gradients</span></span><br><span class="line">        optimizer.step()                                <span class="comment"># apply gradients</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> step % <span class="number">50</span> == <span class="number">0</span>:</span><br><span class="line">            <span class="attr">test_output</span> = rnn(test_x)                   <span class="comment"># (samples, time_step, input_size)</span></span><br><span class="line">            <span class="attr">pred_y</span> = torch.max(test_output, <span class="number">1</span>)[<span class="number">1</span>].data.numpy().squeeze()</span><br><span class="line">            <span class="attr">accuracy</span> = sum(<span class="attr">pred_y</span> == test_y) / float(test_y.size)</span><br><span class="line">            print('Epoch: ', epoch, '| train loss: %.<span class="number">4</span>f' % loss.data[<span class="number">0</span>], '| test accuracy: %.<span class="number">2</span>f' % accuracy)</span><br><span class="line"></span><br><span class="line"><span class="comment"># print 10 predictions from test data</span></span><br><span class="line"><span class="attr">test_output</span> = rnn(test_x[:<span class="number">10</span>].view(-<span class="number">1</span>, <span class="number">28</span>, <span class="number">28</span>))</span><br><span class="line"><span class="attr">pred_y</span> = torch.max(test_output, <span class="number">1</span>)[<span class="number">1</span>].data.numpy().squeeze()</span><br><span class="line">print(pred_y, 'prediction number')</span><br><span class="line">print(test_y[:<span class="number">10</span>], 'real number')</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/30/LSTM/" data-id="cl8vfrwpq0004ogc5b3bn23zo" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pytorch/">pytorch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/神经网络/">神经网络</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/01/30/pytorch-base/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          pytorch_base
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/01/30/CNN/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">CNN</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/30-N天自制操作系统/">30*N天自制操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/">LeetCode</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PyTorch笔记/">PyTorch笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python踩坑指南/">Python踩坑指南</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Raspberry-Pi/">Raspberry Pi</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/caffe/">caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/raspbian/">raspbian</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/函数库/">函数库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/参考手册/">参考手册</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/学习方法/">学习方法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具积累/">工具积累</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/整理/">整理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/爬虫/">爬虫</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/目标检测/">目标检测</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/神经网络/">神经网络</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/读论文/">读论文</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/API/">API</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AlexNet/">AlexNet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Array/">Array</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Attention-Network/">Attention Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOs/">CentOs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP基础/">HTTP基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode/">LeetCode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MLP/">MLP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Raspberry-Pi/">Raspberry Pi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/String/">String</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/caffe/">caffe</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/deploy/">deploy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lda/">lda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/object-detect/">object_detect</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/os/">os</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pytorch/">pytorch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raspbian/">raspbian</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrapy/">scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sort/">sort</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tornado/">tornado</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/twitter/">twitter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/union-find/">union-find</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/下载/">下载</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代理的基本原理/">代理的基本原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/会话与Cookies/">会话与Cookies</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/函数/">函数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/包使用/">包使用</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/双系统/">双系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符串处理/">字符串处理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/工具/">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/快捷键/">快捷键</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/整理/">整理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/文件读取/">文件读取</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/汇编/">汇编</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫/">爬虫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫原理/">爬虫原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫基础库/">爬虫基础库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫实践/">爬虫实践</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫解析库/">爬虫解析库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/神经网络/">神经网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/笔记/">笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网页基础/">网页基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/视频处理/">视频处理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/读论文/">读论文</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/阅读/">阅读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/AlexNet/" style="font-size: 10px;">AlexNet</a> <a href="/tags/Array/" style="font-size: 12.5px;">Array</a> <a href="/tags/Attention-Network/" style="font-size: 10px;">Attention Network</a> <a href="/tags/CentOs/" style="font-size: 10px;">CentOs</a> <a href="/tags/HTTP基础/" style="font-size: 10px;">HTTP基础</a> <a href="/tags/LeetCode/" style="font-size: 17.5px;">LeetCode</a> <a href="/tags/MLP/" style="font-size: 10px;">MLP</a> <a href="/tags/Raspberry-Pi/" style="font-size: 10px;">Raspberry Pi</a> <a href="/tags/String/" style="font-size: 10px;">String</a> <a href="/tags/caffe/" style="font-size: 12.5px;">caffe</a> <a href="/tags/deploy/" style="font-size: 10px;">deploy</a> <a href="/tags/ffmpeg/" style="font-size: 10px;">ffmpeg</a> <a href="/tags/git/" style="font-size: 12.5px;">git</a> <a href="/tags/lda/" style="font-size: 10px;">lda</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object-detect/" style="font-size: 10px;">object_detect</a> <a href="/tags/os/" style="font-size: 10px;">os</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/pytorch/" style="font-size: 20px;">pytorch</a> <a href="/tags/raspbian/" style="font-size: 12.5px;">raspbian</a> <a href="/tags/scrapy/" style="font-size: 10px;">scrapy</a> <a href="/tags/sort/" style="font-size: 12.5px;">sort</a> <a href="/tags/tornado/" style="font-size: 10px;">tornado</a> <a href="/tags/twitter/" style="font-size: 10px;">twitter</a> <a href="/tags/union-find/" style="font-size: 10px;">union-find</a> <a href="/tags/vim/" style="font-size: 10px;">vim</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/下载/" style="font-size: 10px;">下载</a> <a href="/tags/代理的基本原理/" style="font-size: 10px;">代理的基本原理</a> <a href="/tags/会话与Cookies/" style="font-size: 10px;">会话与Cookies</a> <a href="/tags/函数/" style="font-size: 12.5px;">函数</a> <a href="/tags/包使用/" style="font-size: 10px;">包使用</a> <a href="/tags/双系统/" style="font-size: 10px;">双系统</a> <a href="/tags/字符串处理/" style="font-size: 15px;">字符串处理</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/快捷键/" style="font-size: 10px;">快捷键</a> <a href="/tags/整理/" style="font-size: 10px;">整理</a> <a href="/tags/文件读取/" style="font-size: 15px;">文件读取</a> <a href="/tags/汇编/" style="font-size: 10px;">汇编</a> <a href="/tags/爬虫/" style="font-size: 15px;">爬虫</a> <a href="/tags/爬虫原理/" style="font-size: 10px;">爬虫原理</a> <a href="/tags/爬虫基础库/" style="font-size: 10px;">爬虫基础库</a> <a href="/tags/爬虫实践/" style="font-size: 10px;">爬虫实践</a> <a href="/tags/爬虫解析库/" style="font-size: 10px;">爬虫解析库</a> <a href="/tags/神经网络/" style="font-size: 20px;">神经网络</a> <a href="/tags/笔记/" style="font-size: 12.5px;">笔记</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/网页基础/" style="font-size: 10px;">网页基础</a> <a href="/tags/视频处理/" style="font-size: 10px;">视频处理</a> <a href="/tags/读论文/" style="font-size: 10px;">读论文</a> <a href="/tags/阅读/" style="font-size: 10px;">阅读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/10/05/test-new-begin/">test_new_begin</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/14/LeetCode-String/">LeetCode_String</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/09/read/">read</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/08/sort-out/">sort_out</a>
+          </li>
+        
+          <li>
+            <a href="/2020/02/19/CVTEpro/">CVTEpro</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 Hodge Li<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

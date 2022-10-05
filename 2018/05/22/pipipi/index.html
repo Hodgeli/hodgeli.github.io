@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Raspberry Pi | 我的追寻</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="树莓派玩机指南">
+<meta name="keywords" content="Raspberry Pi,CentOs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Raspberry Pi">
+<meta property="og:url" content="http://yoursite.com/2018/05/22/pipipi/index.html">
+<meta property="og:site_name" content="我的追寻">
+<meta property="og:description" content="树莓派玩机指南">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-06-02T04:22:51.258Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Raspberry Pi">
+<meta name="twitter:description" content="树莓派玩机指南">
+  
+    <link rel="alternate" href="/atom.xml" title="我的追寻" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">我的追寻</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">进一寸有一寸的欢喜</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-pipipi" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/22/pipipi/" class="article-date">
+  <time datetime="2018-05-22T15:09:38.000Z" itemprop="datePublished">2018-05-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Raspberry-Pi/">Raspberry Pi</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Raspberry Pi
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>以下部分是以CentOs为例，但发现使用不方便，故丢在引用里，以Raspbain为例重写。</p>
+<blockquote><br>##### 系统烧录<br><a href="http://shumeipai.nxez.com/raspberry-pi-os-collection" target="_blank" rel="noopener">适用于树莓派的系统列表</a><br>这次用CentOs做例子讲解<br><a href="http://mirror.centos.org/altarch/7/isos/armhfp/" target="_blank" rel="noopener">CentOs系统镜像列表</a><br>下载下来的后缀为.raw.xz的文件要解压成.raw<br>然后用Win32DiskImager工具烧录到闪存卡<br>将闪存卡插入树莓派，通电，连接网线。<br>##### 局域网连接<br>树莓派算是做好了，如何食用呢？<br>###### 有路由器<br>将电脑和树莓派用网线连接到同一路由器<br>1. 如果有路由器访问权限，直接查看树莓派的IP地址<br>2. 用ipscaner工具可以查看同意局域网内的设备IP地址<br><br>###### 无路由器<br>电脑联网并将网络设置为共享模式<br>树莓派用网线连接电脑（可用网线转接器）<br>cmd输入命令<code>arp -a</code><br>在接口197.168.137.1下面的第一个IP地址即为电脑共享给树莓派的IP<br><br>获得了IP就好说话了，用putty也好cmder也好，只要支持ssh访问的都行<br>命令<code>ssh username@ip</code>即可连接<br><br>##### 初始化配置<br>###### SD卡扩展到实际容量<br>在终端中输入<code>fdisk /dev/mmcblk0</code>进入硬盘分区软件<br>在软件中输入：<br>p——查看旧分区情况<br>d——删除分区，并按照提示删除第三个分区<br>n——添加一个分区，空间起始位置按照系统默认（默认是最大空间）<br>p——查看新分区情况<br>w——写入分区信息并退出软件<br>在终端中输入：<code>sudo reboot</code>重启树莓派<br>在树莓派开机后在终端输入： <code>resize2fs /dev/mmcblk0p3</code>重新加载分区信息<br>使用：<code>df -h</code>查看新的分区信息表<br>###### 设置网络配置信息<br><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nmcli  d  wifi　　<span class="comment">#查看周围的wifi</span></span><br><span class="line">nmcli d wifi <span class="keyword">connect</span> yourSSID password <span class="string">'yourpassword'</span>  <span class="comment">#连接wifi  </span></span><br><span class="line">nmcli d  show wlan<span class="number">0</span>  <span class="comment">#查看wlan0的状态</span></span><br></pre></td></tr></table></figure><br><br>接下来设置网络配置信息<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vi etc/sysconfig/network-scripts/ifcfg-0000   <span class="comment">#0000是wifi的名字</span></span><br><span class="line"></span><br><span class="line">BOOTPROTO=static              <span class="comment">#静态IP</span></span><br><span class="line">IPADDR=192.168.0.160       <span class="comment">#IP地址</span></span><br><span class="line">GATEWAY=192.168.1.1    <span class="comment">#默认网关</span></span><br><span class="line">NETMASK=255.255.255.0  <span class="comment">#子网掩码</span></span><br></pre></td></tr></table></figure><br><br>###### 创建新用户<br>新建用户并初始化密码：<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">adduser </span>yourusername</span><br><span class="line"><span class="symbol">passwd</span> yourusername</span><br></pre></td></tr></table></figure><br><br>linux会判断密码复杂度，不过可以强行忽略<br>给新建用户授权：<br>新创建的用户并不能使用sudo命令，需要给他添加授权。<br>sudo命令的授权管理是在sudoers文件里的<br><figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost /]<span class="comment"># ls -l /etc/sudoers</span></span><br><span class="line">-r--r-----.<span class="number"> 1 </span>root root<span class="number"> 3938 </span>Apr<span class="number"> 10 </span>20:27 /etc/sudoers</span><br></pre></td></tr></table></figure><br><br>只有只读的权限，如果想要修改的话，需要先添加w权限<br><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost /]<span class="comment"># chmod -v u+w /etc/sudoers</span></span><br><span class="line">mode <span class="keyword">of</span> ‘/etc/sudoers’ changed <span class="keyword">from</span> <span class="number">0440</span> (r--r-----) <span class="keyword">to</span> <span class="number">0640</span> (rw-r-----)</span><br></pre></td></tr></table></figure><br><br>然后就可以添加内容了<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@localhost</span> /]<span class="meta"># vi /etc/sudoers</span></span><br></pre></td></tr></table></figure><br><br>在下面的一行下追加新增的用户:<br><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## Allow root to run any commands anywher  </span></span><br><span class="line"><span class="attribute">root</span>    <span class="literal">ALL</span>=(<span class="literal">ALL</span>)       <span class="literal">ALL</span>  </span><br><span class="line"><span class="attribute">Hodge</span>  <span class="literal">ALL</span>=(<span class="literal">ALL</span>)       <span class="literal">ALL</span>  #这个是新增的用户</span><br></pre></td></tr></table></figure><br><br>记得将写权限收回:<br><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost /]<span class="comment"># chmod -v u-w /etc/sudoers</span></span><br><span class="line">mode <span class="keyword">of</span> ‘/etc/sudoers’ changed <span class="keyword">from</span> <span class="number">0640</span> (rw-r-----) <span class="keyword">to</span> <span class="number">0440</span> (r--r-----)</span><br></pre></td></tr></table></figure><br><br>###### 更换阿里源<br>1. 备份<br><code>mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup</code><br>2. 下载新的CentOS-Base.repo 到/etc/yum.repos.d/<br><code>wget http://mirrors.aliyun.com/repo/Centos-altarch-7.repo -O /etc/yum.repos.d/CentOS-Base.repo</code><br>3. 初始化<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@localhost</span> yum.repos.d]<span class="meta"># yum clean all</span></span><br><span class="line">[root<span class="symbol">@localhost</span> yum.repos.d]<span class="meta"># yum makecache</span></span><br></pre></td></tr></table></figure><br><br></blockquote>
+
+<h5 id="系统烧录"><a href="#系统烧录" class="headerlink" title="系统烧录"></a>系统烧录</h5><p><a href="http://shumeipai.nxez.com/raspberry-pi-os-collection" target="_blank" rel="noopener">适用于树莓派的系统列表</a><br>这次用Raspbain做例子讲解<br><a href="https://www.raspberrypi.org/downloads/" target="_blank" rel="noopener">Raspbain系统下载</a><br>下载下来的后缀为.zip的文件要解压成.img<br>然后用Win32DiskImager工具烧录到闪存卡<br>将闪存卡插入树莓派，通电，连接网线。</p>
+<h5 id="局域网连接"><a href="#局域网连接" class="headerlink" title="局域网连接"></a>局域网连接</h5><p>树莓派算是做好了，如何食用呢？</p>
+<h6 id="有路由器"><a href="#有路由器" class="headerlink" title="有路由器"></a>有路由器</h6><p>将电脑和树莓派用网线连接到同一路由器</p>
+<ol>
+<li>如果有路由器访问权限，直接查看树莓派的IP地址</li>
+<li>用ipscaner工具可以查看同意局域网内的设备IP地址</li>
+</ol>
+<h6 id="无路由器"><a href="#无路由器" class="headerlink" title="无路由器"></a>无路由器</h6><p>电脑联网并将网络设置为共享模式<br>树莓派用网线连接电脑（可用网线转接器）<br>cmd输入命令<code>arp -a</code><br>在接口197.168.137.1下面的第一个IP地址即为电脑共享给树莓派的IP<br>可用ping命令测试</p>
+<p>获得了IP就好说话了，用putty也好cmder也好，只要支持ssh访问的都行<br>命令<code>ssh username@ip</code>即可连接</p>
+<h6 id="关于ssh"><a href="#关于ssh" class="headerlink" title="关于ssh"></a>关于ssh</h6><p>获取树莓派IP后用ssh工具连接时可能出现连接被拒绝等报错<br>可参考：<a href="http://shumeipai.nxez.com/2017/02/27/raspbian-ssh-connection-refused.html" target="_blank" rel="noopener">树莓派新系统SSH连接被拒绝的解决方法</a></p>
+<h5 id="初始化配置"><a href="#初始化配置" class="headerlink" title="初始化配置"></a>初始化配置</h5><h6 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h6><p><code>sudo passwd pi</code></p>
+<h6 id="开启root用户"><a href="#开启root用户" class="headerlink" title="开启root用户"></a>开启root用户</h6><p>由于root用户默认密码为空，因此无法登陆。登陆默认用户pi给root设置密码后即可开启root用户<br>可使用<code>su - root</code>切换用户</p>
+<h6 id="SD卡扩展到实际容量"><a href="#SD卡扩展到实际容量" class="headerlink" title="SD卡扩展到实际容量"></a>SD卡扩展到实际容量</h6><p>使用：<code>df -h</code>查看新的分区信息表<br>最新的Raspbain系统已自动充分利用闪存卡空间了，无需额外设置。</p>
+<h6 id="设置网络配置信息"><a href="#设置网络配置信息" class="headerlink" title="设置网络配置信息"></a>设置网络配置信息</h6><p>连接无线网：</p>
+<ol>
+<li>用户可以在未启动树莓派的状态下单独修改 /boot/wpa_supplicant.conf 文件（内存卡插电脑）配置 WiFi 的 SSID 和密码，这样树莓派启动后会自行读取 wpa_supplicant.conf 配置文件连接 WiFi 设备。</li>
+<li>树莓派启动状态下使用<code>sudo nano /etc/wpa_supplicant/wpa_supplicant.conf</code>打开该文件</li>
+</ol>
+<p>编辑内容如下：<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">country=CN</span><br><span class="line">ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev</span><br><span class="line">update_config=1</span><br><span class="line"> </span><br><span class="line">network=&#123;</span><br><span class="line">ssid=<span class="string">"WiFi-A"</span></span><br><span class="line">psk=<span class="string">"12345678"</span></span><br><span class="line">key_mgmt=WPA-PSK</span><br><span class="line">priority=1</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">network=&#123;</span><br><span class="line">ssid=<span class="string">"WiFi-B"</span></span><br><span class="line">psk=<span class="string">"12345678"</span></span><br><span class="line">key_mgmt=WPA-PSK</span><br><span class="line">priority=2</span><br><span class="line">scan_ssid=1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>ssid:网络的ssid<br>psk:密码<br>priority:连接优先级，数字越大优先级越高（不可以是负数）<br>scan_ssid:连接隐藏WiFi时需要指定该值为1<br>如果你的 WiFi 没有密码或使用WEP加密<code>key_mgmt=NONE</code><br>如果你的 WiFi 使用WPA/WPA2加密<code>key_mgmt=WPA-PSK</code></p>
+<p>配置静态IP：<br>修改/etc/dhcpcd.conf 文件<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">interface eth0</span><br><span class="line"></span><br><span class="line">static <span class="attribute">ip_address</span>=192.168.0.10/24</span><br><span class="line">static <span class="attribute">routers</span>=192.168.0.1</span><br><span class="line">static <span class="attribute">domain_name_servers</span>=192.168.0.1</span><br><span class="line"></span><br><span class="line">interface wlan0</span><br><span class="line"></span><br><span class="line">static <span class="attribute">ip_address</span>=192.168.0.200/24</span><br><span class="line">static <span class="attribute">routers</span>=192.168.0.1</span><br><span class="line">static <span class="attribute">domain_name_servers</span>=192.168.0.1</span><br></pre></td></tr></table></figure></p>
+<p>上面的配置文件中 , eth0是有线的配置  , wlan0是无线配置<br>ip_address就是静态IP , 后面要接/24<br>routers是网关<br>static domain_name_servers是DNS</p>
+<h6 id="更换软件源"><a href="#更换软件源" class="headerlink" title="更换软件源"></a>更换软件源</h6><p>选取<a href="https://lug.ustc.edu.cn/wiki/mirrors/help/raspbian" target="_blank" rel="noopener">中科大的软件源</a></p>
+<ol>
+<li>备份<br><code>mv /etc/apt/sources.list /etc/apt/sources.list.backup</code></li>
+<li><p>新建sources.list并写入如下内容</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">deb <span class="symbol">http:</span>/<span class="regexp">/mirrors.ustc.edu.cn/raspbian</span><span class="regexp">/raspbian/</span> jessie main non-free contrib</span><br><span class="line">deb-src <span class="symbol">http:</span>/<span class="regexp">/mirrors.ustc.edu.cn/raspbian</span><span class="regexp">/raspbian/</span> jessie main non-free contrib</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>更新软件列表</p>
+<figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> <span class="keyword">update</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h5 id="架设服务器"><a href="#架设服务器" class="headerlink" title="架设服务器"></a>架设服务器</h5><ol>
+<li><p>安装Apache2</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="builtin-name">get</span> install apache2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装sqlite</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="builtin-name">get</span> install sqlite</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h5 id="远程访问"><a href="#远程访问" class="headerlink" title="远程访问"></a>远程访问</h5><h6 id="远程桌面"><a href="#远程桌面" class="headerlink" title="远程桌面"></a>远程桌面</h6><p>局域网内windows远程桌面连接树莓派</p>
+<ol>
+<li><p>必须先安装tightvncserver！！！</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="builtin-name">get</span> install tightvncserver</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>再安装xrdp服务。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="builtin-name">get</span> install xrdp</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>打开Windows的远程桌面功能再输入目标局域网IP即可连接。</p>
+<h6 id="nat123"><a href="#nat123" class="headerlink" title="nat123"></a>nat123</h6><p>环境安装：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">apt-get  update  //更新，新系统推荐运行</span></span><br><span class="line"><span class="meta">#</span><span class="bash">apt-get  install  mono-complete  //安装运行环境，一路YES下去</span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="built_in">cd</span>  /mnt                                        //  mnt为你想要安装nat123的目录</span></span><br><span class="line"><span class="meta">#</span><span class="bash">wget  http://www.nat123.com/down/nat123linux.tar.gz  //下载软件</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> tar  -zxvf  nat123linux.tar.gz     //解压</span></span><br><span class="line"><span class="meta">#</span><span class="bash">mono  nat123linux.sh         //运行</span></span><br></pre></td></tr></table></figure></p>
+<p>运行并按提示依次输入自己的帐号和密码、运行成功<br>当然你不想这个程序一直占用你的屏幕，接下来输入x 回车退出软件<br>我们要客户端后台服务启动，这样才清爽：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#cd</span>  /mnt                   <span class="comment">//将mnt换成是自己本地实际安装目录</span></span><br><span class="line"><span class="selector-id">#mono</span>  nat123linux<span class="selector-class">.sh</span> service &amp;</span><br></pre></td></tr></table></figure></p>
+<p>运行显示 nat123 service is running…. 就ok啦 按下回车键 就可以将其后台运行了<br>如果你还是不放心，可查看其运行情况：<code>ps -ef|grep nat123</code><br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pi       23599 23577  5 02:45 pts/0    00:00:02 mono nat123linux.sh service</span><br><span class="line">pi       23688 23577  0 02:46 pts/0    00:00:00 grep <span class="attribute">--color</span>=auto nat123</span><br></pre></td></tr></table></figure></p>
+<p>至此树莓派raspbian/Linux上软件的配置与运行登录完成~~~~</p>
+<p>终于到了重头戏了<br>端口映射配置<br>登录到 <a href="http://www.nat123.com/UsersNatItem.jsp" target="_blank" rel="noopener">http://www.nat123.com/UsersNatItem.jsp</a><br>在映射编辑页面：<br>应用类型：因为全端口映射需要安装nat123的软件才可以访问内网，故不再折腾<br>重点讲80网站类型和其他（非网站类型）</p>
+<ol>
+<li>80网站类型、映射线路默认、应用名称（随你咯）、内网端口为80、内网地址为树莓派静态IP地址、外网域名<br>确认保存后在自己的域名解析管理网站将DNS服务器或NS设置为dns1.dns123.net/dns3.dns123.net；或者将cname设置为指定值</li>
+<li>其他（非网站类型）一般用来做ssh连接或远程桌面连接<br>映射线路默认、应用名称（随你咯）、内网端口ssh为22，xrdp为3350、内网地址为树莓派静态IP地址、外网端口按要求设置、外网域名<br>确认保存后在自己的域名解析管理网站将DNS服务器或NS设置为dns1.dns123.net/dns3.dns123.net；或者将cname设置为指定值</li>
+</ol>
+<p>nat123自启动<br>要保证在断网、断电、重启后nat123服务自动启动：</p>
+<ol>
+<li><p>编写autonat123.sh脚本放在/mnt目录下：</p>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">cd /home/<span class="built_in">pi</span>/Public/nat123</span><br><span class="line"><span class="meta">#echo <span class="meta-string">"1"</span> &gt; times.log</span></span><br><span class="line">ps -fe|grep nat123linux.sh |grep -v grep</span><br><span class="line"><span class="keyword">if</span> [ $? -ne <span class="number">0</span> ];<span class="keyword">then</span></span><br><span class="line">var=`<span class="built_in">date</span> +%Y/%m/%d-%H:%M:%S`</span><br><span class="line"><span class="built_in">echo</span> $var &gt;&gt; runtimes.<span class="built_in">log</span></span><br><span class="line">mono nat123linux.sh autologin username passwd</span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line"><span class="meta">#echo <span class="meta-string">".....nat123linux.....is.........runing......................."</span></span></span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过<code>crontab -e</code>设置自动任务，每10小时运行autonat123.sh<br>将以下指令加入文件最后<code>0 */10 * * * cd /mnt &amp;&amp; sh autonat123.sh</code></p>
+</li>
+<li>将autonat123.sh脚本加入开机自启动：<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/rc.<span class="keyword">local</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>加入启动指令<code>sh /mnt/autonat123.sh</code></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/05/22/pipipi/" data-id="cl8vfrwsc002nogc53nr845ro" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOs/">CentOs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Raspberry-Pi/">Raspberry Pi</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/05/29/vim/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          vim
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/05/18/cs231n/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">起步与KNN</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/30-N天自制操作系统/">30*N天自制操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/">LeetCode</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PyTorch笔记/">PyTorch笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python踩坑指南/">Python踩坑指南</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Raspberry-Pi/">Raspberry Pi</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/caffe/">caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/raspbian/">raspbian</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/函数库/">函数库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/参考手册/">参考手册</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/学习方法/">学习方法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具积累/">工具积累</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/整理/">整理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/爬虫/">爬虫</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/目标检测/">目标检测</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/神经网络/">神经网络</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/读论文/">读论文</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/API/">API</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AlexNet/">AlexNet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Array/">Array</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Attention-Network/">Attention Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOs/">CentOs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP基础/">HTTP基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode/">LeetCode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MLP/">MLP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Raspberry-Pi/">Raspberry Pi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/String/">String</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/caffe/">caffe</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/deploy/">deploy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lda/">lda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/object-detect/">object_detect</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/os/">os</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pytorch/">pytorch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raspbian/">raspbian</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrapy/">scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sort/">sort</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tornado/">tornado</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/twitter/">twitter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/union-find/">union-find</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/下载/">下载</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代理的基本原理/">代理的基本原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/会话与Cookies/">会话与Cookies</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/函数/">函数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/包使用/">包使用</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/双系统/">双系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符串处理/">字符串处理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/工具/">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/快捷键/">快捷键</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/整理/">整理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/文件读取/">文件读取</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/汇编/">汇编</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫/">爬虫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫原理/">爬虫原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫基础库/">爬虫基础库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫实践/">爬虫实践</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫解析库/">爬虫解析库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/神经网络/">神经网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/笔记/">笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网页基础/">网页基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/视频处理/">视频处理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/读论文/">读论文</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/阅读/">阅读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/AlexNet/" style="font-size: 10px;">AlexNet</a> <a href="/tags/Array/" style="font-size: 12.5px;">Array</a> <a href="/tags/Attention-Network/" style="font-size: 10px;">Attention Network</a> <a href="/tags/CentOs/" style="font-size: 10px;">CentOs</a> <a href="/tags/HTTP基础/" style="font-size: 10px;">HTTP基础</a> <a href="/tags/LeetCode/" style="font-size: 17.5px;">LeetCode</a> <a href="/tags/MLP/" style="font-size: 10px;">MLP</a> <a href="/tags/Raspberry-Pi/" style="font-size: 10px;">Raspberry Pi</a> <a href="/tags/String/" style="font-size: 10px;">String</a> <a href="/tags/caffe/" style="font-size: 12.5px;">caffe</a> <a href="/tags/deploy/" style="font-size: 10px;">deploy</a> <a href="/tags/ffmpeg/" style="font-size: 10px;">ffmpeg</a> <a href="/tags/git/" style="font-size: 12.5px;">git</a> <a href="/tags/lda/" style="font-size: 10px;">lda</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object-detect/" style="font-size: 10px;">object_detect</a> <a href="/tags/os/" style="font-size: 10px;">os</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/pytorch/" style="font-size: 20px;">pytorch</a> <a href="/tags/raspbian/" style="font-size: 12.5px;">raspbian</a> <a href="/tags/scrapy/" style="font-size: 10px;">scrapy</a> <a href="/tags/sort/" style="font-size: 12.5px;">sort</a> <a href="/tags/tornado/" style="font-size: 10px;">tornado</a> <a href="/tags/twitter/" style="font-size: 10px;">twitter</a> <a href="/tags/union-find/" style="font-size: 10px;">union-find</a> <a href="/tags/vim/" style="font-size: 10px;">vim</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/下载/" style="font-size: 10px;">下载</a> <a href="/tags/代理的基本原理/" style="font-size: 10px;">代理的基本原理</a> <a href="/tags/会话与Cookies/" style="font-size: 10px;">会话与Cookies</a> <a href="/tags/函数/" style="font-size: 12.5px;">函数</a> <a href="/tags/包使用/" style="font-size: 10px;">包使用</a> <a href="/tags/双系统/" style="font-size: 10px;">双系统</a> <a href="/tags/字符串处理/" style="font-size: 15px;">字符串处理</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/快捷键/" style="font-size: 10px;">快捷键</a> <a href="/tags/整理/" style="font-size: 10px;">整理</a> <a href="/tags/文件读取/" style="font-size: 15px;">文件读取</a> <a href="/tags/汇编/" style="font-size: 10px;">汇编</a> <a href="/tags/爬虫/" style="font-size: 15px;">爬虫</a> <a href="/tags/爬虫原理/" style="font-size: 10px;">爬虫原理</a> <a href="/tags/爬虫基础库/" style="font-size: 10px;">爬虫基础库</a> <a href="/tags/爬虫实践/" style="font-size: 10px;">爬虫实践</a> <a href="/tags/爬虫解析库/" style="font-size: 10px;">爬虫解析库</a> <a href="/tags/神经网络/" style="font-size: 20px;">神经网络</a> <a href="/tags/笔记/" style="font-size: 12.5px;">笔记</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/网页基础/" style="font-size: 10px;">网页基础</a> <a href="/tags/视频处理/" style="font-size: 10px;">视频处理</a> <a href="/tags/读论文/" style="font-size: 10px;">读论文</a> <a href="/tags/阅读/" style="font-size: 10px;">阅读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/10/05/test-new-begin/">test_new_begin</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/14/LeetCode-String/">LeetCode_String</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/09/read/">read</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/08/sort-out/">sort_out</a>
+          </li>
+        
+          <li>
+            <a href="/2020/02/19/CVTEpro/">CVTEpro</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 Hodge Li<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

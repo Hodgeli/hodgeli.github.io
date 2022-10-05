@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>vine数据集处理3 | 我的追寻</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="通过整理好的urls下载视频">
+<meta name="keywords" content="python,文件读取,下载">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vine数据集处理3">
+<meta property="og:url" content="http://yoursite.com/2017/12/07/vinedataset3/index.html">
+<meta property="og:site_name" content="我的追寻">
+<meta property="og:description" content="通过整理好的urls下载视频">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-07T08:01:52.553Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vine数据集处理3">
+<meta name="twitter:description" content="通过整理好的urls下载视频">
+  
+    <link rel="alternate" href="/atom.xml" title="我的追寻" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">我的追寻</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">进一寸有一寸的欢喜</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-vinedataset3" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/07/vinedataset3/" class="article-date">
+  <time datetime="2017-12-07T07:43:49.000Z" itemprop="datePublished">2017-12-07</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Python踩坑指南/">Python踩坑指南</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      vine数据集处理3
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h5><p>现在拥有了一个121117条 id::::url 的final_hashs.txt文件<br>需要读取里面的url并下载对应的视频，有如下要求：</p>
+<ol>
+<li>随时可手动停止下载，再次开始下载可继续上次任务</li>
+<li>保存下载成功的视频id，保存下载失败(链接失效或下载超时)的视频id::::url</li>
+<li>自定义下载路径<h6 id="download-2-py"><a href="#download-2-py" class="headerlink" title="download_2.py"></a>download_2.py</h6><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line">#可间断性地下载final_urls.txt的链接获得视频集</span><br><span class="line">import urllib.request</span><br><span class="line"></span><br><span class="line">def getLines(file_name):        #获取文件行数</span><br><span class="line">    <span class="built_in">count</span> = <span class="number">0</span></span><br><span class="line">    thefile = <span class="keyword">open</span>(file_name, encoding=<span class="string">'utf8'</span>, errors=<span class="string">'ignore'</span>)</span><br><span class="line">    <span class="keyword">while</span> True:</span><br><span class="line">        <span class="keyword">buffer</span> = thefile.<span class="keyword">read</span>(<span class="number">1024</span> * <span class="number">8192</span>)</span><br><span class="line">        <span class="keyword">if</span> not <span class="keyword">buffer</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="built_in">count</span> += <span class="keyword">buffer</span>.<span class="built_in">count</span>(<span class="string">'\n'</span>)</span><br><span class="line">    thefile.<span class="keyword">close</span>()</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">count</span></span><br><span class="line"></span><br><span class="line">dict_id_url = &#123;&#125;</span><br><span class="line"><span class="keyword">f</span> = <span class="keyword">open</span>(<span class="string">"dict_id_url.txt"</span>,encoding=<span class="string">'utf8'</span>, errors=<span class="string">'ignore'</span>)</span><br><span class="line"><span class="keyword">a</span> = <span class="keyword">f</span>.<span class="keyword">read</span>()</span><br><span class="line">dict_id_url = <span class="built_in">eval</span>(<span class="keyword">a</span>)</span><br><span class="line"><span class="keyword">f</span>.<span class="keyword">close</span>()</span><br><span class="line"><span class="keyword">print</span>(<span class="string">"dict_id_url读取成功"</span>)        #读取剩余urls</span><br><span class="line"></span><br><span class="line">f_down_ok = <span class="keyword">open</span>(<span class="string">"down_ok.txt"</span>,<span class="string">'a'</span>,encoding=<span class="string">'utf8'</span>, errors=<span class="string">'ignore'</span>)</span><br><span class="line">f_down_ok_this_time = <span class="keyword">open</span>(<span class="string">"down_ok_this_time.txt"</span>,encoding=<span class="string">'utf8'</span>, errors=<span class="string">'ignore'</span>)</span><br><span class="line"><span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">    line_down_ok_this_time = f_down_ok_this_time.readline()</span><br><span class="line">    <span class="keyword">if</span> not line_down_ok_this_time:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        line_down_ok_this_time = line_down_ok_this_time.replace(<span class="string">'\n'</span>,<span class="string">''</span>)</span><br><span class="line">        del dict_id_url[str(line_down_ok_this_time)]        #更新未下载urls</span><br><span class="line">        f_down_ok.<span class="keyword">write</span>(str(line_down_ok_this_time)+<span class="string">'\n'</span>)       #更新已下载urls</span><br><span class="line">f_down_ok_this_time.<span class="keyword">close</span>()</span><br><span class="line">f_down_ok.<span class="keyword">close</span>()</span><br><span class="line">f_dict_id_url = <span class="keyword">open</span>(<span class="string">"dict_id_url.txt"</span>,<span class="string">'w'</span>,encoding=<span class="string">'utf8'</span>, errors=<span class="string">'ignore'</span>)    #保存未下载的urls</span><br><span class="line">f_dict_id_url.<span class="keyword">write</span>(str(dict_id_url))</span><br><span class="line">f_dict_id_url.<span class="keyword">close</span>()</span><br><span class="line"><span class="keyword">print</span>(<span class="string">"dict_id_url清理已下载urls成功"</span>)</span><br><span class="line"><span class="keyword">print</span>(<span class="string">"down_ok添加已下载urls成功"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span>(<span class="string">"共剩余"</span>+str(<span class="built_in">len</span>(dict_id_url))+<span class="string">'条未下载'</span>)</span><br><span class="line"><span class="keyword">print</span>(<span class="string">"总共已下载"</span>+str(getLines(<span class="string">'down_ok.txt'</span>))+<span class="string">'条视频'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">f</span> = <span class="keyword">open</span>(<span class="string">"down_ok_this_time.txt"</span>,<span class="string">'w'</span>,encoding=<span class="string">'utf8'</span>, errors=<span class="string">'ignore'</span>)     #清空文本</span><br><span class="line"><span class="keyword">f</span>.<span class="keyword">close</span>()</span><br><span class="line"></span><br><span class="line">f_url_error = <span class="keyword">open</span>(<span class="string">"url_error.txt"</span>,<span class="string">'a'</span>,encoding=<span class="string">'utf8'</span>, errors=<span class="string">'ignore'</span>)</span><br><span class="line">f_url_error_this_time = <span class="keyword">open</span>(<span class="string">"url_error_this_time.txt"</span>,encoding=<span class="string">'utf8'</span>, errors=<span class="string">'ignore'</span>)</span><br><span class="line"><span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">    line_url_error_this_time = f_url_error_this_time.readline()</span><br><span class="line">    <span class="keyword">if</span> not line_url_error_this_time:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        f_url_error.<span class="keyword">write</span>(str(line_url_error_this_time))       #更新失效urls</span><br><span class="line">f_url_error_this_time.<span class="keyword">close</span>()</span><br><span class="line">f_url_error.<span class="keyword">close</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span>(<span class="string">"url_error增加错误urls成功"</span>)</span><br><span class="line"><span class="keyword">print</span>(<span class="string">"共有"</span>+str(getLines(<span class="string">'url_error.txt'</span>))+<span class="string">'条视频链接错误'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">f</span> = <span class="keyword">open</span>(<span class="string">"url_error_this_time.txt"</span>,<span class="string">'w'</span>,encoding=<span class="string">'utf8'</span>, errors=<span class="string">'ignore'</span>)       #清空文本</span><br><span class="line"><span class="keyword">f</span>.<span class="keyword">close</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span>(<span class="string">'---开始下载---'</span>)</span><br><span class="line">flag = <span class="number">1</span></span><br><span class="line"><span class="keyword">for</span> key in dict_id_ur<span class="variable">l:</span></span><br><span class="line">    url = str(dict_id_url[key])</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="string">'.mp4?'</span> in ur<span class="variable">l:</span></span><br><span class="line">            video_name = str(key)+<span class="string">'.mp4'</span>     #视频保存路径</span><br><span class="line">            urllib.request.urlretrieve(url, video_name)     #下载</span><br><span class="line">            f_down_ok_this_time = <span class="keyword">open</span>(<span class="string">"down_ok_this_time.txt"</span>, <span class="string">'a'</span>, encoding=<span class="string">'utf8'</span>, errors=<span class="string">'ignore'</span>)</span><br><span class="line">            f_down_ok_this_time.<span class="keyword">write</span>(str(key)+<span class="string">'\n'</span>)</span><br><span class="line">            f_down_ok_this_time.<span class="keyword">close</span>()</span><br><span class="line">            <span class="keyword">print</span>(<span class="string">'。。。。。'</span>) #下载成功一条打一个标记</span><br><span class="line">            flag += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            f_url_error_this_time = <span class="keyword">open</span>(<span class="string">"url_error_this_time.txt"</span>, <span class="string">'a'</span>, encoding=<span class="string">'utf8'</span>, errors=<span class="string">'ignore'</span>)</span><br><span class="line">            f_url_error_this_time.<span class="keyword">write</span>(str(key)+<span class="string">'::::'</span>+dict_id_url[key]+<span class="string">'\n'</span>)</span><br><span class="line">            f_url_error_this_time.<span class="keyword">close</span>()</span><br><span class="line">    except (TimeoutError,urllib.error.URLError):</span><br><span class="line">        <span class="keyword">print</span>(<span class="string">'----url失效，下载超时----'</span>)</span><br><span class="line">        f_url_error_this_time = <span class="keyword">open</span>(<span class="string">"url_error_this_time.txt"</span>, <span class="string">'a'</span>, encoding=<span class="string">'utf8'</span>, errors=<span class="string">'ignore'</span>)</span><br><span class="line">        f_url_error_this_time.<span class="keyword">write</span>(str(key) + <span class="string">'::::'</span> + dict_id_url[key] + <span class="string">'\n'</span>)</span><br><span class="line">        f_url_error_this_time.<span class="keyword">close</span>()</span><br><span class="line">        <span class="keyword">print</span>(<span class="string">'本次已下载'</span>+str(getLines(<span class="string">'down_ok_this_time.txt'</span>))+<span class="string">'条，本次下载url错误'</span>+str(getLines(<span class="string">'url_error_this_time.txt'</span>))+<span class="string">'条'</span>)</span><br><span class="line">        <span class="keyword">print</span>(<span class="string">'已保存并跳过此条url，下载继续--&gt;'</span>)</span><br><span class="line">    <span class="keyword">if</span>(flag%<span class="number">1000</span>==<span class="number">0</span>):</span><br><span class="line">        <span class="keyword">print</span>(<span class="string">'本次已下载'</span>+flag+<span class="string">'条视频'</span>)</span><br><span class="line"><span class="keyword">print</span>(<span class="string">"****下载全部完成****"</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h5 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h5><p>数据集与代码，发布在<a href="https://github.com/Hodgeli/vine_dataset" title="vine数据集" target="_blank" rel="noopener">github</a>.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/07/vinedataset3/" data-id="cl8vfrwvt007logc5caofio7r" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/下载/">下载</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/文件读取/">文件读取</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/12/07/short-key/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          快捷键
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/12/04/vine-data-2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">vine数据集处理2</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/30-N天自制操作系统/">30*N天自制操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/">LeetCode</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PyTorch笔记/">PyTorch笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python踩坑指南/">Python踩坑指南</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Raspberry-Pi/">Raspberry Pi</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/caffe/">caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/raspbian/">raspbian</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/函数库/">函数库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/参考手册/">参考手册</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/学习方法/">学习方法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具积累/">工具积累</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/整理/">整理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/爬虫/">爬虫</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/目标检测/">目标检测</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/神经网络/">神经网络</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/读论文/">读论文</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/API/">API</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AlexNet/">AlexNet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Array/">Array</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Attention-Network/">Attention Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOs/">CentOs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP基础/">HTTP基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode/">LeetCode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MLP/">MLP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Raspberry-Pi/">Raspberry Pi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/String/">String</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/caffe/">caffe</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/deploy/">deploy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lda/">lda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/object-detect/">object_detect</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/os/">os</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pytorch/">pytorch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raspbian/">raspbian</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrapy/">scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sort/">sort</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tornado/">tornado</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/twitter/">twitter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/union-find/">union-find</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/下载/">下载</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代理的基本原理/">代理的基本原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/会话与Cookies/">会话与Cookies</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/函数/">函数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/包使用/">包使用</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/双系统/">双系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符串处理/">字符串处理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/工具/">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/快捷键/">快捷键</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/整理/">整理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/文件读取/">文件读取</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/汇编/">汇编</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫/">爬虫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫原理/">爬虫原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫基础库/">爬虫基础库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫实践/">爬虫实践</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫解析库/">爬虫解析库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/神经网络/">神经网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/笔记/">笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网页基础/">网页基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/视频处理/">视频处理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/读论文/">读论文</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/阅读/">阅读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/AlexNet/" style="font-size: 10px;">AlexNet</a> <a href="/tags/Array/" style="font-size: 12.5px;">Array</a> <a href="/tags/Attention-Network/" style="font-size: 10px;">Attention Network</a> <a href="/tags/CentOs/" style="font-size: 10px;">CentOs</a> <a href="/tags/HTTP基础/" style="font-size: 10px;">HTTP基础</a> <a href="/tags/LeetCode/" style="font-size: 17.5px;">LeetCode</a> <a href="/tags/MLP/" style="font-size: 10px;">MLP</a> <a href="/tags/Raspberry-Pi/" style="font-size: 10px;">Raspberry Pi</a> <a href="/tags/String/" style="font-size: 10px;">String</a> <a href="/tags/caffe/" style="font-size: 12.5px;">caffe</a> <a href="/tags/deploy/" style="font-size: 10px;">deploy</a> <a href="/tags/ffmpeg/" style="font-size: 10px;">ffmpeg</a> <a href="/tags/git/" style="font-size: 12.5px;">git</a> <a href="/tags/lda/" style="font-size: 10px;">lda</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object-detect/" style="font-size: 10px;">object_detect</a> <a href="/tags/os/" style="font-size: 10px;">os</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/pytorch/" style="font-size: 20px;">pytorch</a> <a href="/tags/raspbian/" style="font-size: 12.5px;">raspbian</a> <a href="/tags/scrapy/" style="font-size: 10px;">scrapy</a> <a href="/tags/sort/" style="font-size: 12.5px;">sort</a> <a href="/tags/tornado/" style="font-size: 10px;">tornado</a> <a href="/tags/twitter/" style="font-size: 10px;">twitter</a> <a href="/tags/union-find/" style="font-size: 10px;">union-find</a> <a href="/tags/vim/" style="font-size: 10px;">vim</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/下载/" style="font-size: 10px;">下载</a> <a href="/tags/代理的基本原理/" style="font-size: 10px;">代理的基本原理</a> <a href="/tags/会话与Cookies/" style="font-size: 10px;">会话与Cookies</a> <a href="/tags/函数/" style="font-size: 12.5px;">函数</a> <a href="/tags/包使用/" style="font-size: 10px;">包使用</a> <a href="/tags/双系统/" style="font-size: 10px;">双系统</a> <a href="/tags/字符串处理/" style="font-size: 15px;">字符串处理</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/快捷键/" style="font-size: 10px;">快捷键</a> <a href="/tags/整理/" style="font-size: 10px;">整理</a> <a href="/tags/文件读取/" style="font-size: 15px;">文件读取</a> <a href="/tags/汇编/" style="font-size: 10px;">汇编</a> <a href="/tags/爬虫/" style="font-size: 15px;">爬虫</a> <a href="/tags/爬虫原理/" style="font-size: 10px;">爬虫原理</a> <a href="/tags/爬虫基础库/" style="font-size: 10px;">爬虫基础库</a> <a href="/tags/爬虫实践/" style="font-size: 10px;">爬虫实践</a> <a href="/tags/爬虫解析库/" style="font-size: 10px;">爬虫解析库</a> <a href="/tags/神经网络/" style="font-size: 20px;">神经网络</a> <a href="/tags/笔记/" style="font-size: 12.5px;">笔记</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/网页基础/" style="font-size: 10px;">网页基础</a> <a href="/tags/视频处理/" style="font-size: 10px;">视频处理</a> <a href="/tags/读论文/" style="font-size: 10px;">读论文</a> <a href="/tags/阅读/" style="font-size: 10px;">阅读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/10/05/test-new-begin/">test_new_begin</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/14/LeetCode-String/">LeetCode_String</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/09/read/">read</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/08/sort-out/">sort_out</a>
+          </li>
+        
+          <li>
+            <a href="/2020/02/19/CVTEpro/">CVTEpro</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 Hodge Li<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

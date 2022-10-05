@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>vine数据集处理4 | 我的追寻</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="清理分割好的数据">
+<meta name="keywords" content="字符串处理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vine数据集处理4">
+<meta property="og:url" content="http://yoursite.com/2018/01/09/clean-down-data/index.html">
+<meta property="og:site_name" content="我的追寻">
+<meta property="og:description" content="清理分割好的数据">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-09T04:49:36.443Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vine数据集处理4">
+<meta name="twitter:description" content="清理分割好的数据">
+  
+    <link rel="alternate" href="/atom.xml" title="我的追寻" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">我的追寻</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">进一寸有一寸的欢喜</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-clean-down-data" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/09/clean-down-data/" class="article-date">
+  <time datetime="2018-01-09T02:06:36.000Z" itemprop="datePublished">2018-01-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Python踩坑指南/">Python踩坑指南</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      vine数据集处理4
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="需求-amp-前提"><a href="#需求-amp-前提" class="headerlink" title="需求&amp;前提"></a>需求&amp;前提</h5><p>多个文件夹的视频文件共121117-1862（下载失败数）= 119255 条<br>多个文件夹的分割后文件共119255 - 135（分割失败数）= 119120 条<br>现要对这119120条数据做hash词频统计，并截取词频不小于5的所有数据并清除不合法数据</p>
+<p>求得分割后数据数:<br>遍历video文件夹建立list_id并去除extract_fail数据</p>
+<h6 id="get-all-videos-py"><a href="#get-all-videos-py" class="headerlink" title="get_all_videos.py"></a>get_all_videos.py</h6><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取所有拆分成功的短视频id存入list_id.txt</span></span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def file_name(file_dir):  <span class="comment"># 获取视频名list</span></span><br><span class="line">    <span class="keyword">for</span> root, dirs, <span class="built_in">files</span> <span class="keyword">in</span> os.walk(file_dir):</span><br><span class="line">        continue</span><br><span class="line">    <span class="literal">return</span> <span class="built_in">files</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">path = <span class="string">'/home/caoda/Hodge_work_space/videos_data/videos_201712'</span></span><br><span class="line">list_id = []</span><br><span class="line">f_list_id = <span class="built_in">open</span>(<span class="string">"list_id.txt"</span>, encoding=<span class="string">'utf8'</span>, errors=<span class="string">'ignore'</span>)</span><br><span class="line"><span class="keyword">a</span> = f_list_id.<span class="built_in">read</span>()</span><br><span class="line">list_id = eval(<span class="keyword">a</span>)</span><br><span class="line">f_list_id.<span class="built_in">close</span>()</span><br><span class="line"></span><br><span class="line">print(<span class="string">'读取list_id成功，现有'</span> + str(<span class="built_in">len</span>(list_id)) + <span class="string">'条数据'</span>)</span><br><span class="line">list_path = [<span class="string">'07'</span>, <span class="string">'08'</span>, <span class="string">'09'</span>, <span class="string">'10'</span>, <span class="string">'11'</span>, <span class="string">'12'</span>, <span class="string">'13'</span>, <span class="string">'14'</span>, <span class="string">'15'</span>, <span class="string">'16'</span>, <span class="string">'18'</span>, <span class="string">'19'</span>, <span class="string">'20'</span>, <span class="string">'21'</span>, <span class="string">'24'</span>]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> list_path:</span><br><span class="line">    list_id += file_name(path + i)</span><br><span class="line">    <span class="comment"># print(path + str(i))</span></span><br><span class="line"></span><br><span class="line">print(<span class="string">'总视频数：'</span> + str(<span class="built_in">len</span>(list_id)))  <span class="comment"># 121117条数据-下载失败条数</span></span><br><span class="line"><span class="comment"># 去除提取失败与剩余条数</span></span><br><span class="line"></span><br><span class="line">f_extract_fail = <span class="built_in">open</span>(<span class="string">"extract_fail"</span>, encoding=<span class="string">'utf8'</span>, errors=<span class="string">'ignore'</span>)</span><br><span class="line">i = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">    line_extract_fail = f_extract_fail.readline()</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> line_extract_fail:</span><br><span class="line">        break</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        line_extract_fail = line_extract_fail.<span class="built_in">replace</span>(<span class="string">'\n'</span>, <span class="string">''</span>)</span><br><span class="line">        <span class="keyword">if</span> (line_extract_fail <span class="keyword">in</span> list_id):</span><br><span class="line">            list_id.remove(line_extract_fail)</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">print(<span class="string">'清理'</span> + str(i) + <span class="string">'条数据\n最后总数据'</span> + str(<span class="built_in">len</span>(list_id)))</span><br><span class="line"></span><br><span class="line">f_list_id = <span class="built_in">open</span>(<span class="string">"list_id.txt"</span>, <span class="string">'w'</span>, encoding=<span class="string">'utf8'</span>, errors=<span class="string">'ignore'</span>)</span><br><span class="line">f_list_id.<span class="built_in">write</span>(str(list_id))</span><br><span class="line">f_list_id.<span class="built_in">close</span>()</span><br><span class="line"></span><br><span class="line">list_id.<span class="built_in">clear</span>()</span><br></pre></td></tr></table></figure>
+<h5 id="词频统计"><a href="#词频统计" class="headerlink" title="词频统计"></a>词频统计</h5><p>根据list_id和121117长度的final_hashs.txt对最终数据做词频统计写入count_hash.txt</p>
+<h6 id="count-py"><a href="#count-py" class="headerlink" title="count.py"></a>count.py</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 统计hash总数与词频</span></span><br><span class="line"><span class="keyword">import</span> collections</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_id</span><span class="params">(template)</span>:</span></span><br><span class="line">    rule = <span class="string">r'(.*?)::::'</span></span><br><span class="line">    slot_list = re.findall(rule, template)</span><br><span class="line">    <span class="keyword">return</span> slot_list</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_text</span><span class="params">(template)</span>:</span></span><br><span class="line">    rule = <span class="string">r'::::(.*?)\n'</span></span><br><span class="line">    slot_list = re.findall(rule, template)</span><br><span class="line">    <span class="keyword">return</span> slot_list</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_list_or_dict</span><span class="params">(path)</span>:</span></span><br><span class="line">    f = open(path, encoding=<span class="string">'utf8'</span>, errors=<span class="string">'ignore'</span>)</span><br><span class="line">    a = f.read()</span><br><span class="line">    dict_or_list = eval(a)</span><br><span class="line">    f.close()</span><br><span class="line">    <span class="keyword">return</span> dict_or_list</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">list_id = get_list_or_dict(<span class="string">'list_id.txt'</span>)</span><br><span class="line">print(<span class="string">'list_id长度'</span> + str(len(list_id)))</span><br><span class="line"></span><br><span class="line">f_id_hash_final = open(<span class="string">"id_hash_final.txt"</span>, <span class="string">'w'</span>, encoding=<span class="string">'utf8'</span>, errors=<span class="string">'ignore'</span>)</span><br><span class="line"></span><br><span class="line">f = open(<span class="string">"final_hashs.txt"</span>, encoding=<span class="string">'utf8'</span>, errors=<span class="string">'ignore'</span>)</span><br><span class="line">dict_id_hash = &#123;&#125;</span><br><span class="line"><span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">    line_txt = f.readline()</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> line_txt:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        dict_id_hash[get_id(line_txt)[<span class="number">0</span>]] = get_text(line_txt)[<span class="number">0</span>]</span><br><span class="line">f.close()</span><br><span class="line">print(<span class="string">'dict_id_hash长度'</span> + str(len(dict_id_hash)))  <span class="comment"># 121117</span></span><br><span class="line">f_dict_id_hash = open(<span class="string">"dict_id_hash.txt"</span>, <span class="string">'w'</span>, encoding=<span class="string">'utf8'</span>, errors=<span class="string">'ignore'</span>)</span><br><span class="line">f_dict_id_hash.write(str(dict_id_hash))</span><br><span class="line">f_dict_id_hash.close()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> id <span class="keyword">in</span> list_id:</span><br><span class="line">    id = id.replace(<span class="string">'.mp4'</span>, <span class="string">''</span>)</span><br><span class="line"></span><br><span class="line">    f_id_hash_final.write(id + <span class="string">'::::'</span> + dict_id_hash[id] + <span class="string">'\n'</span>)</span><br><span class="line">f_id_hash_final.close()</span><br><span class="line"></span><br><span class="line">f_id_hash_final = open(<span class="string">"id_hash_final.txt"</span>, encoding=<span class="string">'utf8'</span>, errors=<span class="string">'ignore'</span>)</span><br><span class="line">f_count_hash = open(<span class="string">"count_hash.txt"</span>, <span class="string">'w'</span>, encoding=<span class="string">'utf8'</span>, errors=<span class="string">'ignore'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">subString1</span><span class="params">(template)</span>:</span>  <span class="comment"># HashTag以‘#’开头，以空格或回车结尾</span></span><br><span class="line">    copy = <span class="keyword">False</span></span><br><span class="line">    finished = <span class="keyword">False</span></span><br><span class="line">    slotList = []</span><br><span class="line">    str = <span class="string">""</span></span><br><span class="line">    <span class="keyword">for</span> s <span class="keyword">in</span> template:</span><br><span class="line">        <span class="keyword">if</span> s == <span class="string">'#'</span>:</span><br><span class="line">            copy = <span class="keyword">True</span></span><br><span class="line">        <span class="keyword">elif</span> s == <span class="string">' '</span>:</span><br><span class="line">            copy = <span class="keyword">False</span></span><br><span class="line">            finished = <span class="keyword">True</span></span><br><span class="line">        <span class="keyword">elif</span> s == <span class="string">'\n'</span>:</span><br><span class="line">            copy = <span class="keyword">False</span></span><br><span class="line">            finished = <span class="keyword">True</span></span><br><span class="line">        <span class="keyword">elif</span> copy:</span><br><span class="line">            str = str + s</span><br><span class="line">        <span class="keyword">if</span> finished:</span><br><span class="line">            <span class="keyword">if</span> str != <span class="string">""</span>:</span><br><span class="line">                slotList.append(str)</span><br><span class="line">            str = <span class="string">""</span></span><br><span class="line">            finished = <span class="keyword">False</span></span><br><span class="line">    <span class="keyword">return</span> slotList</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">slotList = []</span><br><span class="line">i = <span class="number">1</span></span><br><span class="line"><span class="comment"># for i in range(0,3):</span></span><br><span class="line"><span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">    line_id_hash = f_id_hash_final.readline()</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> line_id_hash:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="comment"># print()</span></span><br><span class="line">        slotList += subString1(line_id_hash)  <span class="comment"># 将所有HashTag存进list</span></span><br><span class="line"><span class="comment"># print(slotList)</span></span><br><span class="line"></span><br><span class="line">result = collections.Counter(slotList)  <span class="comment"># 词频统计</span></span><br><span class="line"><span class="comment"># ss = str(result)    #词频统计结果转换成字符串并存文件</span></span><br><span class="line"><span class="comment"># f_handle_hash.write(ss)</span></span><br><span class="line"><span class="comment"># print(result.most_common(100)) 查看统计结果前100名</span></span><br><span class="line"><span class="keyword">for</span> each <span class="keyword">in</span> result.most_common():</span><br><span class="line">    ss = str(each)  <span class="comment"># 词频统计结果转换成字符串并存文件</span></span><br><span class="line">    f_count_hash.write(ss + <span class="string">'\n'</span>)</span><br><span class="line">    <span class="comment"># print(ss)</span></span><br><span class="line">f_id_hash_final.close()</span><br><span class="line">f_count_hash.close()</span><br></pre></td></tr></table></figure>
+<h5 id="截取指定长度数据"><a href="#截取指定长度数据" class="headerlink" title="截取指定长度数据"></a>截取指定长度数据</h5><p>根据词频统计截取hash词频不小于5的数据存入id_hash</p>
+<h6 id="count-num-hash-py"><a href="#count-num-hash-py" class="headerlink" title="count_num_hash.py"></a>count_num_hash.py</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getText</span><span class="params">(template)</span>:</span></span><br><span class="line">    rule = <span class="string">r'::::(.*?)\n'</span></span><br><span class="line">    slotList = re.findall(rule, template)</span><br><span class="line">    <span class="keyword">return</span> slotList</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_list_or_dict</span><span class="params">(path)</span>:</span></span><br><span class="line">    f = open(path, encoding=<span class="string">'utf8'</span>, errors=<span class="string">'ignore'</span>)</span><br><span class="line">    a = f.read()</span><br><span class="line">    dict_or_list = eval(a)</span><br><span class="line">    f.close()</span><br><span class="line">    <span class="keyword">return</span> dict_or_list</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">f_count_hash = open(<span class="string">"count_hash.txt"</span>, encoding=<span class="string">'utf8'</span>, errors=<span class="string">'ignore'</span>)</span><br><span class="line"><span class="comment"># f_list_count_hash = open("list_count_hash.txt",'w',encoding='utf8', errors='ignore')</span></span><br><span class="line">list_hash = []</span><br><span class="line">flag_hash_line = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">    line_hash = f_count_hash.readline()</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> line_hash:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        rule1 = <span class="string">r"'(.*?)'"</span></span><br><span class="line">        rule2 = <span class="string">r'"(.*?)"'</span></span><br><span class="line">        rule3 = <span class="string">r' (.*?)\)'</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            slotList = re.findall(rule1, line_hash)</span><br><span class="line">            hash_num = re.findall(rule3, line_hash)</span><br><span class="line">            <span class="keyword">if</span> int(hash_num[<span class="number">0</span>]) == <span class="number">4</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                list_hash.append(str(slotList[<span class="number">0</span>]))</span><br><span class="line">                flag_hash_line += <span class="number">1</span></span><br><span class="line">        <span class="keyword">except</span> IndexError:</span><br><span class="line">            slotList = re.findall(rule2, line_hash)</span><br><span class="line">            list_hash.append(str(slotList[<span class="number">0</span>]))</span><br><span class="line">            flag_hash_line += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">print(flag_hash_line)</span><br><span class="line"></span><br><span class="line">list_id = get_list_or_dict(<span class="string">'list_id.txt'</span>)</span><br><span class="line">print(len(list_id))</span><br><span class="line">dict_id_hash = get_list_or_dict(<span class="string">'dict_id_hash.txt'</span>)</span><br><span class="line">print(len(dict_id_hash))</span><br><span class="line"></span><br><span class="line">f_id_hash = open(<span class="string">"id_hash"</span>, <span class="string">'w'</span>, encoding=<span class="string">'utf8'</span>, errors=<span class="string">'ignore'</span>)</span><br><span class="line">i = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> id <span class="keyword">in</span> list_id:</span><br><span class="line">    id = str(id).replace(<span class="string">'.mp4'</span>, <span class="string">''</span>)</span><br><span class="line">    <span class="comment"># print(id)</span></span><br><span class="line">    line_list_hash = dict_id_hash[id].split(<span class="string">' '</span>)</span><br><span class="line">    <span class="comment"># print(line_list_hash)</span></span><br><span class="line">    line_hash_new = <span class="string">''</span></span><br><span class="line">    <span class="keyword">for</span> hash <span class="keyword">in</span> line_list_hash:</span><br><span class="line">        hash = str(hash).replace(<span class="string">'#'</span>, <span class="string">''</span>)</span><br><span class="line">        <span class="keyword">if</span> hash <span class="keyword">in</span> list_hash:</span><br><span class="line">            line_hash_new += <span class="string">'#'</span> + hash + <span class="string">' '</span></span><br><span class="line">    <span class="keyword">if</span> line_hash_new != <span class="string">''</span>:</span><br><span class="line">    <span class="comment">#     print('空：' + id)</span></span><br><span class="line">    <span class="comment"># else:</span></span><br><span class="line">        f_id_hash.write(id+<span class="string">'::::'</span>+line_hash_new+<span class="string">'\n'</span>)</span><br><span class="line">        i += <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> (i % <span class="number">10000</span> == <span class="number">0</span>):</span><br><span class="line">        print(i)</span><br><span class="line">f_id_hash.close()</span><br><span class="line">print(i)</span><br></pre></td></tr></table></figure>
+<p>最终处理获得118684长度的id_hash文件</p>
+<h5 id="清理数据"><a href="#清理数据" class="headerlink" title="清理数据"></a>清理数据</h5><p>根据id_error文件从119120条分割后文件集中删除不合法数据</p>
+<h6 id="clean-extract-data-py"><a href="#clean-extract-data-py" class="headerlink" title="clean_extract_data.py"></a>clean_extract_data.py</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> shutil</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_id</span><span class="params">(template)</span>:</span></span><br><span class="line">    rule = <span class="string">r'(.*?)::::'</span></span><br><span class="line">    slot_list = re.findall(rule, template)</span><br><span class="line">    <span class="keyword">return</span> slot_list</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_list_or_dict</span><span class="params">(path)</span>:</span></span><br><span class="line">    f = open(path, encoding=<span class="string">'utf8'</span>, errors=<span class="string">'ignore'</span>)</span><br><span class="line">    a = f.read()</span><br><span class="line">    dict_or_list = eval(a)</span><br><span class="line">    f.close()</span><br><span class="line">    <span class="keyword">return</span> dict_or_list</span><br><span class="line"></span><br><span class="line">dict_id_num = get_list_or_dict(<span class="string">'dict_id_num.txt'</span>)</span><br><span class="line">print(len(dict_id_num))</span><br><span class="line"></span><br><span class="line">list_id_error = []</span><br><span class="line">f_id_error = open(<span class="string">'id_error'</span>, encoding=<span class="string">'utf8'</span>, errors=<span class="string">'ignore'</span>)</span><br><span class="line"><span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">    line_id_error = f_id_error.readline()</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> line_id_error:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        list_id_error.append(dict_id_num[line_id_error.replace(<span class="string">'\n'</span>,<span class="string">''</span>)])</span><br><span class="line">print(len(list_id_error))</span><br><span class="line"></span><br><span class="line">path = <span class="string">'/home/caoda/Hodge_work_space/dataset/dataset'</span></span><br><span class="line">ii = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">16</span>):</span><br><span class="line">    list_extract_num = os.listdir(path + str(i))</span><br><span class="line">    <span class="keyword">for</span> num <span class="keyword">in</span> list_extract_num:</span><br><span class="line">        <span class="keyword">if</span>(num <span class="keyword">in</span> list_id_error):</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                shutil.rmtree(path+str(i)+<span class="string">'/'</span>+num)</span><br><span class="line">                <span class="comment"># print(path+str(i)+'/'+num)</span></span><br><span class="line">            <span class="keyword">except</span>:</span><br><span class="line">                print(<span class="string">'删除出错'</span>)</span><br><span class="line">    ii += len(os.listdir(path + str(i)))</span><br><span class="line">print(ii)</span><br></pre></td></tr></table></figure>
+<p>到目前为止数据集已准备并分割完毕。<br>数据集与代码，发布在<a href="https://github.com/Hodgeli/vine_dataset" title="vine数据集" target="_blank" rel="noopener">github</a>.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/09/clean-down-data/" data-id="cl8vfrwqm000xogc543edvgs0" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/字符串处理/">字符串处理</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/01/09/torch-save/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          保存提取
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/12/21/code-base/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">python函数库</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/30-N天自制操作系统/">30*N天自制操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS231n/">CS231n</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/">LeetCode</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PyTorch笔记/">PyTorch笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python踩坑指南/">Python踩坑指南</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Raspberry-Pi/">Raspberry Pi</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/caffe/">caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/raspbian/">raspbian</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/函数库/">函数库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/参考手册/">参考手册</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/学习方法/">学习方法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具积累/">工具积累</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/整理/">整理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/爬虫/">爬虫</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/目标检测/">目标检测</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/神经网络/">神经网络</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/读论文/">读论文</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/API/">API</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AlexNet/">AlexNet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Array/">Array</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Attention-Network/">Attention Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOs/">CentOs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP基础/">HTTP基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode/">LeetCode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MLP/">MLP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Raspberry-Pi/">Raspberry Pi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/String/">String</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/caffe/">caffe</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/deploy/">deploy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lda/">lda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/object-detect/">object_detect</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/os/">os</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pytorch/">pytorch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raspbian/">raspbian</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrapy/">scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sort/">sort</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tornado/">tornado</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/twitter/">twitter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/union-find/">union-find</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/下载/">下载</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代理的基本原理/">代理的基本原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/会话与Cookies/">会话与Cookies</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/函数/">函数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/包使用/">包使用</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/双系统/">双系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符串处理/">字符串处理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/工具/">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/快捷键/">快捷键</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/整理/">整理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/文件读取/">文件读取</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/汇编/">汇编</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫/">爬虫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫原理/">爬虫原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫基础库/">爬虫基础库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫实践/">爬虫实践</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫解析库/">爬虫解析库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/神经网络/">神经网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/笔记/">笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网页基础/">网页基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/视频处理/">视频处理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/读论文/">读论文</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/阅读/">阅读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/AlexNet/" style="font-size: 10px;">AlexNet</a> <a href="/tags/Array/" style="font-size: 12.5px;">Array</a> <a href="/tags/Attention-Network/" style="font-size: 10px;">Attention Network</a> <a href="/tags/CentOs/" style="font-size: 10px;">CentOs</a> <a href="/tags/HTTP基础/" style="font-size: 10px;">HTTP基础</a> <a href="/tags/LeetCode/" style="font-size: 17.5px;">LeetCode</a> <a href="/tags/MLP/" style="font-size: 10px;">MLP</a> <a href="/tags/Raspberry-Pi/" style="font-size: 10px;">Raspberry Pi</a> <a href="/tags/String/" style="font-size: 10px;">String</a> <a href="/tags/caffe/" style="font-size: 12.5px;">caffe</a> <a href="/tags/deploy/" style="font-size: 10px;">deploy</a> <a href="/tags/ffmpeg/" style="font-size: 10px;">ffmpeg</a> <a href="/tags/git/" style="font-size: 12.5px;">git</a> <a href="/tags/lda/" style="font-size: 10px;">lda</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object-detect/" style="font-size: 10px;">object_detect</a> <a href="/tags/os/" style="font-size: 10px;">os</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/pytorch/" style="font-size: 20px;">pytorch</a> <a href="/tags/raspbian/" style="font-size: 12.5px;">raspbian</a> <a href="/tags/scrapy/" style="font-size: 10px;">scrapy</a> <a href="/tags/sort/" style="font-size: 12.5px;">sort</a> <a href="/tags/tornado/" style="font-size: 10px;">tornado</a> <a href="/tags/twitter/" style="font-size: 10px;">twitter</a> <a href="/tags/union-find/" style="font-size: 10px;">union-find</a> <a href="/tags/vim/" style="font-size: 10px;">vim</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/下载/" style="font-size: 10px;">下载</a> <a href="/tags/代理的基本原理/" style="font-size: 10px;">代理的基本原理</a> <a href="/tags/会话与Cookies/" style="font-size: 10px;">会话与Cookies</a> <a href="/tags/函数/" style="font-size: 12.5px;">函数</a> <a href="/tags/包使用/" style="font-size: 10px;">包使用</a> <a href="/tags/双系统/" style="font-size: 10px;">双系统</a> <a href="/tags/字符串处理/" style="font-size: 15px;">字符串处理</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/快捷键/" style="font-size: 10px;">快捷键</a> <a href="/tags/整理/" style="font-size: 10px;">整理</a> <a href="/tags/文件读取/" style="font-size: 15px;">文件读取</a> <a href="/tags/汇编/" style="font-size: 10px;">汇编</a> <a href="/tags/爬虫/" style="font-size: 15px;">爬虫</a> <a href="/tags/爬虫原理/" style="font-size: 10px;">爬虫原理</a> <a href="/tags/爬虫基础库/" style="font-size: 10px;">爬虫基础库</a> <a href="/tags/爬虫实践/" style="font-size: 10px;">爬虫实践</a> <a href="/tags/爬虫解析库/" style="font-size: 10px;">爬虫解析库</a> <a href="/tags/神经网络/" style="font-size: 20px;">神经网络</a> <a href="/tags/笔记/" style="font-size: 12.5px;">笔记</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/网页基础/" style="font-size: 10px;">网页基础</a> <a href="/tags/视频处理/" style="font-size: 10px;">视频处理</a> <a href="/tags/读论文/" style="font-size: 10px;">读论文</a> <a href="/tags/阅读/" style="font-size: 10px;">阅读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/10/05/test-new-begin/">test_new_begin</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/14/LeetCode-String/">LeetCode_String</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/09/read/">read</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/08/sort-out/">sort_out</a>
+          </li>
+        
+          <li>
+            <a href="/2020/02/19/CVTEpro/">CVTEpro</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 Hodge Li<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
