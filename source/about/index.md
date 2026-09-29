@@ -3,6 +3,7 @@ title: 关于
 date: 2026-09-29 13:30:00
 type: about
 comments: false
+top_img: false
 ---
 
 这里是关于页面。

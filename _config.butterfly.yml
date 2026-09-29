@@ -66,13 +66,15 @@ disable_top_img: false
 default_top_img:
 
 # The banner image of index page
-index_img:
+# false = 不显示首页顶部区域（全屏头部一并去掉，文章列表直接从导航栏下方开始）
+index_img: false
 
 # The banner image of archive page
-archive_img:
+# false = 不显示顶部区域（与首页风格统一）
+archive_img: false
 
 # Note: tag page, not tags page
-tag_img:
+tag_img: false
 
 # The banner image of tag page, you can set the banner image for each tag
 # Format:
@@ -80,7 +82,7 @@ tag_img:
 tag_per_img:
 
 # Note: category page, not categories page
-category_img:
+category_img: false
 
 # The banner image of category page, you can set the banner image for each category
 # Format:
