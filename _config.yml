@@ -1,0 +1,115 @@
+# ==========================================================
+# Hexo 站点配置
+# 文档：https://hexo.io/docs/configuration
+# ==========================================================
+
+# ---------------- 站点信息（占位符，站点跑通后替换） ----------------
+title: 站点标题待定
+subtitle: '副标题待定'
+description: '站点描述待定，会出现在首页与搜索引擎摘要中'
+keywords:
+author: 作者名待定
+language: zh-CN
+timezone: 'Asia/Shanghai'
+
+# ---------------- URL ----------------
+# 使用根域名部署，root 保持 /
+url: https://hodgeli.github.io
+root: /
+permalink: :year/:month/:day/:title/
+permalink_defaults:
+pretty_urls:
+  trailing_index: true
+  trailing_html: true
+
+# ---------------- 目录 ----------------
+source_dir: source
+public_dir: public
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+code_dir: downloads/code
+i18n_dir: :lang
+skip_render:
+
+# ---------------- 写作 ----------------
+new_post_name: :title.md
+default_layout: post
+titlecase: false
+external_link:
+  enable: true
+  field: site
+  exclude:
+filename_case: 0
+render_drafts: false
+post_asset_folder: false
+relative_link: false
+future: true
+syntax_highlighter: highlight.js
+highlight:
+  line_number: true
+  auto_detect: false
+  tab_replace: ''
+  wrap: true
+  hljs: false
+prismjs:
+  preprocess: true
+  line_number: true
+  tab_replace: ''
+
+# ---------------- 首页 ----------------
+index_generator:
+  path: ''
+  per_page: 10
+  order_by: -date
+
+# ---------------- 分类与标签 ----------------
+default_category: uncategorized
+category_map:
+tag_map:
+
+# ---------------- 元数据 ----------------
+meta_generator: true
+
+# ---------------- 日期格式 ----------------
+date_format: YYYY-MM-DD
+time_format: HH:mm:ss
+updated_option: 'mtime'
+
+# ---------------- 分页 ----------------
+per_page: 10
+pagination_dir: page
+
+# ---------------- 包含 / 排除 ----------------
+include:
+exclude:
+ignore:
+
+# ---------------- 主题 ----------------
+theme: butterfly
+
+# ---------------- 本地搜索（hexo-generator-searchdb） ----------------
+search:
+  path: search.xml
+  field: post
+  content: true
+  format: html
+
+# ---------------- RSS（hexo-generator-feed） ----------------
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+  hub:
+  content: true
+  content_limit: 140
+  content_limit_delim: ' '
+  order_by: -date
+
+# ---------------- 站点地图（hexo-generator-sitemap） ----------------
+sitemap:
+  path: sitemap.xml
+
+# ---------------- 部署 ----------------
+# 由 GitHub Actions 完成，此处留空
+deploy:
