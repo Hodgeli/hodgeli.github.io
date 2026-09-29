@@ -3,12 +3,12 @@
 # 文档：https://hexo.io/docs/configuration
 # ==========================================================
 
-# ---------------- 站点信息（占位符，站点跑通后替换） ----------------
-title: 站点标题待定
-subtitle: '副标题待定'
-description: '站点描述待定，会出现在首页与搜索引擎摘要中'
+# ---------------- 站点信息 ----------------
+title: "Hodge's Blog"
+subtitle: ''
+description: '雄关漫道真如铁，而今迈步从头越'
 keywords:
-author: 作者名待定
+author: Hodge
 language: zh-CN
 timezone: 'Asia/Shanghai'
 
