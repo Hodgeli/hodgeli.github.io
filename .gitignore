@@ -4,6 +4,7 @@ db.json
 *.log
 node_modules/
 public/
+brain-export/
 .deploy*/
 _multiconfig.yml
 .workbuddy-ai/
